@@ -90,11 +90,12 @@ public class UserService extends BaseService<User> {
         return resultMap;
     }
 
-    /**
-     * @Author: lee
-     * @date : 2020/7/15 20:31
-     * Description: 查询用户信息
-     **/
+  /**
+   * @author luyu
+   * @date 2020/7/16 19:29
+   * Description
+   * 查询全部用户信息，可用于用户信息导出
+   */
     public Map<String, Object> selectAll() {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         List<User> userList = userMapper.selectAll();
@@ -126,7 +127,7 @@ public class UserService extends BaseService<User> {
     /**
      * @Author: lee
      * @date : 2020/7/15 20:38
-     * Description: 分页查询用户
+     * Description: 分页查询全部用户
      **/
     public Map<String, Object> selectUserAll(HashMap map, RedisService redisService) {
         Map<String, Object> resultMap = new HashMap<>();

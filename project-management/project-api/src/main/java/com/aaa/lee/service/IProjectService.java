@@ -3,9 +3,14 @@ package com.aaa.lee.service;
 import com.aaa.lee.base.ResultData;
 import com.aaa.lee.model.LoginLog;
 import com.aaa.lee.model.User;
+import com.aaa.lee.staticproerties.RedisProperties;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * create by: lee
@@ -28,5 +33,51 @@ public interface IProjectService {
     @PostMapping("/addLoginLog")
     Integer addLoginLog(@RequestBody LoginLog loginlog);
 
+    /**
+     * @author luyu
+     * @date 2020/7/16 19:59
+     * Description
+     * 添加用户
+     */
+    @PostMapping("/user/addUser")
+    ResultData addUser(@RequestBody User user);
 
+    /**
+     * @author luyu
+     * @date 2020/7/16 20:01
+     * Description
+     * 批量删除用户
+     */
+    @DeleteMapping("/user/delUser")
+    ResultData delUser(@RequestBody List<Long> ids);
+    /**
+     * @author luyu
+     * @date 2020/7/16 20:03
+     * Description
+     * 修改用户信息
+     */
+    @PostMapping("/user/updateUser")
+    ResultData updateUser(@RequestBody User user);
+
+
+    //TODO 需要加一个导出用户信息的接口
+    /**
+     * @author luyu
+     * @date 2020/7/16 20:06
+     * Description
+     * 条件分页查询所有用户
+     */
+    @PostMapping("/user/selectUser")
+    ResultData selectUserAll(@RequestBody HashMap map);
+
+
+
+/**
+ * @author luyu
+ * @date 2020/7/16 18:38
+ * Description
+ * 查询所有用户角色
+ */
+@PostMapping("/selectAllRoles")
+ResultData selectAllRoles(@RequestBody User user);
 }

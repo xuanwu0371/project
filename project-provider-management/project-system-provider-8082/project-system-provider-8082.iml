@@ -19,6 +19,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="project-provider-backup" />
     <orderEntry type="module" module-name="project-service" />
     <orderEntry type="module" module-name="project-mapper" />
     <orderEntry type="module" module-name="project-model" />
