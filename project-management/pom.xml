@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>project</artifactId>
+        <groupId>com.aaa.lee</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>project-management</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>project-api</module>
+        <module>project-mapper</module>
+        <module>project-model</module>
+        <module>project-service</module>
+    </modules>
+
+    <dependencies>
+        <!--service业务层需要用到common，mapper中也可能用到common，所以直接在父级项目添加common-->
+        <dependency>
+            <artifactId>project-common</artifactId>
+            <groupId>com.aaa.lee</groupId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+</project>
