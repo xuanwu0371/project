@@ -1,6 +1,7 @@
 package com.aaa.lee.Controller;
 
-import com.aaa.lee.base.BaseController;
+import com.aaa.lee.base.BaseService;
+import com.aaa.lee.base.CommonController;
 import com.aaa.lee.base.ResultData;
 import com.aaa.lee.model.Menu;
 import com.aaa.lee.service.MenuService;
@@ -17,7 +18,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/menu")
-public class MenuController extends BaseController {
+public class MenuController extends CommonController<Menu> {
     @Autowired
     private MenuService menuService;
 
@@ -38,7 +39,7 @@ public class MenuController extends BaseController {
      * Description: 在菜单管理中新增菜单或者是按钮
     **/
     @PostMapping("/insertMenuOrButton")
-    public ResultData<Menu> insertMenuOrButton(@RequestBody Menu menu){
+    public ResultData insertMenuOrButton(@RequestBody Menu menu){
         Map<String, Object> Result = menuService.insertMenuOrButton(menu);
         if (!Result.isEmpty()){
             return super.operationSuccess();
@@ -52,10 +53,10 @@ public class MenuController extends BaseController {
      * Description: 在菜单管理中修改菜单或者按钮
     **/
     @PostMapping("/updateMenuOrButton")
-    public ResultData<Menu> updateMenuOrButton(@RequestBody Menu menu){
+    public ResultData updateMenuOrButton(@RequestBody Menu menu){
         Map<String, Object> Result = menuService.updateMenuOrButton(menu);
         if (!Result.isEmpty()){
-            return super.operationSuccess();
+            return super.updateOperationSuccess();
         }else {
             return super.operationFailed();
         }
@@ -66,7 +67,7 @@ public class MenuController extends BaseController {
      * Description: 删除按钮或者菜单
     **/
     @PostMapping("/deleteMenuOrButton")
-    private ResultData<Menu> deleteMenuOrButton(@RequestParam("menuId") Long menuId){
+    private ResultData deleteMenuOrButton(@RequestParam("menuId") Long menuId){
         Map<String, Object> Result = menuService.deleteMenuOrButton(menuId);
         if (!Result.isEmpty()){
             return super.operationSuccess();
@@ -76,10 +77,8 @@ public class MenuController extends BaseController {
     }
 
 
-
-
-
-
-
-
+    @Override
+    public BaseService<Menu> getBaseService() {
+        return null;
+    }
 }
