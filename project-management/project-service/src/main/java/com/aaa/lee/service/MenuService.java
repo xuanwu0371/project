@@ -1,7 +1,6 @@
 package com.aaa.lee.service;
 
 import com.aaa.lee.base.BaseService;
-import com.aaa.lee.base.ResultData;
 import com.aaa.lee.mapper.MenuMapper;
 import com.aaa.lee.model.Menu;
 import org.springframework.beans.factory.annotation.Autowired;

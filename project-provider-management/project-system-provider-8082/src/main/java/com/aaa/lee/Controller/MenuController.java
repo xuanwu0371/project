@@ -39,11 +39,41 @@ public class MenuController extends BaseController {
     **/
     @PostMapping("/insertMenuOrButton")
     public ResultData<Menu> insertMenuOrButton(@RequestBody Menu menu){
-        Map<String, Object> stringObjectMap = menuService.insertMenuOrButton(menu);
-        if ()
+        Map<String, Object> Result = menuService.insertMenuOrButton(menu);
+        if (!Result.isEmpty()){
+            return super.operationSuccess();
+        }else {
+            return super.operationFailed();
+        }
     }
-
-
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/16 16:08
+     * Description: 在菜单管理中修改菜单或者按钮
+    **/
+    @PostMapping("/updateMenuOrButton")
+    public ResultData<Menu> updateMenuOrButton(@RequestBody Menu menu){
+        Map<String, Object> Result = menuService.updateMenuOrButton(menu);
+        if (!Result.isEmpty()){
+            return super.operationSuccess();
+        }else {
+            return super.operationFailed();
+        }
+    }
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/16 16:11
+     * Description: 删除按钮或者菜单
+    **/
+    @PostMapping("/deleteMenuOrButton")
+    private ResultData<Menu> deleteMenuOrButton(@RequestParam("menuId") Long menuId){
+        Map<String, Object> Result = menuService.deleteMenuOrButton(menuId);
+        if (!Result.isEmpty()){
+            return super.operationSuccess();
+        }else {
+            return super.operationFailed();
+        }
+    }
 
 
 

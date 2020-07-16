@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaa.lee.mapper.UserConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.aaa.lee.model.UserConfig" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="THEME" property="theme" jdbcType="VARCHAR" />
+    <result column="LAYOUT" property="layout" jdbcType="VARCHAR" />
+    <result column="MULTI_PAGE" property="multiPage" jdbcType="CHAR" />
+    <result column="FIX_SIDERBAR" property="fixSiderbar" jdbcType="CHAR" />
+    <result column="FIX_HEADER" property="fixHeader" jdbcType="CHAR" />
+    <result column="COLOR" property="color" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>
