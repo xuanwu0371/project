@@ -52,7 +52,7 @@ public abstract class CommonController<T> extends BaseController {
         Integer insertResult = getBaseService().add(instance);
         try {
             if (insertResult > 0) {
-                return super.insertOperation();
+                return super.insertOperationSuccess();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -122,7 +122,7 @@ public abstract class CommonController<T> extends BaseController {
         try {
             Integer result = getBaseService().delete(instance);
             if (result > 0) {
-                return super.deleteOperation("删除成功");
+                return super.deleteOperationSuccess("删除成功");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -140,7 +140,7 @@ public abstract class CommonController<T> extends BaseController {
         try {
             Integer result = getBaseService().deleteByIds(ids);
             if (result > 0) {
-                return super.deleteOperation("批量删除成功");
+                return super.deleteOperationSuccess("批量删除成功");
             }
         } catch (Exception e) {
             e.printStackTrace();
