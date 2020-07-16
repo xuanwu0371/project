@@ -12,7 +12,7 @@
     <artifactId>project-system-provider-8082</artifactId>
 
     <dependencies>
-        
+
         <dependency>
             <groupId>com.aaa.lee</groupId>
             <artifactId>project-provider-backup</artifactId>

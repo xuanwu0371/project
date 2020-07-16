@@ -13,7 +13,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>project-provider-backup</module>
-        <module>project-mapping-provider-8082</module>
         <module>project-system-provider-8082</module>
     </modules>
 
