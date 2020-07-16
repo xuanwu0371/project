@@ -40,20 +40,10 @@ public class UserController extends CommonController<User> {
     ResultData addUser(@RequestBody User user){
         Map<String,Object> addResult  = userService.addUser(user);
         if (INSERT_OPERATION_SUCCESS.getCode().equals(addResult.get("code"))){
-            return
+            return null;
         }
+        return null;
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
