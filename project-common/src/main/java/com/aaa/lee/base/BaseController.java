@@ -127,7 +127,7 @@ public class BaseController {
      *Description
      *       用户已经存在，使用系统消息
      */
-    protected ResultData suerExist(){
+    protected ResultData userExist(){
         ResultData resultData = new ResultData();
         resultData.setCode(USER_EXIST.getCode());
         resultData.setMsg(USER_EXIST.getMsg());
@@ -140,7 +140,7 @@ public class BaseController {
      *Description
      *       用户已经存在，自定义返回消息
      */
-    protected ResultData suerExist(String msg) {
+    protected ResultData userExist(String msg) {
         ResultData resultData = new ResultData();
         resultData.setCode(USER_EXIST.getCode());
         resultData.setMsg(msg);
@@ -153,7 +153,7 @@ public class BaseController {
      *Description
      * 用户已经存在，返回数据信息，使用系统消息
      */
-    protected ResultData suerExist(Object data) {
+    protected ResultData userExist(Object data) {
         ResultData resultData = new ResultData();
         resultData.setCode(USER_EXIST.getCode());
         resultData.setMsg(USER_EXIST.getMsg());
