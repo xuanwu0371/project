@@ -87,7 +87,7 @@ public interface IProjectService {
     /**
      * @author yang
      * @date 2020/7/17 10:35
-     *Description
+     * Description
      * 添加新闻
      */
     @PostMapping("/news/addNews")
@@ -96,7 +96,7 @@ public interface IProjectService {
     /**
      * @author yang
      * @date 2020/7/17 10:40
-     *Description
+     * Description
      * 删除新闻
      */
     @PostMapping("/news/delNews")
@@ -105,7 +105,7 @@ public interface IProjectService {
     /**
      * @author yang
      * @date 2020/7/17 10:39
-     *Description
+     * Description
      * 修改新闻
      */
     @PostMapping("/news/updateNews")
@@ -114,7 +114,7 @@ public interface IProjectService {
     /**
      * @author yang
      * @date 2020/7/17 10:41
-     *Description
+     * Description
      * 查询所有新闻
      */
     @PostMapping("/news/selectNews")
