@@ -1,14 +1,11 @@
 package com.aaa.lee.service;
 
 import com.aaa.lee.base.ResultData;
-import com.aaa.lee.model.LoginLog;
-import com.aaa.lee.model.News;
-import com.aaa.lee.model.User;
+import com.aaa.lee.model.*;
 import com.aaa.lee.staticproerties.RedisProperties;
+import com.aaa.lee.vo.RoleVo;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +24,7 @@ public interface IProjectService {
     @PostMapping("/doLogin")
     ResultData doLogin(@RequestBody User user);
 
+
     /**
      * @Author: lee
      * @date : 2020/7/15 15:21
@@ -34,6 +32,7 @@ public interface IProjectService {
      **/
     @PostMapping("/addLoginLog")
     Integer addLoginLog(@RequestBody LoginLog loginlog);
+
 
     /**
      * @author luyu
@@ -44,6 +43,7 @@ public interface IProjectService {
     @PostMapping("/user/addUser")
     ResultData addUser(@RequestBody User user);
 
+
     /**
      * @author luyu
      * @date 2020/7/16 20:01
@@ -52,6 +52,7 @@ public interface IProjectService {
      */
     @DeleteMapping("/user/delUser")
     ResultData delUser(@RequestBody List<Long> ids);
+
 
     /**
      * @author luyu
@@ -67,6 +68,16 @@ public interface IProjectService {
 
     /**
      * @author luyu
+     * @date 2020/7/16 18:38
+     * Description
+     * 查询所有用户角色
+     */
+    @PostMapping("/menu/selectAllRoles")
+    ResultData selectAllRoles(@RequestBody User user);
+
+
+    /**
+     * @author luyu
      * @date 2020/7/16 20:06
      * Description
      * 条件分页查询所有用户
@@ -76,49 +87,109 @@ public interface IProjectService {
 
 
     /**
-     * @author luyu
-     * @date 2020/7/16 18:38
-     * Description
-     * 查询所有用户角色
-     */
-    @PostMapping("/selectAllRoles")
-    ResultData selectAllRoles(@RequestBody User user);
+     * @Author: Lee ShiHao
+     * @date : 2020/7/17 8:54
+     * Description: 在菜单管理中新增菜单或者是按钮
+     **/
+    @PostMapping("/menu/insertMenuOrButton")
+    ResultData insertMenuOrButton(@RequestBody Menu menu);
 
     /**
-     * @author yang
-     * @date 2020/7/17 10:35
-     *Description
-     * 添加新闻
-     */
-    @PostMapping("/news/addNews")
-    ResultData addNews(@RequestBody News news);
+     * @Author: Lee ShiHao
+     * @date : 2020/7/17 8:56
+     * Description: 删除按钮或者菜单
+     **/
+    @PostMapping("/menu//deleteMenuOrButton")
+    ResultData deleteMenuOrButton(@RequestParam("menuId") Long menuId);
 
     /**
-     * @author yang
-     * @date 2020/7/17 10:40
-     *Description
-     * 删除新闻
-     */
-    @PostMapping("/news/delNews")
-    ResultData delNews(@RequestBody List<Long> ids);
+     * @Author: Lee ShiHao
+     * @date : 2020/7/17 8:55
+     * Description: 在菜单管理中修改菜单或者按钮
+     **/
+    @PostMapping("/menu/updateMenuOrButton")
+    ResultData updateMenuOrButton(@RequestBody Menu menu);
 
     /**
-     * @author yang
-     * @date 2020/7/17 10:39
-     *Description
-     * 修改新闻
-     */
-    @PostMapping("/news/updateNews")
-    ResultData updateNews(@RequestBody News news);
+     * @Author: Lee ShiHao
+     * @date : 2020/7/17 8:53
+     * Description: 查询所有菜单
+     **/
+    @GetMapping("/menu/getMenus")
+    ResultData selectAllMenus();
+
 
     /**
-     * @author yang
-     * @date 2020/7/17 10:41
-     *Description
-     * 查询所有新闻
-     */
-    @PostMapping("/news/selectNews")
-    ResultData selectNews();
+     * @Author: Lee ShiHao
+     * @date : 2020/7/16 19:35
+     * Description: 新增角色以及批量新增权限
+     **/
+    @PostMapping("/role/insertRole")
+    ResultData insertRole(@RequestBody RoleVo roleVo);
+
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/16 19:31
+     * Description: 删除角色
+     **/
+    @PostMapping("/role/deleteRole")
+    ResultData deleteRole(@RequestParam("roleId") Long roleId);
+
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/16 19:38
+     * Description: 修改角色及权限
+     **/
+    @PostMapping("/role/updateRole")
+    ResultData updateRole(@RequestBody RoleVo roleVo);
+
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/17 9:05
+     * Description: 查询所有角色
+     **/
+    @GetMapping("/role/allRoles")
+    ResultData selectAllRole();
+
+
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/17 9:05
+     * Description: 角色分页查询
+     **/
+    @PostMapping("/role/pageRoles")
+    ResultData selectAllRoleByPage(@RequestBody RoleVo roleVo);
+
+
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/17 11:45
+     * Description: 新增字典信息
+     **/
+    @PostMapping("/insertDict")
+    ResultData insertDict(@RequestBody Dict dict);
+
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/17 11:41
+     * Description: 通过id批量删除字典
+     **/
+    @PostMapping("/delDictsById")
+    ResultData delDictsById(@RequestBody List<Long> ids);
+
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/17 11:34
+     * Description: 修改字典信息
+     **/
+    @PostMapping("/updateDict")
+    ResultData updateDict(@RequestBody Dict dict);
+
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/17 11:24
+     * Description: 分页查询字典
+     **/
+    @PostMapping("/selectAllDictByPage")
+    ResultData selectAllDictByPage(@RequestBody HashMap hashMap);
 }
-
-
