@@ -193,7 +193,6 @@ public interface IProjectService {
     @PostMapping("/selectAllDictByPage")
     ResultData selectAllDictByPage(@RequestBody HashMap hashMap);
 
-
     /**
      * @author yang
      * @date 2020/7/17 10:35
