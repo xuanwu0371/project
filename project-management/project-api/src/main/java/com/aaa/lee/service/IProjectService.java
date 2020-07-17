@@ -65,8 +65,14 @@ public interface IProjectService {
 
 
     //TODO 需要加一个导出用户信息的接口
-    @PostMapping("/allUser")
-    ResultData select(@RequestBody User user);
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/17 19:32
+     * Description: 所有用户
+    **/
+    @PostMapping("user/selectAll")
+    ResultData selectAll(@RequestBody User user);
+
     /**
      * @author luyu
      * @date 2020/7/16 18:38
