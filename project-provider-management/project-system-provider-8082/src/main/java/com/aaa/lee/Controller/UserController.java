@@ -81,7 +81,21 @@ public class UserController extends CommonController<User> {
         return super.updateOperationFailed();
 
     }
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/17 18:56
+     * Description: 查询用户信息
+    **/
+    @PostMapping("/allUser")
+    ResultData allUser(@RequestBody User user){
+        Map<String, Object> resultMap = userService.selectAll();
 
+        if (SELECT_OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))){
+            return super.selectOperationSuccess(resultMap);
+        }else {
+            return super.selectOperationFailed();
+        }
+    }
     /**
      * @author luyu
      * @date 2020/7/16 19:09
