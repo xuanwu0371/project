@@ -27,7 +27,7 @@ import static com.aaa.lee.status.OperationStatus.*;
 @RestController
 @Slf4j
 @RequestMapping("/news")
-public class NewsController extends CommonController<News>{
+public class NewsController extends CommonController<News> {
 
     @Autowired
     private NewsService newsService;
@@ -37,26 +37,27 @@ public class NewsController extends CommonController<News>{
     /**
      * @author yang
      * @date 2020/7/17 9:17
-     *Description
+     * Description
      * 新闻管理：新增新闻
      */
     @PostMapping("/addNews")
-    ResultData addNews(@RequestBody News news){
-        Map<String,Object> addResult = newsService.addNews(news);
+    ResultData addNews(@RequestBody News news) {
+        Map<String, Object> addResult = newsService.addNews(news);
         if (INSERT_OPERATION_SUCCESS.getCode().equals(addResult.get("code"))) {
             return super.insertOperationSuccess();
         }
         return super.insertOperationFailed();
     }
+
     /**
      * @author yang
      * @date 2020/7/17 9:18
-     *Description
+     * Description
      * 删除新闻
      */
     @PostMapping("/delNews")
-    ResultData delNews(@RequestBody List<Long> ids){
-        Map<String,Object> resultMap = newsService.delNews(ids);
+    ResultData delNews(@RequestBody List<Long> ids) {
+        Map<String, Object> resultMap = newsService.delNews(ids);
         if (DELETE_OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
             return super.deleteOperationSuccess();
         }
@@ -66,14 +67,14 @@ public class NewsController extends CommonController<News>{
     /**
      * @author yang
      * @date 2020/7/17 9:26
-     *Description
-     *    修改新闻信息
+     * Description
+     * 修改新闻信息
      */
     @RequestMapping("/updateNews")
-    ResultData updateNews(@RequestBody News news){
-        Map<String,Object> resultMap =newsService.updateNews(news);
-        if (UPDATE_OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))){
-            return  super.updateOperationSuccess();
+    ResultData updateNews(@RequestBody News news) {
+        Map<String, Object> resultMap = newsService.updateNews(news);
+        if (UPDATE_OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+            return super.updateOperationSuccess();
         }
         return super.updateOperationFailed();
     }
@@ -81,14 +82,14 @@ public class NewsController extends CommonController<News>{
     /**
      * @author yang
      * @date 2020/7/17 10:07
-     *Description
+     * Description
      * 查询全部新闻
      */
     @PostMapping("/selectNews")
-    public ResultData selectNews(){
-        Map<String,Object> resultMap =newsService.selectNews();
-        if (SELECT_OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))){
-            return super.selectOperationSuccess();
+    public ResultData selectNews() {
+        Map<String, Object> resultMap = newsService.selectNews();
+        if (SELECT_OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+            return super.selectOperationSuccess(resultMap);
         }
         return super.selectOperationFailed();
     }
@@ -96,14 +97,14 @@ public class NewsController extends CommonController<News>{
     /**
      * @author yang
      * @date 2020/7/17 9:34
-     *Description
+     * Description
      * 分页查询全部新闻
      */
     @PostMapping("/selectAllNews")
-    ResultData selectAllNews(@RequestBody HashMap map){
-        Map<String,Object> resultMap = newsService.selectAllNews(map,redisService);
-        if (SELECT_OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))){
-            return super.selectOperationSuccess();
+    ResultData selectAllNews(@RequestBody HashMap map) {
+        Map<String, Object> resultMap = newsService.selectAllNews(map, redisService);
+        if (SELECT_OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+            return super.selectOperationSuccess(resultMap);
         } else {
             return super.selectOperationFailed();
         }
@@ -112,11 +113,11 @@ public class NewsController extends CommonController<News>{
     /**
      * @author yang
      * @date 2020/7/17 9:56
-     *Description
-     *       分页条件查询
+     * Description
+     * 分页条件查询
      */
     @PostMapping("/selectNewsPageInfo")
-    ResultData selectNewsPageInfo(HashMap map){
+    ResultData selectNewsPageInfo(HashMap map) {
         return null;
 
     }

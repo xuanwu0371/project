@@ -235,7 +235,7 @@ public interface IProjectService {
      * 查询所有新闻
      */
     @PostMapping("/news/selectNews")
-    ResultData selectNews();
+    ResultData selectNews(@RequestBody News news);
 
     /**
      * @author yang
