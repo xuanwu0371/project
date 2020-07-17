@@ -6,7 +6,6 @@ import org.apache.commons.httpclient.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import com.aaa.lee.utils.DateUtils;
 import com.aaa.lee.utils.FileNameUtils;
 
 import java.io.IOException;

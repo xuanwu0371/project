@@ -17,7 +17,7 @@ import static com.aaa.lee.status.OperationStatus.*;
  * description:
  */
 @Service
-public class MenuService extends BaseService {
+public class MenuService extends BaseService<Menu> {
     @Autowired
     private MenuMapper menuMapper;
 

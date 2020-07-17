@@ -28,10 +28,11 @@ public class UserController extends BaseController {
      * 用户管理中新增用户
      */
     @PostMapping("/addUser")
-    public  ResultData addUser(@RequestBody User user){
-        return  iProjectService.addUser(user);
+    public ResultData addUser(@RequestBody User user) {
+        return iProjectService.addUser(user);
 
     }
+
     /**
      * @author luyu
      * @date 2020/7/16 20:34
@@ -39,9 +40,10 @@ public class UserController extends BaseController {
      * 删除用户
      */
     @DeleteMapping("/delUser")
-    public  ResultData delUser(@RequestBody List<Long> ids){
+    public ResultData delUser(@RequestBody List<Long> ids) {
         return iProjectService.delUser(ids);
     }
+
     /**
      * @author luyu
      * @date 2020/7/16 20:35
@@ -49,8 +51,8 @@ public class UserController extends BaseController {
      * 修改用户信息
      */
     @PostMapping("/updateUser")
-    public ResultData updateUser(@RequestBody User user){
-      return iProjectService.updateUser(user);
+    public ResultData updateUser(@RequestBody User user) {
+        return iProjectService.updateUser(user);
     }
 
     //TODO 导出用户信息的功能，待撰写
@@ -62,11 +64,9 @@ public class UserController extends BaseController {
      * 带条件查询用户
      */
     @PostMapping("/selectUser")
-    ResultData selectUserAll(@RequestBody HashMap map){
+    ResultData selectUserAll(@RequestBody HashMap map) {
         return iProjectService.selectUserAll(map);
-        }
-
-
+    }
 
 
 }

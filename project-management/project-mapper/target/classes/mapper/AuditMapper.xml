@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aaa.lee.mapper.AuditMapper" >
+  <resultMap id="BaseResultMap" type="com.aaa.lee.model.Audit" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="submit_time" property="submitTime" jdbcType="TIMESTAMP" />
+    <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="ref_id" property="refId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+</mapper>

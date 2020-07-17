@@ -27,8 +27,14 @@ import static com.aaa.lee.status.OperationStatus.*;
 public class UserController extends CommonController<User> {
     @Autowired
     private UserService userService;
+
     @Autowired
     private RedisService redisService;
+
+    @Override
+    public BaseService getBaseService() {
+        return null;
+    }
 
     /**
      * @Author: Lee ShiHao
@@ -115,8 +121,5 @@ public class UserController extends CommonController<User> {
         }
     }
 
-    @Override
-    public BaseService getBaseService() {
-        return null;
-    }
+
 }

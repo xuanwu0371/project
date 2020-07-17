@@ -34,32 +34,34 @@ import static com.aaa.lee.staticproerties.TimeFormatProperties.TIME_FORMAT;
 public class LogAspect {
     @Autowired
     private IProjectService iProjectService;
+
     /**
      * @Author: lee
      * @date : 2020/7/15 16:04
      * Description: 定义切点信息
-     *      这个时候就不能再按照常规的切点(service/controller)
-     *      直接去切自定义的注解
-     *      也就是说当检测自定义注解存在的时候,切面触发,也就是说AOP才会被触发
-    **/
+     * 这个时候就不能再按照常规的切点(service/controller)
+     * 直接去切自定义的注解
+     * 也就是说当检测自定义注解存在的时候,切面触发,也就是说AOP才会被触发
+     **/
     @Pointcut("@annotation(com.aaa.lee.annotation.LoginAnnotation)")
-    public void pointcut(){
+    public void pointcut() {
         //todo
     }
+
     /**
      * @Author: lee
      * @date : 2020/7/15 16:07
      * Description: 定义环形切面
-     *          ProceedingJoinPoint:
-     *          封装了目标路径中所用到的所有参数
-     *          会用到大量的反射
-    **/
+     * ProceedingJoinPoint:
+     * 封装了目标路径中所用到的所有参数
+     * 会用到大量的反射
+     **/
     @Around("pointcut()")
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws ClassNotFoundException {
-        Object result= null;
+        Object result = null;
         try {
-            result=proceedingJoinPoint.proceed();
-        }catch (Throwable th){
+            result = proceedingJoinPoint.proceed();
+        } catch (Throwable th) {
             th.printStackTrace();
         }
         //获取Request对象
@@ -71,8 +73,8 @@ public class LogAspect {
 
         LoginLog loginLog = new LoginLog();
         loginLog.setIp(ipAddr);
-        loginLog.setLocation(addressMap.get("province")+"|"+addressMap.get("city"));
-        loginLog.setLoginTime(DateUtil.formatDate(new Date(),TIME_FORMAT));
+        loginLog.setLocation(addressMap.get("province") + "|" + addressMap.get("city"));
+        loginLog.setLoginTime(DateUtil.formatDate(new Date(), TIME_FORMAT));
         //3.获取Username--->想要获取到username,必须要获取到目标方法的参数值
         Object[] args = proceedingJoinPoint.getArgs();
         User user = (User) args[0];
@@ -84,22 +86,22 @@ public class LogAspect {
 
         String tarMethodName = proceedingJoinPoint.getSignature().getName();
         //4.2  获取类对象
-        Class tarClass=Class.forName(tarClassName);
+        Class tarClass = Class.forName(tarClassName);
         //4.3 获取目标类中的所有方法
         Method[] methods = tarClass.getMethods();
-        String operationType="";
-        String operationName="";
-        for (Method method:methods){
+        String operationType = "";
+        String operationName = "";
+        for (Method method : methods) {
             String methodName = method.getName();
-            if (tarMethodName.equals(methodName)){
+            if (tarMethodName.equals(methodName)) {
                 //这个时候虽然已经确定了目标方法没有问题,但是有可能会出现方法的重载
                 //还需要进一步判断
                 //4.4获取目标方法的参数
                 Class[] parameterTypes = method.getParameterTypes();
-                if (parameterTypes.length==args.length){
+                if (parameterTypes.length == args.length) {
                     //获取目标方法
-                    operationType= method.getAnnotation(LoginAnnotation.class).operationType();
-                    operationName= method.getAnnotation(LoginAnnotation.class).operationName();
+                    operationType = method.getAnnotation(LoginAnnotation.class).operationType();
+                    operationName = method.getAnnotation(LoginAnnotation.class).operationName();
 
                 }
             }

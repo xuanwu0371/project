@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/role")
-public class RoleController extends CommonController {
+public class RoleController extends CommonController<Role> {
     @Autowired
     private RoleService roleService;
 
@@ -25,34 +25,18 @@ public class RoleController extends CommonController {
     public BaseService getBaseService() {
         return null;
     }
-
     /**
      * @Author: Lee ShiHao
-     * @date : 2020/7/16 19:23
-     * Description: 查询所有的角色
+     * @date : 2020/7/16 19:35
+     * Description: 新增角色以及批量新增权限
      **/
-    @GetMapping("/allRoles")
-    public ResultData selectAllROle() {
-        ResultData resultData = roleService.selectAllRole();
-        if (resultData.getCode().equals("1")) {
-            return selectOperationSuccess(resultData.getCode());
-        } else {
-            return selectOperationFailed();
-        }
-    }
-
-    /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/16 19:27
-     * Description: 简单的分页查询
-     **/
-    @PostMapping("/pageRoles")
-    public ResultData selectAllRoleByPage(@RequestBody RoleVo roleVo) {
-        ResultData<PageInfo<Role>> resultData = roleService.selectAllRoleByPage(roleVo);
-        if (resultData.getCode().equals("1")) {
-            return selectOperationSuccess(resultData.getCode());
-        } else {
-            return selectOperationFailed();
+    @PostMapping("/insertRole")
+    public ResultData insertRole(@RequestBody RoleVo roleVo) {
+        Boolean insertRole = roleService.insertRole(roleVo);
+        if (insertRole) {
+            return super.insertOperationSuccess("新增角色及权限成功");
+        }else {
+            return super.insertOperationFailed("新增角色及权限失败");
         }
     }
 
@@ -73,23 +57,9 @@ public class RoleController extends CommonController {
 
     /**
      * @Author: Lee ShiHao
-     * @date : 2020/7/16 19:35
-     * Description: 新增角色以及批量新增权限
-     **/
-    @PostMapping("/insertRole")
-    public ResultData insertRole(@RequestBody RoleVo roleVo) {
-        Boolean insertRole = roleService.insertRole(roleVo);
-        if (insertRole) {
-            return super.insertOperationSuccess("新增角色及权限成功");
-        }else {
-            return super.insertOperationFailed("新增角色及权限失败");
-        }
-    }
-    /**
-     * @Author: Lee ShiHao
      * @date : 2020/7/16 19:38
      * Description: 修改角色及权限
-    **/
+     **/
     @PostMapping("/updateRole")
     public ResultData updateRole(@RequestBody RoleVo roleVo){
         Boolean updateRole = roleService.updateRole(roleVo);
@@ -97,6 +67,35 @@ public class RoleController extends CommonController {
             return super.updateOperationSuccess("修改角色及权限成功");
         }else {
             return super.updateOperationFailed("修改角色及权限失败");
+        }
+    }
+
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/16 19:23
+     * Description: 查询所有的角色
+     **/
+    @GetMapping("/allRoles")
+    public ResultData selectAllRole() {
+        ResultData resultData = roleService.selectAllRole();
+        if (resultData.getMsg().equals("查询成功")) {
+            return selectOperationSuccess(resultData.getCode());
+        } else {
+            return selectOperationFailed();
+        }
+    }
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/16 19:27
+     * Description: 简单的分页查询
+     **/
+    @PostMapping("/pageRoles")
+    public ResultData selectAllRoleByPage(@RequestBody RoleVo roleVo) {
+        ResultData<PageInfo<Role>> resultData = roleService.selectAllRoleByPage(roleVo);
+        if (resultData.getCode().equals("1")) {
+            return selectOperationSuccess(resultData.getCode());
+        } else {
+            return selectOperationFailed();
         }
     }
 }

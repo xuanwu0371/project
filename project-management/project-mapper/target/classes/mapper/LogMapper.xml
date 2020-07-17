@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.lee.mapper.LogMapper">
+  <resultMap id="BaseResultMap" type="com.aaa.lee.model.Log">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+    <result column="TIME" jdbcType="DECIMAL" property="time" />
+    <result column="IP" jdbcType="VARCHAR" property="ip" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="OPERATION" jdbcType="LONGVARCHAR" property="operation" />
+    <result column="METHOD" jdbcType="LONGVARCHAR" property="method" />
+    <result column="PARAMS" jdbcType="LONGVARCHAR" property="params" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="com.aaa.lee.model.Log">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+    <result column="TIME" jdbcType="DECIMAL" property="time" />
+    <result column="IP" jdbcType="VARCHAR" property="ip" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="OPERATION" jdbcType="LONGVARCHAR" property="operation" />
+    <result column="METHOD" jdbcType="LONGVARCHAR" property="method" />
+    <result column="PARAMS" jdbcType="LONGVARCHAR" property="params" />
+  </resultMap>
+</mapper>
