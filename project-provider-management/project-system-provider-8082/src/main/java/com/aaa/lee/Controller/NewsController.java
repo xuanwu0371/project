@@ -120,7 +120,7 @@ public class NewsController extends CommonController<News>{
         return null;
 
     }
-
+//TODO 分页查询
 
 
     public BaseService getBaseService() {

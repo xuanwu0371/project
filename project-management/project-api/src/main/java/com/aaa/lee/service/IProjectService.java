@@ -196,7 +196,7 @@ public interface IProjectService {
     /**
      * @author yang
      * @date 2020/7/17 10:35
-     *Description
+     * Description
      * 添加新闻
      */
     @PostMapping("/news/addNews")
@@ -205,7 +205,7 @@ public interface IProjectService {
     /**
      * @author yang
      * @date 2020/7/17 10:40
-     *Description
+     * Description
      * 删除新闻
      */
     @PostMapping("/news/delNews")
@@ -214,7 +214,7 @@ public interface IProjectService {
     /**
      * @author yang
      * @date 2020/7/17 10:39
-     *Description
+     * Description
      * 修改新闻
      */
     @PostMapping("/news/updateNews")
@@ -223,9 +223,45 @@ public interface IProjectService {
     /**
      * @author yang
      * @date 2020/7/17 10:41
-     *Description
+     * Description
      * 查询所有新闻
      */
     @PostMapping("/news/selectNews")
     ResultData selectNews();
+
+    /**
+     * @author yang
+     * @date 2020/7/17 16:46
+     *Description
+     * 新增仪器设备信息
+     */
+    @PostMapping("/equipment/insertEquipment")
+    ResultData insertEquipment(@RequestBody Equipment equipment);
+
+    /**
+     * @author yang
+     * @date 2020/7/17 16:57
+     *Description
+     * 通过id批量删除仪器设备信息
+     */
+    @PostMapping("/equipment/delEquipment")
+    ResultData delEquipmentById(@RequestBody List<Long> ids);
+
+    /**
+     * @author yang
+     * @date 2020/7/17 16:58
+     *Description
+     * 修改仪器设备信息
+     */
+    @PostMapping("/equipment/updateEquipment")
+    ResultData updateEquipment(@RequestBody Equipment equipment);
+
+    /**
+     * @author yang
+     * @date 2020/7/17 17:00
+     *Description
+     * 分页查询仪器设备信息
+     */
+    @PostMapping("/equipment/selectAllEquipmentByPage")
+    ResultData selectAllEquipmentByPage(@RequestBody HashMap hashMap);
 }
