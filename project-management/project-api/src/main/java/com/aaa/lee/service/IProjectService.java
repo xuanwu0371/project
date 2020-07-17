@@ -192,4 +192,40 @@ public interface IProjectService {
      **/
     @PostMapping("/selectAllDictByPage")
     ResultData selectAllDictByPage(@RequestBody HashMap hashMap);
+
+    /**
+     * @author yang
+     * @date 2020/7/17 10:35
+     *Description
+     * 添加新闻
+     */
+    @PostMapping("/news/addNews")
+    ResultData addNews(@RequestBody News news);
+
+    /**
+     * @author yang
+     * @date 2020/7/17 10:40
+     *Description
+     * 删除新闻
+     */
+    @PostMapping("/news/delNews")
+    ResultData delNews(@RequestBody List<Long> ids);
+
+    /**
+     * @author yang
+     * @date 2020/7/17 10:39
+     *Description
+     * 修改新闻
+     */
+    @PostMapping("/news/updateNews")
+    ResultData updateNews(@RequestBody News news);
+
+    /**
+     * @author yang
+     * @date 2020/7/17 10:41
+     *Description
+     * 查询所有新闻
+     */
+    @PostMapping("/news/selectNews")
+    ResultData selectNews();
 }
