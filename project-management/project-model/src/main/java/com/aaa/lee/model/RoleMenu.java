@@ -1,7 +1,15 @@
 package com.aaa.lee.model;
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
+import javax.persistence.*;
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Accessors(chain = true)
 @Table(name = "t_role_menu")
 public class RoleMenu {
     @Column(name = "ROLE_ID")

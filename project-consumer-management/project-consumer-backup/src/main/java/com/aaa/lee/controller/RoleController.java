@@ -23,7 +23,7 @@ public class RoleController extends BaseController {
      * @date : 2020/7/16 19:23
      * Description: 查询所有的角色
      **/
-    @GetMapping("/allRoles")
+    @PostMapping("/allRoles")
     public ResultData selectAllRole() {
         return iProjectService.selectAllRole();
     }

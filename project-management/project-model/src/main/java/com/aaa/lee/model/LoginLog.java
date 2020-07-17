@@ -1,6 +1,8 @@
 package com.aaa.lee.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import javax.persistence.Column;
@@ -8,6 +10,8 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Table(name = "t_login_log")
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Accessors(chain = true)
 public class LoginLog implements Serializable {

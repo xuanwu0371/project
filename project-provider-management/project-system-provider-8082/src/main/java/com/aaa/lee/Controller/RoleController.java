@@ -75,7 +75,7 @@ public class RoleController extends CommonController<Role> {
      * @date : 2020/7/16 19:23
      * Description: 查询所有的角色
      **/
-    @GetMapping("/allRoles")
+    @PostMapping ("/allRoles")
     public ResultData selectAllRole() {
         ResultData resultData = roleService.selectAllRole();
         if (resultData.getMsg().equals("查询成功")) {

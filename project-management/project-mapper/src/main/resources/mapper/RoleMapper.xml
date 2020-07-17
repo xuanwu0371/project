@@ -11,4 +11,7 @@
     <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
     <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP" />
   </resultMap>
+  <select id="allRoles" resultType="HashMap" parameterType="HashMap">
+    select * from t_role
+  </select>
 </mapper>
