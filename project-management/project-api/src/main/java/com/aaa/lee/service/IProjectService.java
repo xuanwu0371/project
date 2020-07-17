@@ -148,7 +148,7 @@ public interface IProjectService {
      * @date : 2020/7/17 9:05
      * Description: 查询所有角色
      **/
-    @GetMapping("/role/allRoles")
+    @PostMapping("/role/allRoles")
     ResultData selectAllRole();
 
 

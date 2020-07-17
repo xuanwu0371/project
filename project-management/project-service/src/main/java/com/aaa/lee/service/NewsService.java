@@ -9,6 +9,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import jdk.internal.org.objectweb.asm.tree.InnerClassNode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.Sqls;
 
@@ -23,6 +24,7 @@ import static com.aaa.lee.status.OperationStatus.*;
  * @author Yang
  * @date 2020-07-16 18:32
  */
+@Service
 public class NewsService extends BaseService<News> {
     @Autowired
     private NewsMapper newsMapper;
