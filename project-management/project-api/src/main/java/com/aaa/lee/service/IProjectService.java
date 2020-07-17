@@ -2,6 +2,7 @@ package com.aaa.lee.service;
 
 import com.aaa.lee.base.ResultData;
 import com.aaa.lee.model.LoginLog;
+import com.aaa.lee.model.News;
 import com.aaa.lee.model.User;
 import com.aaa.lee.staticproerties.RedisProperties;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -22,14 +23,15 @@ public interface IProjectService {
      * @Author: lee
      * @date : 2020/7/15 15:20
      * Description: 执行登录操作
-    **/
+     **/
     @PostMapping("/doLogin")
     ResultData doLogin(@RequestBody User user);
+
     /**
      * @Author: lee
      * @date : 2020/7/15 15:21
      * Description: 新增日志
-    **/
+     **/
     @PostMapping("/addLoginLog")
     Integer addLoginLog(@RequestBody LoginLog loginlog);
 
@@ -50,6 +52,7 @@ public interface IProjectService {
      */
     @DeleteMapping("/user/delUser")
     ResultData delUser(@RequestBody List<Long> ids);
+
     /**
      * @author luyu
      * @date 2020/7/16 20:03
@@ -61,6 +64,7 @@ public interface IProjectService {
 
 
     //TODO 需要加一个导出用户信息的接口
+
     /**
      * @author luyu
      * @date 2020/7/16 20:06
@@ -71,13 +75,50 @@ public interface IProjectService {
     ResultData selectUserAll(@RequestBody HashMap map);
 
 
+    /**
+     * @author luyu
+     * @date 2020/7/16 18:38
+     * Description
+     * 查询所有用户角色
+     */
+    @PostMapping("/selectAllRoles")
+    ResultData selectAllRoles(@RequestBody User user);
 
-/**
- * @author luyu
- * @date 2020/7/16 18:38
- * Description
- * 查询所有用户角色
- */
-@PostMapping("/selectAllRoles")
-ResultData selectAllRoles(@RequestBody User user);
+    /**
+     * @author yang
+     * @date 2020/7/17 10:35
+     *Description
+     * 添加新闻
+     */
+    @PostMapping("/news/addNews")
+    ResultData addNews(@RequestBody News news);
+
+    /**
+     * @author yang
+     * @date 2020/7/17 10:40
+     *Description
+     * 删除新闻
+     */
+    @PostMapping("/news/delNews")
+    ResultData delNews(@RequestBody List<Long> ids);
+
+    /**
+     * @author yang
+     * @date 2020/7/17 10:39
+     *Description
+     * 修改新闻
+     */
+    @PostMapping("/news/updateNews")
+    ResultData updateNews(@RequestBody News news);
+
+    /**
+     * @author yang
+     * @date 2020/7/17 10:41
+     *Description
+     * 查询所有新闻
+     */
+    @PostMapping("/news/selectNews")
+    ResultData selectNews();
 }
+
+
