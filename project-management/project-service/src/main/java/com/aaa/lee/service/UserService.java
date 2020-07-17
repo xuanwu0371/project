@@ -37,18 +37,18 @@ public class UserService extends BaseService<User> {
      * @date : 2020/7/15 19:59
      * Description: 新增用户
      **/
-    public Map<String, Object> addUser(User user) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        user.setCreateTime(DateUtil.formatDate(new Date(), TIME_FORMAT));
-        int addResult = userMapper.insert(user);
-        if (addResult > 0) {
-            resultMap.put("code", INSERT_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", INSERT_OPERATION_SUCCESS.getMsg());
-        } else {
-            resultMap.put("code", INSERT_OPERATION_FAILED.getCode());
-            resultMap.put("msg", INSERT_OPERATION_FAILED.getMsg());
-        }
-        return resultMap;
+        public Map<String, Object> addUser(User user) {
+            Map<String, Object> resultMap = new HashMap<String, Object>();
+            user.setCreateTime(DateUtil.formatDate(new Date(), TIME_FORMAT));
+            int addResult = userMapper.insert(user);
+            if (addResult > 0) {
+                resultMap.put("code", INSERT_OPERATION_SUCCESS.getCode());
+                resultMap.put("msg", INSERT_OPERATION_SUCCESS.getMsg());
+            } else {
+                resultMap.put("code", INSERT_OPERATION_FAILED.getCode());
+                resultMap.put("msg", INSERT_OPERATION_FAILED.getMsg());
+            }
+            return resultMap;
     }
 
     /**
@@ -97,16 +97,17 @@ public class UserService extends BaseService<User> {
    * 查询全部用户信息，可用于用户信息导出
    */
     public Map<String, Object> selectAll() {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        List<User> userList = userMapper.selectAll();
-        if (null != userList && !userList.isEmpty()) {
-            resultMap.put("code", SELECT_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", SELECT_OPERATION_SUCCESS.getMsg());
-            return resultMap;
-        } else {
-            resultMap.put("code", SELECT_OPERATION_FAILED.getCode());
-            resultMap.put("msg", SELECT_OPERATION_FAILED.getMsg());
-        }
+            Map<String, Object> resultMap = new HashMap<String, Object>();
+            List<User> userList = userMapper.selectAll();
+            if (null != userList && !userList.isEmpty()) {
+                resultMap.put("code", SELECT_OPERATION_SUCCESS.getCode());
+                resultMap.put("msg", SELECT_OPERATION_SUCCESS.getMsg());
+                resultMap.put("data",userList);
+                return resultMap;
+            } else {
+                resultMap.put("code", SELECT_OPERATION_FAILED.getCode());
+                resultMap.put("msg", SELECT_OPERATION_FAILED.getMsg());
+            }
         return resultMap;
     }
 
