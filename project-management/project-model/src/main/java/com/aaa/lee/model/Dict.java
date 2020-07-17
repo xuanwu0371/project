@@ -1,8 +1,10 @@
 package com.aaa.lee.model;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+
 import javax.persistence.*;
 
 @Table(name = "t_dict")

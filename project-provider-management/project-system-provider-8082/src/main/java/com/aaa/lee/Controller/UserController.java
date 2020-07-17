@@ -129,7 +129,7 @@ public class UserController extends CommonController<User> {
      * 带条件查询用户信息
      */
     @PostMapping("/selectUser")
-    ResultData selectUserAll(@RequestBody HashMap map) {
+    ResultData selectUser(@RequestBody HashMap map) {
         Map<String, Object> userAll = userService.selectUserAll(map, redisService);
         if (SELECT_OPERATION_SUCCESS.getCode().equals(userAll.get("code"))) {
             return super.selectOperationSuccess(userAll);

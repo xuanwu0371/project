@@ -1,8 +1,10 @@
 package com.aaa.lee.model;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -276,15 +278,14 @@ public class MappingUnit {
     private Integer auditStatus;
 
     /**
-     * 
-单位代码
+     * 单位代码
      */
     @Column(name = "unit_code")
     private String unitCode;
 
     /**
      * 1白名单2
-黑名单3待定
+     * 黑名单3待定
      */
     @Column(name = "unit_status")
     private Integer unitStatus;
@@ -297,7 +298,7 @@ public class MappingUnit {
 
     /**
      * 单位分值 默认为100分 小于60分
-进黑名单,大于等于100分进白名单
+     * 进黑名单,大于等于100分进白名单
      */
     private Integer score;
 

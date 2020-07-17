@@ -28,7 +28,6 @@ public class DictService extends BaseService<Dict> {
     private DictMapper dictMapper;
 
 
-
     /**
      * @Author: Lee ShiHao
      * @date : 2020/7/17 11:13
@@ -46,6 +45,7 @@ public class DictService extends BaseService<Dict> {
         }
         return resultMap;
     }
+
     /**
      * @Author: Lee ShiHao
      * @date : 2020/7/17 11:03
@@ -65,6 +65,7 @@ public class DictService extends BaseService<Dict> {
         }
         return resultMap;
     }
+
     /**
      * @Author: Lee ShiHao
      * @date : 2020/7/17 11:09
@@ -84,8 +85,8 @@ public class DictService extends BaseService<Dict> {
 
             }
         } else {
-            resultMap.put("code",FAILED.getCode());
-            resultMap.put("msg",FAILED.getMsg());
+            resultMap.put("code", FAILED.getCode());
+            resultMap.put("msg", FAILED.getMsg());
         }
         return resultMap;
     }

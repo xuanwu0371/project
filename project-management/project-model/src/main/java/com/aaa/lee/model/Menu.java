@@ -8,11 +8,12 @@ import lombok.experimental.Accessors;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
+
+@Table(name = "t_menu")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Accessors(chain = true)
-@Table(name = "t_menu")
 public class Menu {
     /**
      * 菜单/按钮ID
