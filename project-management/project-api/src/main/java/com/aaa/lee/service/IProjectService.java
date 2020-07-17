@@ -193,6 +193,7 @@ public interface IProjectService {
     @PostMapping("/selectAllDictByPage")
     ResultData selectAllDictByPage(@RequestBody HashMap hashMap);
 
+
     /**
      * @author yang
      * @date 2020/7/17 10:35
@@ -264,4 +265,46 @@ public interface IProjectService {
      */
     @PostMapping("/equipment/selectAllEquipmentByPage")
     ResultData selectAllEquipmentByPage(@RequestBody HashMap hashMap);
+
+
+    /**
+     * @author luyu
+     * @date 2020/7/17 17:00
+     * Description:新增部门
+     */
+    @PostMapping("/dept/addDept")
+    ResultData addDept(@RequestBody Dept dept);
+
+    /**
+     * @author luyu
+     * @date 2020/7/17 17:01
+     * Description:删除部门
+     */
+    @PostMapping("/dept/delDept")
+    ResultData delDept(@RequestBody List<Long> ids);
+
+    /**
+     * @author luyu
+     * @date 2020/7/17 17:03
+     * Description:修改部门
+     */
+    @PostMapping("/dept/updateDept")
+    ResultData updateDept(@RequestBody Dept dept);
+
+    /**
+     * @author luyu
+     * @date 2020/7/17 17:05
+     * Description:查询全部部门
+     */
+    @PostMapping("/dept/selectAllDept")
+    ResultData selectAllDept(@RequestBody Dept dept);
+
+    /**
+     * @author luyu
+     * @date 2020/7/17 17:08
+     * Description:根据条件查询部门
+     */
+    @PostMapping("/dept/selectAllDeptByNameOrTime")
+    ResultData selectAllDeptByNameOrTime(@RequestBody Dept dept);
+
 }
