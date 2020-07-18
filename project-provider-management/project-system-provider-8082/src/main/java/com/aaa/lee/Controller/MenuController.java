@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+import static com.aaa.lee.status.OperationStatus.*;
+
+
 /**
  * create by: LiShiHao
  * create Time:  2020/7/16 10:17
@@ -35,7 +38,7 @@ public class MenuController extends CommonController<Menu> {
     @PostMapping("/insertMenuOrButton")
     public ResultData insertMenuOrButton(@RequestBody Menu menu){
         Map<String, Object> Result = menuService.insertMenuOrButton(menu);
-        if (!Result.isEmpty()){
+        if (Result.get("code").equals(INSERT_SUCCESS.getCode())){
             return super.operationSuccess();
         }else {
             return super.operationFailed();
@@ -51,7 +54,7 @@ public class MenuController extends CommonController<Menu> {
     @PostMapping("/deleteMenuOrButton")
     public ResultData deleteMenuOrButton(@RequestParam("menuId") Long menuId){
         Map<String, Object> Result = menuService.deleteMenuOrButton(menuId);
-        if (!Result.isEmpty()){
+        if (Result.get("code").equals(DELETE_SUCCESS.getCode())){
             return super.operationSuccess();
         }else {
             return super.operationFailed();
@@ -67,7 +70,7 @@ public class MenuController extends CommonController<Menu> {
     @PostMapping("/updateMenuOrButton")
     public ResultData updateMenuOrButton(@RequestBody Menu menu){
         Map<String, Object> Result = menuService.updateMenuOrButton(menu);
-        if (!Result.isEmpty()){
+        if (Result.get("code").equals(UPDATE_SUCCESS.getCode())){
             return super.operationSuccess();
         }else {
             return super.operationFailed();

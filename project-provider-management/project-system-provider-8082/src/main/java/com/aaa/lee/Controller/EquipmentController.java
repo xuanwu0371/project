@@ -40,7 +40,7 @@ public class EquipmentController extends CommonController<Equipment> {
     @PostMapping("/insertEquipment")
     public ResultData insertEquipment(@RequestBody Equipment equipment){
         Map<String,Object> insertEquipment = equipmentService.insertEquipment(equipment);
-        if (insertEquipment.get("msg").equals(OPERATION_SUCCESS.getMsg())) {
+        if (insertEquipment.get("msg").equals(INSERT_SUCCESS.getMsg())) {
             return super.operationSuccess();
         } else {
             return super.operationFailed();
@@ -56,7 +56,7 @@ public class EquipmentController extends CommonController<Equipment> {
     @PostMapping("/delEquipment")
     public ResultData delEquipmentById(@RequestBody List<Long> ids){
         Map<String,Object> delEquipment = equipmentService.delEquipmentById(ids);
-        if (delEquipment.get("msg").equals(OPERATION_SUCCESS.getMsg())) {
+        if (delEquipment.get("msg").equals(DELETE_SUCCESS.getMsg())) {
             return super.operationSuccess();
         } else {
             return super.operationFailed();
@@ -71,7 +71,7 @@ public class EquipmentController extends CommonController<Equipment> {
     @PostMapping("/updateEquipment")
     public ResultData updateEquipment(@RequestBody Equipment equipment){
         Map<String,Object> updateEquipment = equipmentService.updateEquipment(equipment);
-        if (updateEquipment.get("msg").equals(OPERATION_SUCCESS.getCode())){
+        if (updateEquipment.get("msg").equals(UPDATE_SUCCESS.getCode())){
             return super.operationSuccess();
         } else {
             return super.operationFailed();
@@ -87,7 +87,7 @@ public class EquipmentController extends CommonController<Equipment> {
     @PostMapping("/selectAllEquipmentByPage")
     public ResultData selectAllEquipmentByPage(@RequestBody HashMap hashMap){
         Map<String,Object> AllEquipment = equipmentService.selectAllEquipmentByPage(hashMap);
-        if (AllEquipment.get("msg").equals(OPERATION_SUCCESS.getMsg())){
+        if (AllEquipment.get("msg").equals(SELECT_SUCCESS.getMsg())){
             return super.operationSuccess();
         } else {
             return super.operationFailed();

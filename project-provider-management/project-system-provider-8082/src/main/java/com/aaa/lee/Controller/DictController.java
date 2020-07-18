@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.aaa.lee.status.OperationStatus.*;
+
 /**
  * create by: LiShiHao
  * create Time:  2020/7/17 11:22
@@ -36,8 +38,8 @@ public class DictController extends CommonController<Dict> {
      **/
     @PostMapping("/insertDict")
     public ResultData insertDict(@RequestBody Dict dict){
-        Map<String, Object> insertDict = dictService.insertDict(dict);
-        if (insertDict.get("msg").equals("新增成功")){
+        Map<String, Object> result = dictService.insertDict(dict);
+        if (result.get("code").equals(INSERT_SUCCESS)){
             return super.operationSuccess();
         }else {
             return super.operationFailed();
@@ -50,8 +52,8 @@ public class DictController extends CommonController<Dict> {
     **/
     @PostMapping("/delDictsById")
     public ResultData delDictsById(@RequestBody List<Long> ids){
-        Map<String, Object> delDict = dictService.delDictsById(ids);
-        if (delDict.get("msg").equals("删除成功")){
+        Map<String, Object> result = dictService.delDictsById(ids);
+        if (result.get("code").equals(DELETE_SUCCESS)){
             return super.operationSuccess();
         }else {
             return super.operationFailed();
@@ -65,8 +67,8 @@ public class DictController extends CommonController<Dict> {
     **/
     @PostMapping("/updateDict")
     public ResultData updateDict(@RequestBody Dict dict){
-        Map<String, Object> updateDict = dictService.updateDict(dict);
-        if (updateDict.get("msg").equals("修改成功")){
+        Map<String, Object> result = dictService.updateDict(dict);
+        if (result.get("code").equals(UPDATE_SUCCESS)){
             return super.operationSuccess();
         }else {
             return super.operationFailed();
@@ -79,9 +81,9 @@ public class DictController extends CommonController<Dict> {
      **/
     @PostMapping("/selectAllDictByPage")
     public ResultData selectAllDictByPage(@RequestBody HashMap hashMap){
-        Map<String, Object> AllDict = dictService.selectAllDictByPage(hashMap);
-        if (AllDict.get("msg").equals("查询成功")){
-            return super.operationSuccess();
+        Map<String, Object> result = dictService.selectAllDictByPage(hashMap);
+        if (result.get("code").equals(SELECT_SUCCESS)){
+            return super.operationSuccess(result);
         }else {
             return super.operationFailed();
         }

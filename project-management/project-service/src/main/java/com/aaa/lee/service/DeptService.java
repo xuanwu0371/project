@@ -40,11 +40,11 @@ public class DeptService extends BaseService<Dept> {
         dept.setCreateTime(new Date());
         int addResult = deptMapper.insert(dept);
         if (addResult > 0) {
-            resultMap.put("code", OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", OPERATION_FAILED.getMsg());
+            resultMap.put("code",INSERT_SUCCESS .getCode());
+            resultMap.put("msg", INSERT_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", OPERATION_FAILED.getCode());
-            resultMap.put("msg", OPERATION_FAILED.getMsg());
+            resultMap.put("code", INSERT_FAILED.getCode());
+            resultMap.put("msg", INSERT_FAILED.getMsg());
         }
         return resultMap;
     }
@@ -60,11 +60,11 @@ public class DeptService extends BaseService<Dept> {
         Example example = Example.builder(Dept.class).where(Sqls.custom().andIn("deptId", ids)).build();
         int delsultmap = deptMapper.deleteByExample(example);
         if (delsultmap > 0) {
-            resultMap.put("code", OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
+            resultMap.put("code",DELETE_SUCCESS .getCode());
+            resultMap.put("msg", DELETE_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", OPERATION_FAILED.getCode());
-            resultMap.put("msg", OPERATION_FAILED.getMsg());
+            resultMap.put("code",DELETE_FAILED .getCode());
+            resultMap.put("msg",DELETE_FAILED .getMsg());
         }
 
         return resultMap;
@@ -86,11 +86,11 @@ public class DeptService extends BaseService<Dept> {
         }
         int updateResult = deptMapper.updateByPrimaryKey(dept);
         if (updateResult > 0) {
-            resultMap.put("code", OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
+            resultMap.put("code",UPDATE_SUCCESS .getCode());
+            resultMap.put("msg", UPDATE_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", OPERATION_FAILED.getCode());
-            resultMap.put("msg", OPERATION_FAILED.getMsg());
+            resultMap.put("code", UPDATE_FAILED.getCode());
+            resultMap.put("msg",UPDATE_FAILED .getMsg());
         }
         return resultMap;
     }
@@ -104,11 +104,11 @@ public class DeptService extends BaseService<Dept> {
         Map<String, Object> reultMap = new HashMap<>();
         List<Dept> list = deptMapper.selectAll();
         if (list.size() > 0) {
-            reultMap.put("code", OPERATION_SUCCESS.getCode());
-            reultMap.put("msg", OPERATION_SUCCESS.getMsg());
+            reultMap.put("code", SELECT_SUCCESS.getCode());
+            reultMap.put("msg", SELECT_SUCCESS.getMsg());
         } else {
-            reultMap.put("code", OPERATION_FAILED.getCode());
-            reultMap.put("msg", OPERATION_FAILED.getMsg());
+            reultMap.put("code",SELECT_FAILED .getCode());
+            reultMap.put("msg", SELECT_FAILED.getMsg());
         }
         return reultMap;
     }
@@ -123,12 +123,12 @@ public class DeptService extends BaseService<Dept> {
         //根据条件查询部门信息
         List<Dept> depts = deptMapper.selectDeptByNameOrTime(dept);
         if (depts.size() > 0 && depts != null) {
-            resultMap.put("code", OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
+            resultMap.put("code",SELECT_SUCCESS .getCode());
+            resultMap.put("msg", SELECT_SUCCESS.getMsg());
             resultMap.put("data", depts);
         } else {
-            resultMap.put("code", OPERATION_FAILED.getCode());
-            resultMap.put("msg", OPERATION_FAILED.getMsg());
+            resultMap.put("code", SELECT_FAILED.getCode());
+            resultMap.put("msg",SELECT_FAILED .getMsg());
         }
         return resultMap;
     }

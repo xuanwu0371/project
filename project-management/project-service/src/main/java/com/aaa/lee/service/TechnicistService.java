@@ -41,11 +41,11 @@ public class TechnicistService extends BaseService<Technicist> {
 
         int addResult = technicistMapper.insert(technicist);
         if (addResult > 0) {
-            resultMap.put("code", OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
+            resultMap.put("code", INSERT_SUCCESS.getCode());
+            resultMap.put("msg", INSERT_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", OPERATION_FAILED.getCode());
-            resultMap.put("msg", OPERATION_FAILED.getMsg());
+            resultMap.put("code", INSERT_FAILED.getCode());
+            resultMap.put("msg", INSERT_FAILED.getMsg());
         }
         return resultMap;
     }
@@ -60,11 +60,11 @@ public class TechnicistService extends BaseService<Technicist> {
         Example example = Example.builder(Technicist.class).where(Sqls.custom().andIn("id", ids)).build();
         int i = technicistMapper.deleteByExample(example);
         if (i > 0) {
-            resultMap.put("code", OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
+            resultMap.put("code",DELETE_SUCCESS .getCode());
+            resultMap.put("msg", DELETE_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", OPERATION_FAILED.getCode());
-            resultMap.put("msg", OPERATION_FAILED.getMsg());
+            resultMap.put("code",DELETE_FAILED .getCode());
+            resultMap.put("msg",DELETE_FAILED .getMsg());
         }
         return resultMap;
     }
@@ -78,11 +78,11 @@ public class TechnicistService extends BaseService<Technicist> {
         technicist.setModifyTime(new Date());
         int i = technicistMapper.updateByPrimaryKeySelective(technicist);
         if (i > 0) {
-            resultMap.put("code", OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
+            resultMap.put("code",UPDATE_SUCCESS .getCode());
+            resultMap.put("msg", UPDATE_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", OPERATION_FAILED.getCode());
-            resultMap.put("msg", OPERATION_FAILED.getMsg());
+            resultMap.put("code", UPDATE_FAILED.getCode());
+            resultMap.put("msg", UPDATE_FAILED.getMsg());
         }
         return resultMap;
     }
@@ -95,12 +95,12 @@ public class TechnicistService extends BaseService<Technicist> {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         List<Technicist> technicistList = technicistMapper.selectAll();
         if (null != technicistList && !technicistList.isEmpty()) {
-            resultMap.put("code", OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
+            resultMap.put("code",SELECT_SUCCESS .getCode());
+            resultMap.put("msg", SELECT_SUCCESS.getMsg());
             resultMap.put("data", technicistList);
         } else {
-            resultMap.put("code", OPERATION_FAILED.getCode());
-            resultMap.put("msg", OPERATION_FAILED.getMsg());
+            resultMap.put("code", SELECT_FAILED.getCode());
+            resultMap.put("msg", SELECT_FAILED.getMsg());
         }
         return resultMap;
     }
@@ -128,17 +128,17 @@ public class TechnicistService extends BaseService<Technicist> {
         Object tokenId = redisService.getOne(map.get("tokenId").toString());
         //检测token
         if (null == tokenId) {
-            resultMap.put("code", OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
+            resultMap.put("code",SELECT_FAILED .getCode());
+            resultMap.put("msg", SELECT_SUCCESS.getMsg());
         }
         if (map.size() > 0) {
             PageInfo<HashMap> pageInfo = selectTechnicistPageInfo(map);
             if (null != pageInfo && pageInfo.getSize() > 0) {
-                resultMap.put("code", OPERATION_SUCCESS.getCode());
-                resultMap.put("msg", OPERATION_SUCCESS.getMsg());
+                resultMap.put("code",SELECT_SUCCESS .getCode());
+                resultMap.put("msg", SELECT_SUCCESS.getMsg());
             } else {
-                resultMap.put("code", OPERATION_FAILED.getCode());
-                resultMap.put("msg", OPERATION_FAILED.getMsg());
+                resultMap.put("code",SELECT_FAILED .getCode());
+                resultMap.put("msg", SELECT_FAILED.getMsg());
             }
 
         }

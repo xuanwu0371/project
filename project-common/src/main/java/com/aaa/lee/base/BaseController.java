@@ -2,7 +2,6 @@ package com.aaa.lee.base;
 
 
 
-
 import static com.aaa.lee.status.LoginStatus.*;
 import static com.aaa.lee.status.OperationStatus.*;
 
@@ -22,11 +21,19 @@ import static com.aaa.lee.status.OperationStatus.*;
  * code:406 msg:系统异常
  * code:1 msg:操作成功
  * code:2 msg:操作失败
- * code:3 msg:路由过滤成功
- * code:4 msg:路由过滤失败
- * code:5 msg:token值存在
- * code:6 msg:token值不存在
- * code:7 msg:request对象为null
+ * code:3 msg:新增成功
+ * code:4 msg:新增失败
+ * code:5 msg:删除成功
+ * code:6 msg:删除失败
+ * code:7 msg:更新成功
+ * code:8 msg:更新失败
+ * code:9 msg:查询成功
+ * code:10 msg:查询失败
+ * code:11 msg:路由过滤成功
+ * code:12 msg:路由过滤失败
+ * code:13 msg:token值存在
+ * code:14 msg:token值不存在
+ * code:15 msg:request对象为null
  *
  */
 
@@ -283,8 +290,8 @@ public class BaseController {
      */
     protected ResultData operationSuccess() {
         ResultData resultData = new ResultData();
-        resultData.setCode(OPERATION_SUCCESS.getCode());
-        resultData.setMsg(OPERATION_SUCCESS.getMsg());
+        resultData.setCode(SUCCESS.getCode());
+        resultData.setMsg(SUCCESS.getMsg());
         return resultData;
     }
 
@@ -296,7 +303,7 @@ public class BaseController {
      */
     protected ResultData operationSuccess(String msg){
         ResultData resultData = new ResultData();
-        resultData.setCode(OPERATION_SUCCESS.getCode());
+        resultData.setCode(SUCCESS.getCode());
         resultData.setMsg(msg);
         return resultData;
     }
@@ -309,8 +316,8 @@ public class BaseController {
      */
     protected ResultData operationSuccess(Object data) {
         ResultData resultData = new ResultData();
-        resultData.setCode(OPERATION_SUCCESS.getCode());
-        resultData.setMsg(OPERATION_SUCCESS.getMsg());
+        resultData.setCode(SUCCESS.getCode());
+        resultData.setMsg(SUCCESS.getMsg());
         resultData.setData(data);
         return resultData;
     }
@@ -323,7 +330,7 @@ public class BaseController {
      */
     protected ResultData operationSuccess(String msg,Object data){
         ResultData resultData = new ResultData();
-        resultData.setCode(OPERATION_SUCCESS.getCode());
+        resultData.setCode(SUCCESS.getCode());
         resultData.setMsg(msg);
         resultData.setData(data);
         return resultData;
@@ -337,8 +344,8 @@ public class BaseController {
      */
     protected ResultData operationFailed() {
         ResultData resultData = new ResultData();
-        resultData.setCode(OPERATION_FAILED.getCode());
-        resultData.setMsg(OPERATION_FAILED.getMsg());
+        resultData.setCode(FAILED.getCode());
+        resultData.setMsg(FAILED.getMsg());
         return resultData;
     }
 
@@ -350,12 +357,330 @@ public class BaseController {
      */
     protected ResultData operationFailed(String msg) {
         ResultData resultData = new ResultData();
-        resultData.setCode(OPERATION_FAILED.getCode());
+        resultData.setCode(FAILED.getCode());
         resultData.setMsg(msg);
         return resultData;
     }
 
+    /**
+     * @author yang
+     * @date 2020/7/16 14:59
+     *Description
+     * 新增成功，返回系统信息
+     */
+    protected ResultData insertOperationSuccess(){
+        ResultData resultData = new ResultData();
+        resultData.setCode(INSERT_SUCCESS.getCode());
+        resultData.setMsg(INSERT_SUCCESS.getMsg());
+        return resultData;
+    }
 
+    /**
+     * @author yang
+     * @date 2020/7/16 15:02
+     *Description
+     * 新增成功，返回自定义信息
+     */
+    protected ResultData insertOperationSuccess(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setCode(INSERT_SUCCESS.getCode());
+        resultData.setMsg(msg);
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:03
+     *Description
+     * 新增成功，返回系统信息，数据信息
+     */
+    protected ResultData insertOperationSuccess(Object data){
+        ResultData resultData = new ResultData();
+        resultData.setCode(INSERT_SUCCESS.getCode());
+        resultData.setMsg(INSERT_SUCCESS.getMsg());
+        resultData.setData(data);
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:05
+     *Description
+     * 新增成功，返回自定义信息，数据信息
+     */
+    protected ResultData insertOperationSuccess(String msg,Object data){
+        ResultData resultData = new ResultData();
+        resultData.setCode(INSERT_SUCCESS.getCode());
+        resultData.setMsg(msg);
+        resultData.setData(data);
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:08
+     *Description
+     * 新增失败，返回系统信息
+     */
+    protected ResultData insertOperationFailed(){
+        ResultData resultData = new ResultData();
+        resultData.setCode(INSERT_FAILED.getCode());
+        resultData.setMsg(INSERT_FAILED.getMsg());
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:10
+     *Description
+     * 新增失败，返回自定义信息
+     */
+    protected ResultData insertOperationFailed(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setCode(INSERT_FAILED.getCode());
+        resultData.setMsg(INSERT_FAILED.getMsg());
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:12
+     *Description
+     *       删除成功，返回系统信息
+     */
+    protected ResultData deleteOperationSuccess(){
+        ResultData resultData = new ResultData();
+        resultData.setCode(DELETE_SUCCESS.getCode());
+        resultData.setMsg(DELETE_SUCCESS.getMsg());
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:14
+     *Description
+     * 删除成功，返回自定义信息
+     */
+    protected ResultData deleteOperationSuccess(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setCode(DELETE_SUCCESS.getCode());
+        resultData.setMsg(msg);
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:16
+     *Description
+     * 删除成功，返回系统信息，数据信息
+     */
+    protected ResultData deleteOperationSuccess(Object data){
+        ResultData resultData = new ResultData();
+        resultData.setCode(DELETE_SUCCESS.getCode());
+        resultData.setMsg(DELETE_SUCCESS.getMsg());
+        resultData.setData(data);
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:17
+     *Description
+     * 删除成功，返回自定义信息，数据信息
+     */
+    protected ResultData deletaOperationSuccess(String msg, Object data){
+        ResultData resultData = new ResultData();
+        resultData.setCode(DELETE_SUCCESS.getCode());
+        resultData.setMsg(msg);
+        resultData.setData(data);
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:22
+     *Description
+     * 删除失败，返回系统信息
+     */
+    protected ResultData deleteOperationFailed(){
+        ResultData resultData = new ResultData();
+        resultData.setCode(DELETE_FAILED.getCode());
+        resultData.setMsg(DELETE_FAILED.getMsg());
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:23
+     *Description
+     * 删除失败，返回自定义信息
+     */
+    protected ResultData deleteOperationFailed(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setCode(DELETE_FAILED.getCode());
+        resultData.setMsg(msg);
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:25
+     *Description
+     * 更新成功，返回系统信息
+     */
+    protected ResultData updateOperationSuccess(){
+        ResultData resultData = new ResultData();
+        resultData.setCode(UPDATE_SUCCESS.getCode());
+        resultData.setMsg(UPDATE_SUCCESS.getMsg());
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:27
+     *Description
+     * 更新成功，返回自定义信息
+     */
+    protected ResultData updateOperationSuccess(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setCode(UPDATE_SUCCESS.getCode());
+        resultData.setMsg(msg);
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:28
+     *Description
+     * 更新成功，返回系统信息，数据信息
+     */
+    protected  ResultData updateOperationSuccess(Object data){
+        ResultData resultData = new ResultData();
+        resultData.setCode(UPDATE_SUCCESS.getCode());
+        resultData.setMsg(UPDATE_SUCCESS.getMsg());
+        resultData.setData(data);
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:30
+     *Description
+     * 更新成功，返回自定义信息，数据信息
+     */
+    protected ResultData updateOperationSuccess(String msg,Object data){
+        ResultData resultData = new ResultData();
+        resultData.setCode(UPDATE_SUCCESS.getCode());
+        resultData.setMsg(msg);
+        resultData.setData(data);
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:32
+     *Description
+     * 更新失败，返回系统信息
+     */
+    protected ResultData updateOperationFailed(){
+        ResultData resultData = new ResultData();
+        resultData.setCode(UPDATE_FAILED.getCode());
+        resultData.setMsg(UPDATE_FAILED.getMsg());
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:34
+     *Description
+     * 更新失败，返回自定义信息
+     */
+    protected ResultData updateOperationFailed(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setCode(UPDATE_FAILED.getCode());
+        resultData.setMsg(msg);
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:36
+     *Description
+     * 查询成功，返回系统信息
+     */
+    protected ResultData selectOperationSuccess(){
+        ResultData resultData = new ResultData();
+        resultData.setCode(SELECT_SUCCESS.getCode());
+        resultData.setMsg(SELECT_SUCCESS.getMsg());
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:38
+     *Description
+     * 查询成功，返回自定义信息
+     */
+    protected ResultData selectOperationSuccess(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setCode(SELECT_SUCCESS.getCode());
+        resultData.setMsg(msg);
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:39
+     *Description
+     * 查询成功，返回系统信息，数据信息
+     */
+    protected ResultData selectOperationSuccess(Object data){
+        ResultData resultData = new ResultData();
+        resultData.setCode(SELECT_SUCCESS.getCode());
+        resultData.setMsg(SELECT_SUCCESS.getMsg());
+        resultData.setData(data);
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:42
+     *Description
+     * 查询成功，返回自定义信息，数据信息
+     */
+    protected ResultData selectOperationSuccess(String msg,Object data){
+        ResultData resultData = new ResultData();
+        resultData.setCode(SELECT_SUCCESS.getCode());
+        resultData.setMsg(msg);
+        resultData.setData(data);
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:43
+     *Description
+     *      查询失败，返回系统信息
+     */
+    protected ResultData selectOperationFailed(){
+        ResultData resultData = new ResultData();
+        resultData.setCode(SELECT_FAILED.getCode());
+        resultData.setMsg(SELECT_FAILED.getMsg());
+        return resultData;
+    }
+
+    /**
+     * @author yang
+     * @date 2020/7/16 15:45
+     *Description
+     * 查询失败，返回自定义信息
+     */
+    protected ResultData selectOperationFailed(String msg){
+        ResultData resultData = new ResultData();
+        resultData.setCode(SELECT_FAILED.getCode());
+        resultData.setMsg(msg);
+        return resultData;
+    }
 
     /**
      * @author yang
