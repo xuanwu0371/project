@@ -102,13 +102,11 @@ public class NewsService extends BaseService<News> {
             resultMap.put("code", SELECT_OPERATION_SUCCESS.getCode());
             resultMap.put("msg", SELECT_OPERATION_SUCCESS.getMsg());
             resultMap.put("data", newsList);
-            System.out.println(resultMap.get("data"));
-            return resultMap;
         } else {
             resultMap.put("code", SELECT_OPERATION_FAILED.getCode());
             resultMap.put("msg", SELECT_OPERATION_FAILED.getMsg());
-            return resultMap;
         }
+        return resultMap;
 
     }
 
@@ -141,7 +139,6 @@ public class NewsService extends BaseService<News> {
             if (null != pageInfo && pageInfo.getSize() > 0) {
                 resultMap.put("code", SELECT_OPERATION_SUCCESS.getCode());
                 resultMap.put("msg", SELECT_OPERATION_SUCCESS.getMsg());
-                return resultMap;
             } else {
                 resultMap.put("code", SELECT_OPERATION_FAILED.getCode());
                 resultMap.put("msg", SELECT_OPERATION_FAILED.getMsg());

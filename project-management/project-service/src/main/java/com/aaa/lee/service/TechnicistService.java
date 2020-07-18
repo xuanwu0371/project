@@ -1,14 +1,14 @@
 package com.aaa.lee.service;
 
 import com.aaa.lee.base.BaseService;
-import com.aaa.lee.mapper.UserMapper;
-import com.aaa.lee.model.User;
+import com.aaa.lee.mapper.TechnicistMapper;
+import com.aaa.lee.model.Technicist;
 import com.aaa.lee.redis.RedisService;
 import com.aaa.lee.utils.BaseUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.httpclient.util.DateUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -21,26 +21,27 @@ import java.util.Map;
 
 import static com.aaa.lee.staticproerties.TimeFormatProperties.TIME_FORMAT;
 import static com.aaa.lee.status.OperationStatus.*;
+import static com.aaa.lee.status.OperationStatus.DELETE_OPERATION_FAILED;
 
 /**
- * create by: lee
+ * create by: LiShiHao
+ * create Time:  2020/7/18 8:28
  * description:
  */
 @Service
 @Slf4j
-public class UserService extends BaseService<User> {
+public class TechnicistService extends BaseService<Technicist> {
     @Autowired
-    private UserMapper userMapper;
-
+    private TechnicistMapper technicistMapper;
     /**
-     * @Author: lee
-     * @date : 2020/7/15 19:59
-     * Description: 新增用户
-     **/
-    public Map<String, Object> addUser(User user) {
+     * @Author: Lee ShiHao
+     * @date : 2020/7/18 8:29
+     * Description: 新增技术员
+    **/
+    public Map<String, Object> addTechnicist(Technicist technicist) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        user.setCreateTime(DateUtil.formatDate(new Date(), TIME_FORMAT));
-        int addResult = userMapper.insert(user);
+
+        int addResult = technicistMapper.insert(technicist);
         if (addResult > 0) {
             resultMap.put("code", INSERT_OPERATION_SUCCESS.getCode());
             resultMap.put("msg", INSERT_OPERATION_SUCCESS.getMsg());
@@ -50,17 +51,16 @@ public class UserService extends BaseService<User> {
         }
         return resultMap;
     }
-
     /**
-     * @Author: lee
-     * @date : 2020/7/15 20:19
-     * Description: 批量删除用户
-     **/
-    public Map<String, Object> delUser(List<Long> ids) {
+     * @Author: Lee ShiHao
+     * @date : 2020/7/18 9:03
+     * Description: 批量删除技术员
+    **/
+    public Map<String,Object> delTechnicist(List<Long> ids){
         Map<String, Object> resultMap = new HashMap<String, Object>();
         //获取到参数类型,然后添加一个where条件,是in类型,id属于ids中的
-        Example example = Example.builder(User.class).where(Sqls.custom().andIn("id", ids)).build();
-        int i = userMapper.deleteByExample(example);
+        Example example = Example.builder(Technicist.class).where(Sqls.custom().andIn("id", ids)).build();
+        int i = technicistMapper.deleteByExample(example);
         if (i > 0) {
             resultMap.put("code", DELETE_OPERATION_SUCCESS.getCode());
             resultMap.put("msg", DELETE_OPERATION_SUCCESS.getMsg());
@@ -70,16 +70,15 @@ public class UserService extends BaseService<User> {
         }
         return resultMap;
     }
-
     /**
-     * @Author: lee
-     * @date : 2020/7/15 20:28
-     * Description: 修改用户信息
-     **/
-    public Map<String, Object> updateUser(User user) {
+     * @Author: Lee ShiHao
+     * @date : 2020/7/18 9:08
+     * Description: 修改技术员信息
+    **/
+    public Map<String, Object> updateTechnicist(Technicist technicist) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        user.setModifyTime(DateUtil.formatDate(new Date(), TIME_FORMAT));
-        int i = userMapper.updateByPrimaryKeySelective(user);
+        technicist.setModifyTime(new Date());
+        int i = technicistMapper.updateByPrimaryKeySelective(technicist);
         if (i > 0) {
             resultMap.put("code", UPDATE_OPERATION_SUCCESS.getCode());
             resultMap.put("msg", UPDATE_OPERATION_SUCCESS.getMsg());
@@ -89,48 +88,44 @@ public class UserService extends BaseService<User> {
         }
         return resultMap;
     }
-
     /**
-     * @author luyu
-     * @date 2020/7/16 19:29
-     * Description
-     * 查询全部用户信息，可用于用户信息导出
-     */
-    public Map<String, Object> selectAll() {
+     * @Author: Lee ShiHao
+     * @date : 2020/7/18 9:11
+     * Description: 查询全部技术员
+    **/
+    public Map<String, Object> selectAllTechnicist() {
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        List<User> userList = userMapper.selectAll();
-        if (null != userList && !userList.isEmpty()) {
+        List<Technicist> technicistList = technicistMapper.selectAll();
+        if (null != technicistList && !technicistList.isEmpty()) {
             resultMap.put("code", SELECT_OPERATION_SUCCESS.getCode());
             resultMap.put("msg", SELECT_OPERATION_SUCCESS.getMsg());
-            resultMap.put("data", userList);
+            resultMap.put("data", technicistList);
         } else {
             resultMap.put("code", SELECT_OPERATION_FAILED.getCode());
             resultMap.put("msg", SELECT_OPERATION_FAILED.getMsg());
         }
         return resultMap;
     }
-
     /**
-     * @Author: LiShiHao
-     * @date : 2020/7/15 21:26
-     * Description:分页条件查询
-     **/
-    public PageInfo<HashMap> selectUserPageInfo(HashMap map) {
+     * @Author: Lee ShiHao
+     * @date : 2020/7/18 9:16
+     * Description: 分页条件查询技术员
+    **/
+    public PageInfo<HashMap> selectTechnicistPageInfo(HashMap map) {
         PageHelper.startPage(BaseUtil.transToInt(map.get("pageNo")), BaseUtil.transToInt(map.get("pageNumber")));
-        List<HashMap> list = userMapper.selectUserAll(map);
+        List<HashMap> list = technicistMapper.selectTechnicistAll(map);
         PageInfo<HashMap> pageInfo = new PageInfo<HashMap>(list);
-        if (null != pageInfo && !"".equals(pageInfo)) {
+        if (!"".equals(pageInfo)) {
             return pageInfo;
         }
         return null;
     }
-
     /**
      * @Author: lee
      * @date : 2020/7/15 20:38
-     * Description: 分页查询全部用户
+     * Description: 分页查询全部技术员
      **/
-    public Map<String, Object> selectUserAll(HashMap map, RedisService redisService) {
+    public Map<String, Object> selectTechnicistAll(HashMap map, RedisService redisService) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         Object tokenId = redisService.getOne(map.get("tokenId").toString());
         //检测token
@@ -139,7 +134,7 @@ public class UserService extends BaseService<User> {
             resultMap.put("msg", SELECT_OPERATION_SUCCESS.getMsg());
         }
         if (map.size() > 0) {
-            PageInfo<HashMap> pageInfo = selectUserPageInfo(map);
+            PageInfo<HashMap> pageInfo = selectTechnicistPageInfo(map);
             if (null != pageInfo && pageInfo.getSize() > 0) {
                 resultMap.put("code", SELECT_OPERATION_SUCCESS.getCode());
                 resultMap.put("msg", SELECT_OPERATION_SUCCESS.getMsg());
@@ -151,5 +146,4 @@ public class UserService extends BaseService<User> {
         }
         return resultMap;
     }
-
 }

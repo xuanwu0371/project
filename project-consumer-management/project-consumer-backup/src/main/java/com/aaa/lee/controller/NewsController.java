@@ -73,6 +73,5 @@ public class NewsController extends BaseController {
     public ResultData selectNews(News news){
         return iProjectService.selectNews(news);
     }
-    //todo 杨海鹏
 
 }

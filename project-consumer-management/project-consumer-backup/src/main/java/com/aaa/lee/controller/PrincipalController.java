@@ -60,7 +60,7 @@ public class PrincipalController extends BaseController {
      **/
     @PostMapping("/selectPrincipalAll")
     ResultData selectPrincipalAll(Principal principal){
-        return iProjectService.updatePrincipal(principal);
+        return iProjectService.selectPrincipalAll(principal);
     }
 
     /**
