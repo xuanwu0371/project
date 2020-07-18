@@ -36,11 +36,11 @@ public class EquipmentService extends BaseService<Equipment> {
         Map<String, Object> resultMap = new HashMap<>();
         int i = equipmentMapper.insert(equipment);
         if (i > 0) {
-            resultMap.put("code", INSERT_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", INSERT_OPERATION_SUCCESS.getMsg());
+            resultMap.put("code", OPERATION_SUCCESS.getCode());
+            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", INSERT_OPERATION_FAILED.getCode());
-            resultMap.put("msg", INSERT_OPERATION_FAILED.getMsg());
+            resultMap.put("code", OPERATION_FAILED.getCode());
+            resultMap.put("msg", OPERATION_FAILED.getMsg());
         }
         return resultMap;
     }
@@ -57,11 +57,11 @@ public class EquipmentService extends BaseService<Equipment> {
         Example id = Example.builder(Equipment.class).where(Sqls.custom().andIn("id", ids)).build();
         int i = equipmentMapper.deleteByExample(id);
         if (i > 0) {
-            resultMap.put("code", DELETE_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", DELETE_OPERATION_SUCCESS.getMsg());
+            resultMap.put("code", OPERATION_SUCCESS.getCode());
+            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", DELETE_OPERATION_FAILED.getCode());
-            resultMap.put("msg", DELETE_OPERATION_FAILED.getMsg());
+            resultMap.put("code", OPERATION_FAILED.getCode());
+            resultMap.put("msg", OPERATION_FAILED.getMsg());
         }
         return resultMap;
     }
@@ -77,15 +77,15 @@ public class EquipmentService extends BaseService<Equipment> {
         if (equipment != null) {
             int i = equipmentMapper.updateByPrimaryKey(equipment);
             if (i > 0) {
-                resultMap.put("code", UPDATE_OPERATION_SUCCESS.getCode());
-                resultMap.put("msg", UPDATE_OPERATION_SUCCESS.getMsg());
+                resultMap.put("code", OPERATION_SUCCESS.getCode());
+                resultMap.put("msg", OPERATION_SUCCESS.getMsg());
             } else {
-                resultMap.put("code", UPDATE_OPERATION_FAILED.getCode());
-                resultMap.put("msg", UPDATE_OPERATION_FAILED.getMsg());
+                resultMap.put("code", OPERATION_FAILED.getCode());
+                resultMap.put("msg", OPERATION_FAILED.getMsg());
             }
         } else {
-            resultMap.put("code", FAILED.getCode());
-            resultMap.put("msg", FAILED.getMsg());
+            resultMap.put("code", OPERATION_FAILED.getCode());
+            resultMap.put("msg", OPERATION_FAILED.getMsg());
         }
         return resultMap;
     }
@@ -101,12 +101,12 @@ public class EquipmentService extends BaseService<Equipment> {
         Equipment equipment = new Equipment();
         PageInfo<Equipment> equipmentPageInfo = super.selectListByPage(equipment, BaseUtil.transToInt(hashMap.get("pageNo")), BaseUtil.transToInt(hashMap.get("pageNumber")));
         if (null != equipmentPageInfo && equipmentPageInfo.getSize() > 0) {
-            resultMap.put("code", SELECT_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", SELECT_OPERATION_SUCCESS.getMsg());
+            resultMap.put("code", OPERATION_SUCCESS.getCode());
+            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
             resultMap.put("data", equipmentPageInfo);
         } else {
-            resultMap.put("code", SELECT_OPERATION_FAILED.getCode());
-            resultMap.put("msg", SELECT_OPERATION_FAILED.getMsg());
+            resultMap.put("code", OPERATION_FAILED.getCode());
+            resultMap.put("msg", OPERATION_FAILED.getMsg());
         }
         return resultMap;
     }

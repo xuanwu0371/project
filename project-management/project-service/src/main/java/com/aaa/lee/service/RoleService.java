@@ -58,12 +58,12 @@ public class RoleService extends BaseService<Role> {
         try {
             if (null != rolePageInfo) {
                 //说明查到了数据
-                resultData.setCode(SUCCESS.getCode());
-                resultData.setMsg(SUCCESS.getMsg());
+                resultData.setCode(OPERATION_SUCCESS.getCode());
+                resultData.setMsg(OPERATION_SUCCESS.getMsg());
                 resultData.setData(rolePageInfo);
             } else {
-                resultData.setCode(FAILED.getCode());
-                resultData.setMsg(FAILED.getCode());
+                resultData.setCode(OPERATION_FAILED.getCode());
+                resultData.setMsg(OPERATION_FAILED.getCode());
             }
             return resultData;
         } catch (Exception e) {
@@ -197,7 +197,7 @@ public class RoleService extends BaseService<Role> {
         return false;
     }
 
-}//结束括号
+}
 
 
 

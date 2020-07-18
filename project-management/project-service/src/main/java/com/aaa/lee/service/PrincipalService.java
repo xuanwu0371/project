@@ -42,14 +42,14 @@ public class PrincipalService extends BaseService<Principal> {
         principal.setModifyTime(new Date());
         int addResult = principalMapper.insert(principal);
         if (addResult > 0) {
-            resultMap.put("code", INSERT_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", INSERT_OPERATION_SUCCESS.getMsg());
-            return resultMap;
+            resultMap.put("code", OPERATION_SUCCESS.getCode());
+            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", INSERT_OPERATION_FAILED.getCode());
-            resultMap.put("msg", INSERT_OPERATION_FAILED.getMsg());
-            return resultMap;
+            resultMap.put("code", OPERATION_FAILED.getCode());
+            resultMap.put("msg", OPERATION_FAILED.getMsg());
         }
+        return resultMap;
+
     }
 
     /**
@@ -63,14 +63,13 @@ public class PrincipalService extends BaseService<Principal> {
         Example example = Example.builder(Principal.class).where(Sqls.custom().andIn("id", ids)).build();
         int i = principalMapper.deleteByExample(example);
         if (i > 0) {
-            resultMap.put("code", DELETE_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", DELETE_OPERATION_SUCCESS.getMsg());
-            return resultMap;
+            resultMap.put("code", OPERATION_SUCCESS.getCode());
+            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", DELETE_OPERATION_FAILED.getCode());
-            resultMap.put("msg", DELETE_OPERATION_FAILED.getMsg());
-            return resultMap;
+            resultMap.put("code", OPERATION_FAILED.getCode());
+            resultMap.put("msg", OPERATION_FAILED.getMsg());
         }
+        return resultMap;
     }
 
     /**
@@ -83,14 +82,13 @@ public class PrincipalService extends BaseService<Principal> {
         principal.setModifyTime(new Date());
         int i = principalMapper.updateByPrimaryKeySelective(principal);
         if (i > 0) {
-            resultMap.put("code", UPDATE_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", UPDATE_OPERATION_SUCCESS.getMsg());
-            return resultMap;
+            resultMap.put("code", OPERATION_SUCCESS.getCode());
+            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", UPDATE_OPERATION_FAILED.getCode());
-            resultMap.put("msg", UPDATE_OPERATION_FAILED.getMsg());
-            return resultMap;
+            resultMap.put("code", OPERATION_FAILED.getCode());
+            resultMap.put("msg", OPERATION_FAILED.getMsg());
         }
+        return resultMap;
 
     }
 
@@ -103,15 +101,14 @@ public class PrincipalService extends BaseService<Principal> {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         List<Principal> principals = principalMapper.selectAll();
         if (null != principals && !principals.isEmpty()) {
-            resultMap.put("code", SELECT_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", SELECT_OPERATION_SUCCESS.getMsg());
+            resultMap.put("code",OPERATION_SUCCESS.getCode());
+            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
             resultMap.put("data", principals);
-            return resultMap;
         } else {
-            resultMap.put("code", SELECT_OPERATION_FAILED.getCode());
-            resultMap.put("msg", SELECT_OPERATION_FAILED.getMsg());
-            return resultMap;
+            resultMap.put("code", OPERATION_FAILED.getCode());
+            resultMap.put("msg", OPERATION_FAILED.getMsg());
         }
+        return resultMap;
     }
 
     /**
@@ -124,6 +121,7 @@ public class PrincipalService extends BaseService<Principal> {
         List<HashMap> list = principalMapper.selectPrincipalAll(map);
         PageInfo<HashMap> pageInfo = new PageInfo<HashMap>(list);
         if (null != pageInfo && !"".equals(pageInfo)) {
+
             return pageInfo;
         }
         return null;
@@ -135,23 +133,21 @@ public class PrincipalService extends BaseService<Principal> {
      * Description: 分页查询全部重要人
      **/
     public Map<String, Object> selectPrincipalsAll(HashMap map, RedisService redisService) {
-        Map<String, Object> resultMap = new HashMap<>();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
         Object tokenId = redisService.getOne(map.get("tokenId").toString());
         //检测token
         if (null == tokenId) {
-            resultMap.put("code", SELECT_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", SELECT_OPERATION_SUCCESS.getMsg());
-            return resultMap;
+            resultMap.put("code", OPERATION_SUCCESS.getCode());
+            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
         }
         if (map.size() > 0) {
             PageInfo<HashMap> pageInfo = selectPrincipalsPageInfo(map);
             if (null != pageInfo && pageInfo.getSize() > 0) {
-                resultMap.put("code", SELECT_OPERATION_SUCCESS.getCode());
-                resultMap.put("msg", SELECT_OPERATION_SUCCESS.getMsg());
-                return resultMap;
+                resultMap.put("code", OPERATION_SUCCESS.getCode());
+                resultMap.put("msg", OPERATION_SUCCESS.getMsg());
             } else {
-                resultMap.put("code", SELECT_OPERATION_FAILED.getCode());
-                resultMap.put("msg", SELECT_OPERATION_FAILED.getMsg());
+                resultMap.put("code", OPERATION_FAILED.getCode());
+                resultMap.put("msg", OPERATION_FAILED.getMsg());
             }
 
         }

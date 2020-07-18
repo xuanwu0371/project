@@ -355,5 +355,44 @@ public interface IProjectService {
     @PostMapping("/selectPrincipal")
     ResultData selectPrincipal(@RequestBody HashMap map);
 
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/18 9:24
+     * Description: 新增技术员
+     **/
+    @PostMapping("/addTechnicist")
+    ResultData addTechnicist(@RequestBody Technicist technicist);
 
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/18 9:25
+     * Description: 批量删除技术员
+     **/
+    @PostMapping("/delTechnicist")
+    ResultData delTechnicist(@RequestBody List<Long> ids);
+
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/18 9:26
+     * Description: 修改技术员信息
+     **/
+    @PostMapping("/updateTechnicist")
+    ResultData updateTechnicist(@RequestBody Technicist technicist);
+
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/18 9:27
+     * Description: 查询技术员信息
+     **/
+    //todo 没有加@RequestBody
+    @PostMapping("/selectAllTechnicist")
+    ResultData selectAllTechnicist();
+
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/18 9:30
+     * Description: 带条件查询用户信息
+     **/
+    @PostMapping("/selectTechnicist")
+    ResultData selectTechnicist(@RequestBody HashMap map);
 }

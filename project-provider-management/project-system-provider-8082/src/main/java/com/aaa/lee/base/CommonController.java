@@ -4,8 +4,13 @@ package com.aaa.lee.base;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import tk.mybatis.mapper.util.Sqls;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -94,94 +99,134 @@ public abstract class CommonController<T> extends BaseController {
         return super.operationFailed();
     }
     /**
-     * Author: lee
-     * Description: 查询一条数据
-    **/
-    public ResultData selectOne(@RequestBody Map map){
-        T instance =getBaseService().newInstance(map);
-        T selectOne = getBaseService().selectOne(instance);
-        if (!selectOne.equals("")){
-            return super.operationSuccess(selectOne);
+     * @author Seven Lee
+     * @description
+     *      更新操作
+     * @param [map]
+     * @date 2020/3/11
+     * @return com.aaa.lee.repast.base.ResultData
+     * @throws
+     **/
+    public ResultData update(@RequestBody Map map){
+        T t = getBaseService().newInstance(map);
+        int updateResult = getBaseService().update(t);
+        if(updateResult > 0){
+            return  operationSuccess();
         }
-        return super.operationFailed();
+        return operationFailed();
     }
     /**
-     * Author: lee
-     * Description: 查询一条数据,可以排序
-     * fileds:不只是代表唯一键
-     * select * from user where password = xxxx and age = xx and address = xxx
-    **/
-    public ResultData selectOneByFiled(@RequestParam("where") Sqls where,@RequestParam("orderByFiled") String orderByFiled,@RequestBody Map map){
-        T instance = getBaseService().newInstance(map);
-        T selectResult = getBaseService().selectOneByFiled(where, orderByFiled, (String) instance);
-        if (!selectResult.equals("")){
-            return super.operationSuccess(selectResult);
+     * @author Seven Lee
+     * @description
+     *      查询一条数据
+     * @param [map]
+     * @date 2020/3/11
+     * @return java.lang.Object
+     * @throws
+     **/
+    public ResultData getOne(@RequestBody Map map) {
+        T t = getBaseService().newInstance(map);
+        t = getBaseService().selectOne(t);
+        if (null != t) {
+            return operationSuccess(t);
         }
-        return super.operationFailed();
-
-    }
-    /**
-     * Author: lee
-     * Description: 查询集合,条件查询
-    **/
-    public ResultData selectList(@RequestBody Map map){
-        T instance =getBaseService().newInstance(map);
-        List selectList=getBaseService().selectList(instance);
-        if(!selectList.isEmpty()){
-            return super.operationSuccess(selectList);
-        }
-        return super.operationFailed();
-    }
-    /**
-     * Author: lee
-     * Description: 查询集合,分页查询
-    **/
-    public ResultData selectListByPage(@RequestBody Map map,@RequestParam("pageNo") Integer pageNo,@RequestParam("pageSize") Integer pageSize){
-        T instance = getBaseService().newInstance(map);
-        PageInfo<T> pageInfo = getBaseService().selectListByPage((T) instance.getClass().getFields().toString(), pageNo, pageSize);//TODO
-        if (!pageInfo.equals("")){
-            return super.operationSuccess(pageInfo);
-        }
-        return super.operationFailed();
+        return operationFailed();
     }
 
     /**
-     * Author: lee
-     * Description: 通过条件查询一个列表
-    **/
-    public ResultData selectListByFiled(@RequestParam("where") Sqls where,@RequestParam("orderByFiled") String orderByField,@RequestBody Map map){
-        T instance = getBaseService().newInstance(map);
-        List<T> ResultData = getBaseService().selectListByFiled(where, orderByField,(String) instance);
-        if (!ResultData.isEmpty()){
-            return super.operationSuccess(ResultData);
+     * @author Seven Lee
+     * @description
+     *      条件查询多条结果
+     * @param [map]
+     * @date 2020/3/11
+     * @return com.aaa.lee.repast.base.ResultData
+     * @throws
+     **/
+    public ResultData getList(@RequestBody Map map){
+        T t = getBaseService().newInstance(map);
+        List<T> resultT = getBaseService().selectList(t);
+        if(resultT.size() > 0) {
+            return operationSuccess(resultT);
         }
-        return super.operationFailed();
-    }
-
-
-    /**
-     * Author: lee
-     * Description: 根据主键进行更新
-    **/
-    public ResultData updateByPrimaryKey(@RequestBody Map map ){
-        T instance = getBaseService().newInstance(map);
-        Integer updateResult = getBaseService().update(instance);
-        if (!updateResult.equals(0) ){
-            return super.operationSuccess();
-        }
-        return super.operationFailed();
-
+        return operationFailed("未找到查询结果");
     }
     /**
-     * Author: lee
-     * Description: 批量更新
-    **/
-    public ResultData  batchUpdate(@RequestBody Map map ,@RequestParam("ids") Integer[] ids){
-        T instance = getBaseService().newInstance(map);
-        Integer updateResult = getBaseService().batchUpdate(instance,ids);
-        if (!updateResult.equals(0)){
-            return super.operationSuccess();
+     * @author Seven Lee
+     * @description
+     *      带条件的分页查询
+     * @param [map, pageNo, pageSize]
+     * @date 2020/3/11
+     * @return java.lang.Object
+     * @throws
+     **/
+    public ResultData getListByPage(@RequestBody Map map, @RequestParam("pageNo") int pageNo, @RequestParam("pageSize") int pageSize){
+        T t = getBaseService().newInstance(map);
+        PageInfo<T> pageInfo = getBaseService().selectListByPage(t,pageNo,pageSize);
+        List<T> resultList = pageInfo.getList();
+        if(resultList.size() > 0) {
+            return operationSuccess(pageInfo);
         }
-        return super.operationFailed();
+        return operationFailed("未找到查询结果");
+    }
+    /**
+     * @author Seven Lee
+     * @description
+     *      不带条件的分页查询
+     * @param [pageNo, pageSize]
+     * @date 2020/3/11
+     * @return java.lang.Object
+     * @throws
+     **/
+    public ResultData getListByPage( @RequestParam("pageNo") int pageNo, @RequestParam("pageSize") int pageSize){
+        PageInfo<T> pageInfo =getBaseService().selectListByPage(null,pageNo,pageSize);
+        List<T> resultList = pageInfo.getList();
+        if(resultList.size() > 0) {
+            return operationSuccess(pageInfo);
+        }
+        return operationFailed("未找到查询结果");
+    }
+    /**
+     * @author Seven Lee
+     * @description
+     *      从本地当前线程中获取request对象
+     * @param []
+     * @date 2020/3/11
+     * @return javax.servlet.http.HttpServletRequest
+     * @throws
+     **/
+    public HttpServletRequest getServletRequest() {
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        ServletRequestAttributes servletRequestAttributes;
+        if (requestAttributes instanceof ServletRequestAttributes) {
+            servletRequestAttributes = (ServletRequestAttributes) requestAttributes;
+            return servletRequestAttributes.getRequest();
+        }
+        return null;
+    }
+
+    /**
+     * @author Seven Lee
+     * @description
+     *      获取当前客户端session对象(如果没有则创建一个新的session)
+     * @param []
+     * @date 2020/3/11
+     * @return javax.servlet.http.HttpSession
+     * @throws
+     **/
+    public HttpSession getSession() {
+        return getServletRequest().getSession();
+    }
+
+    /**
+     * @author Seven Lee
+     * @description
+     *      获取当前客户端session对象(如果没有则直接返回null)
+     * @param []
+     * @date 2020/3/11
+     * @return javax.servlet.http.HttpSession
+     * @throws
+     **/
+    public HttpSession getExistSession() {
+        return getServletRequest().getSession(false);
     }
 }

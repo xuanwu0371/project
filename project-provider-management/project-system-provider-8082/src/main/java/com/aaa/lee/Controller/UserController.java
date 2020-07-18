@@ -45,25 +45,25 @@ public class UserController extends CommonController<User> {
     @PostMapping("/addUser")
     ResultData addUser(@RequestBody User user) {
         Map<String, Object> addResult = userService.addUser(user);
-        if (INSERT_OPERATION_SUCCESS.getCode().equals(addResult.get("code"))) {
-            return super.insertOperationSuccess();
+        if (addResult.get("code").equals(OPERATION_SUCCESS.getCode())) {
+            return super.operationSuccess();
         }
-        return super.insertOperationFailed();
+        return super.operationFailed();
     }
 
     /**
      * @author luyu
      * @date 2020/7/16 18:53
      * Description
-     * 批量删除用户
+     *  批量删除用户
      */
     @PostMapping("/delUser")
     ResultData delUser(@RequestBody List<Long> ids) {
         Map<String, Object> resultMap = userService.delUser(ids);
-        if (DELETE_OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.deleteOperationSuccess();
+        if (resultMap.get("code").equals(OPERATION_SUCCESS.getCode())) {
+            return super.operationSuccess();
         }
-        return super.deleteOperationFailed();
+        return super.operationFailed();
     }
 
     /**
@@ -75,10 +75,10 @@ public class UserController extends CommonController<User> {
     @PostMapping("/updateUser")
     ResultData updateUser(@RequestBody User user) {
         Map<String, Object> resultMap = userService.updateUser(user);
-        if (UPDATE_OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.updateOperationSuccess();
+        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+            return super.operationSuccess();
         }
-        return super.updateOperationFailed();
+        return super.operationFailed();
 
     }
 
@@ -92,10 +92,10 @@ public class UserController extends CommonController<User> {
     ResultData selectAll(User user) {
         Map<String, Object> resultMap = userService.selectAll();
 
-        if (SELECT_OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.selectOperationSuccess(resultMap);
+        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+            return super.operationSuccess(resultMap);
         } else {
-            return super.selectOperationFailed();
+            return super.operationFailed();
         }
     }
 
@@ -131,10 +131,10 @@ public class UserController extends CommonController<User> {
     @PostMapping("/selectUser")
     ResultData selectUser(@RequestBody HashMap map) {
         Map<String, Object> userAll = userService.selectUserAll(map, redisService);
-        if (SELECT_OPERATION_SUCCESS.getCode().equals(userAll.get("code"))) {
-            return super.selectOperationSuccess(userAll);
+        if (operationSuccess().getCode().equals(userAll.get("code"))) {
+            return super.operationSuccess(userAll);
         } else {
-            return super.selectOperationFailed();
+            return super.operationFailed();
         }
     }
 
