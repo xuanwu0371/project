@@ -42,11 +42,11 @@ public class UserService extends BaseService<User> {
         user.setCreateTime(DateUtil.formatDate(new Date(), TIME_FORMAT));
         int addResult = userMapper.insert(user);
         if (addResult > 0) {
-            resultMap.put("code", INSERT_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", INSERT_OPERATION_SUCCESS.getMsg());
+            resultMap.put("code", OPERATION_SUCCESS.getCode());
+            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", INSERT_OPERATION_FAILED.getCode());
-            resultMap.put("msg", INSERT_OPERATION_FAILED.getMsg());
+            resultMap.put("code", OPERATION_FAILED.getCode());
+            resultMap.put("msg", OPERATION_FAILED.getMsg());
         }
         return resultMap;
     }
@@ -62,11 +62,11 @@ public class UserService extends BaseService<User> {
         Example example = Example.builder(User.class).where(Sqls.custom().andIn("id", ids)).build();
         int i = userMapper.deleteByExample(example);
         if (i > 0) {
-            resultMap.put("code", DELETE_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", DELETE_OPERATION_SUCCESS.getMsg());
+            resultMap.put("code", OPERATION_SUCCESS.getCode());
+            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", DELETE_OPERATION_FAILED.getCode());
-            resultMap.put("msg", DELETE_OPERATION_FAILED.getMsg());
+            resultMap.put("code", OPERATION_FAILED.getCode());
+            resultMap.put("msg", OPERATION_FAILED.getMsg());
         }
         return resultMap;
     }
@@ -81,11 +81,11 @@ public class UserService extends BaseService<User> {
         user.setModifyTime(DateUtil.formatDate(new Date(), TIME_FORMAT));
         int i = userMapper.updateByPrimaryKeySelective(user);
         if (i > 0) {
-            resultMap.put("code", UPDATE_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", UPDATE_OPERATION_SUCCESS.getMsg());
+            resultMap.put("code", OPERATION_SUCCESS.getCode());
+            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", UPDATE_OPERATION_FAILED.getCode());
-            resultMap.put("msg", UPDATE_OPERATION_FAILED.getMsg());
+            resultMap.put("code", OPERATION_FAILED.getCode());
+            resultMap.put("msg", OPERATION_FAILED.getMsg());
         }
         return resultMap;
     }
@@ -94,18 +94,46 @@ public class UserService extends BaseService<User> {
      * @author luyu
      * @date 2020/7/16 19:29
      * Description
-     * 查询全部用户信息，可用于用户信息导出
+     * 查询全部用户信息
      */
     public Map<String, Object> selectAll() {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         List<User> userList = userMapper.selectAll();
         if (null != userList && !userList.isEmpty()) {
-            resultMap.put("code", SELECT_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", SELECT_OPERATION_SUCCESS.getMsg());
+            resultMap.put("code", OPERATION_SUCCESS.getCode());
+            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
             resultMap.put("data", userList);
         } else {
-            resultMap.put("code", SELECT_OPERATION_FAILED.getCode());
-            resultMap.put("msg", SELECT_OPERATION_FAILED.getMsg());
+            resultMap.put("code", OPERATION_FAILED.getCode());
+            resultMap.put("msg", OPERATION_FAILED.getMsg());
+        }
+        return resultMap;
+    }
+
+
+    /**
+     * @Author: lee
+     * @date : 2020/7/15 20:38
+     * Description: 分页查询全部用户
+     **/
+    public Map<String, Object> selectUserAll(HashMap map, RedisService redisService) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        Object tokenId = redisService.getOne(map.get("tokenId").toString());
+        //检测token
+        if (null == tokenId) {
+            resultMap.put("code", OPERATION_SUCCESS.getCode());
+            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
+        }
+        if (map.size() > 0) {
+            PageInfo<HashMap> pageInfo = selectUserPageInfo(map);
+            if (null != pageInfo && pageInfo.getSize() > 0) {
+                resultMap.put("code", OPERATION_SUCCESS.getCode());
+                resultMap.put("msg", OPERATION_SUCCESS.getMsg());
+            } else {
+                resultMap.put("code", OPERATION_FAILED.getCode());
+                resultMap.put("msg", OPERATION_FAILED.getMsg());
+            }
+
         }
         return resultMap;
     }
@@ -124,32 +152,4 @@ public class UserService extends BaseService<User> {
         }
         return null;
     }
-
-    /**
-     * @Author: lee
-     * @date : 2020/7/15 20:38
-     * Description: 分页查询全部用户
-     **/
-    public Map<String, Object> selectUserAll(HashMap map, RedisService redisService) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        Object tokenId = redisService.getOne(map.get("tokenId").toString());
-        //检测token
-        if (null == tokenId) {
-            resultMap.put("code", SELECT_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", SELECT_OPERATION_SUCCESS.getMsg());
-        }
-        if (map.size() > 0) {
-            PageInfo<HashMap> pageInfo = selectUserPageInfo(map);
-            if (null != pageInfo && pageInfo.getSize() > 0) {
-                resultMap.put("code", SELECT_OPERATION_SUCCESS.getCode());
-                resultMap.put("msg", SELECT_OPERATION_SUCCESS.getMsg());
-            } else {
-                resultMap.put("code", SELECT_OPERATION_FAILED.getCode());
-                resultMap.put("msg", SELECT_OPERATION_FAILED.getMsg());
-            }
-
-        }
-        return resultMap;
-    }
-
 }

@@ -34,9 +34,9 @@ public class RoleController extends CommonController<Role> {
     public ResultData insertRole(@RequestBody RoleVo roleVo) {
         Boolean insertRole = roleService.insertRole(roleVo);
         if (insertRole) {
-            return super.insertOperationSuccess("新增角色及权限成功");
+            return super.operationSuccess();
         }else {
-            return super.insertOperationFailed("新增角色及权限失败");
+            return super.operationFailed();
         }
     }
 
@@ -49,9 +49,9 @@ public class RoleController extends CommonController<Role> {
     public ResultData deleteRole(@RequestParam("roleId") Long roleId) {
         Boolean role = roleService.deleteRole(roleId);
         if (role) {
-            return super.deleteOperationSuccess("删除角色成功");
+            return super.operationSuccess();
         } else {
-            return super.deleteOperationFailed("删除角色失败");
+            return super.operationFailed();
         }
     }
 
@@ -64,9 +64,9 @@ public class RoleController extends CommonController<Role> {
     public ResultData updateRole(@RequestBody RoleVo roleVo){
         Boolean updateRole = roleService.updateRole(roleVo);
         if (updateRole){
-            return super.updateOperationSuccess("修改角色及权限成功");
+            return super.operationSuccess();
         }else {
-            return super.updateOperationFailed("修改角色及权限失败");
+            return super.operationFailed();
         }
     }
 
@@ -79,9 +79,9 @@ public class RoleController extends CommonController<Role> {
     public ResultData selectAllRole() {
         ResultData resultData = roleService.selectAllRole();
         if (resultData.getMsg().equals("查询成功")) {
-            return selectOperationSuccess(resultData.getCode());
+            return operationSuccess(resultData.getCode());
         } else {
-            return selectOperationFailed();
+            return operationFailed();
         }
     }
     /**
@@ -93,9 +93,9 @@ public class RoleController extends CommonController<Role> {
     public ResultData selectAllRoleByPage(@RequestBody RoleVo roleVo) {
         ResultData<PageInfo<Role>> resultData = roleService.selectAllRoleByPage(roleVo);
         if (resultData.getCode().equals("1")) {
-            return selectOperationSuccess(resultData.getCode());
+            return operationSuccess(resultData.getCode());
         } else {
-            return selectOperationFailed();
+            return operationFailed();
         }
     }
 }

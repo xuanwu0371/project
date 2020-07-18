@@ -68,7 +68,7 @@ public class MenuController extends CommonController<Menu> {
     public ResultData updateMenuOrButton(@RequestBody Menu menu){
         Map<String, Object> Result = menuService.updateMenuOrButton(menu);
         if (!Result.isEmpty()){
-            return super.updateOperationSuccess();
+            return super.operationSuccess();
         }else {
             return super.operationFailed();
         }

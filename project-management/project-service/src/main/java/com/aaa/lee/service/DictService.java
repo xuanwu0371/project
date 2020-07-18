@@ -37,11 +37,11 @@ public class DictService extends BaseService<Dict> {
         Map<String, Object> resultMap = new HashMap<>();
         int i = dictMapper.insert(dict);
         if (i > 0) {
-            resultMap.put("code", INSERT_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", INSERT_OPERATION_SUCCESS.getMsg());
+            resultMap.put("code", OPERATION_SUCCESS.getCode());
+            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", INSERT_OPERATION_FAILED.getCode());
-            resultMap.put("msg", INSERT_OPERATION_FAILED.getMsg());
+            resultMap.put("code", OPERATION_FAILED.getCode());
+            resultMap.put("msg", OPERATION_FAILED.getMsg());
         }
         return resultMap;
     }
@@ -57,11 +57,11 @@ public class DictService extends BaseService<Dict> {
         Example id = Example.builder(Dict.class).where(Sqls.custom().andIn("id", ids)).build();
         int i = dictMapper.deleteByExample(id);
         if (i > 0) {
-            resultMap.put("code", DELETE_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", DELETE_OPERATION_SUCCESS.getMsg());
+            resultMap.put("code", OPERATION_SUCCESS.getCode());
+            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", DELETE_OPERATION_FAILED.getCode());
-            resultMap.put("msg", DELETE_OPERATION_FAILED.getMsg());
+            resultMap.put("code", OPERATION_FAILED.getCode());
+            resultMap.put("msg", OPERATION_FAILED.getMsg());
         }
         return resultMap;
     }
@@ -76,17 +76,17 @@ public class DictService extends BaseService<Dict> {
         if (dict != null) {
             int i = dictMapper.updateByPrimaryKey(dict);
             if (i > 0) {
-                resultMap.put("code", UPDATE_OPERATION_SUCCESS.getCode());
-                resultMap.put("msg", UPDATE_OPERATION_SUCCESS.getMsg());
+                resultMap.put("code", OPERATION_SUCCESS.getCode());
+                resultMap.put("msg", OPERATION_SUCCESS.getMsg());
 
             } else {
-                resultMap.put("code", UPDATE_OPERATION_FAILED.getCode());
-                resultMap.put("msg", UPDATE_OPERATION_FAILED.getMsg());
+                resultMap.put("code", OPERATION_FAILED.getCode());
+                resultMap.put("msg", OPERATION_FAILED.getMsg());
 
             }
         } else {
-            resultMap.put("code", FAILED.getCode());
-            resultMap.put("msg", FAILED.getMsg());
+            resultMap.put("code", OPERATION_FAILED.getCode());
+            resultMap.put("msg", OPERATION_FAILED.getMsg());
         }
         return resultMap;
     }
@@ -101,12 +101,12 @@ public class DictService extends BaseService<Dict> {
         Dict dict = new Dict();
         PageInfo<Dict> dictPageInfo = super.selectListByPage(dict, BaseUtil.transToInt(hashMap.get("pageNo")), BaseUtil.transToInt(hashMap.get("pageNumber")));
         if (null != dictPageInfo && dictPageInfo.getSize() > 0) {
-            resultMap.put("code", SELECT_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", SELECT_OPERATION_SUCCESS.getMsg());
+            resultMap.put("code", OPERATION_SUCCESS.getCode());
+            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
             resultMap.put("data", dictPageInfo);
         } else {
-            resultMap.put("code", SELECT_OPERATION_FAILED.getCode());
-            resultMap.put("msg", SELECT_OPERATION_FAILED.getMsg());
+            resultMap.put("code", OPERATION_FAILED.getCode());
+            resultMap.put("msg", OPERATION_FAILED.getMsg());
         }
         return resultMap;
     }

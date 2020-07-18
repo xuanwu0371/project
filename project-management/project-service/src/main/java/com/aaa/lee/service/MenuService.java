@@ -84,12 +84,12 @@ public class MenuService extends BaseService<Menu> {
         try {
             Integer add = super.add(menu);
             if (add > 0) {
-                resultMap.put("code", INSERT_OPERATION_SUCCESS.getCode());
-                resultMap.put("msg", INSERT_OPERATION_SUCCESS.getMsg());
+                resultMap.put("code", OPERATION_SUCCESS.getCode());
+                resultMap.put("msg", OPERATION_SUCCESS.getMsg());
                 return resultMap;
             } else {
-                resultMap.put("code", INSERT_OPERATION_FAILED.getCode());
-                resultMap.put("msg", INSERT_OPERATION_FAILED.getMsg());
+                resultMap.put("code", OPERATION_FAILED.getCode());
+                resultMap.put("msg", OPERATION_FAILED.getMsg());
                 return resultMap;
             }
         } catch (Exception e) {
@@ -110,13 +110,13 @@ public class MenuService extends BaseService<Menu> {
         try {
             Integer update = super.update(menu);
             if (update > 0) {
-                resultMap.put("code", UPDATE_OPERATION_SUCCESS.getCode());
-                resultMap.put("msg", UPDATE_OPERATION_SUCCESS.getMsg());
+                resultMap.put("code", OPERATION_SUCCESS.getCode());
+                resultMap.put("msg", OPERATION_SUCCESS.getMsg());
                 return resultMap;
 
             } else {
-                resultMap.put("code", UPDATE_OPERATION_FAILED.getCode());
-                resultMap.put("msg", UPDATE_OPERATION_FAILED.getMsg());
+                resultMap.put("code", OPERATION_FAILED.getCode());
+                resultMap.put("msg", OPERATION_FAILED.getMsg());
                 return resultMap;
             }
         } catch (Exception e) {
@@ -134,12 +134,12 @@ public class MenuService extends BaseService<Menu> {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         int Result = menuMapper.deleteByPrimaryKey(menuId);
         if (Result > 0) {
-            resultMap.put("code", DELETE_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", DELETE_OPERATION_SUCCESS.getMsg());
+            resultMap.put("code", OPERATION_SUCCESS.getCode());
+            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
             return resultMap;
         } else {
-            resultMap.put("code", DELETE_OPERATION_FAILED.getCode());
-            resultMap.put("msg", DELETE_OPERATION_FAILED.getMsg());
+            resultMap.put("code", OPERATION_FAILED.getCode());
+            resultMap.put("msg", OPERATION_FAILED.getMsg());
             return resultMap;
         }
     }

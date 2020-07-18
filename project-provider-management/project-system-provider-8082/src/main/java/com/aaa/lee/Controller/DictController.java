@@ -38,9 +38,9 @@ public class DictController extends CommonController<Dict> {
     public ResultData insertDict(@RequestBody Dict dict){
         Map<String, Object> insertDict = dictService.insertDict(dict);
         if (insertDict.get("msg").equals("新增成功")){
-            return super.insertOperationSuccess();
+            return super.operationSuccess();
         }else {
-            return super.insertOperationFailed();
+            return super.operationFailed();
         }
     }
     /**
@@ -52,9 +52,9 @@ public class DictController extends CommonController<Dict> {
     public ResultData delDictsById(@RequestBody List<Long> ids){
         Map<String, Object> delDict = dictService.delDictsById(ids);
         if (delDict.get("msg").equals("删除成功")){
-            return super.deleteOperationSuccess();
+            return super.operationSuccess();
         }else {
-            return super.deleteOperationFailed();
+            return super.operationFailed();
         }
     }
 
@@ -67,9 +67,9 @@ public class DictController extends CommonController<Dict> {
     public ResultData updateDict(@RequestBody Dict dict){
         Map<String, Object> updateDict = dictService.updateDict(dict);
         if (updateDict.get("msg").equals("修改成功")){
-            return super.updateOperationSuccess();
+            return super.operationSuccess();
         }else {
-            return super.updateOperationFailed();
+            return super.operationFailed();
         }
     }
     /**
@@ -81,9 +81,9 @@ public class DictController extends CommonController<Dict> {
     public ResultData selectAllDictByPage(@RequestBody HashMap hashMap){
         Map<String, Object> AllDict = dictService.selectAllDictByPage(hashMap);
         if (AllDict.get("msg").equals("查询成功")){
-            return super.selectOperationSuccess();
+            return super.operationSuccess();
         }else {
-            return super.selectOperationSuccess();
+            return super.operationFailed();
         }
     }
 

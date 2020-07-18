@@ -43,10 +43,10 @@ public class NewsController extends CommonController<News> {
     @PostMapping("/addNews")
     ResultData addNews(@RequestBody News news) {
         Map<String, Object> addResult = newsService.addNews(news);
-        if (INSERT_OPERATION_SUCCESS.getCode().equals(addResult.get("code"))) {
-            return super.insertOperationSuccess();
+        if (OPERATION_SUCCESS.getCode().equals(addResult.get("code"))) {
+            return super.operationSuccess();
         }
-        return super.insertOperationFailed();
+        return super.operationFailed();
     }
 
     /**
@@ -58,10 +58,10 @@ public class NewsController extends CommonController<News> {
     @PostMapping("/delNews")
     ResultData delNews(@RequestBody List<Long> ids) {
         Map<String, Object> resultMap = newsService.delNews(ids);
-        if (DELETE_OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.deleteOperationSuccess();
+        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+            return super.operationSuccess();
         }
-        return super.deleteOperationFailed();
+        return super.operationFailed();
     }
 
     /**
@@ -73,10 +73,10 @@ public class NewsController extends CommonController<News> {
     @RequestMapping("/updateNews")
     ResultData updateNews(@RequestBody News news) {
         Map<String, Object> resultMap = newsService.updateNews(news);
-        if (UPDATE_OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.updateOperationSuccess();
+        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+            return super.operationSuccess();
         }
-        return super.updateOperationFailed();
+        return super.operationFailed();
     }
 
     /**
@@ -88,10 +88,10 @@ public class NewsController extends CommonController<News> {
     @PostMapping("/selectNews")
     public ResultData selectNews() {
         Map<String, Object> resultMap = newsService.selectNews();
-        if (SELECT_OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.selectOperationSuccess(resultMap);
+        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+            return super.operationSuccess(resultMap);
         }
-        return super.selectOperationFailed();
+        return super.operationFailed();
     }
 
     /**
@@ -103,10 +103,10 @@ public class NewsController extends CommonController<News> {
     @PostMapping("/selectAllNews")
     ResultData selectAllNews(@RequestBody HashMap map) {
         Map<String, Object> resultMap = newsService.selectAllNews(map, redisService);
-        if (SELECT_OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.selectOperationSuccess(resultMap);
+        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+            return super.operationSuccess(resultMap);
         } else {
-            return super.selectOperationFailed();
+            return super.operationFailed();
         }
     }
 

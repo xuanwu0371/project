@@ -37,10 +37,10 @@ public class DeptController extends CommonController<Dept> {
     @PostMapping("/addDept")
     public ResultData addDept(@RequestBody Dept dept) {
         Map<String, Object> addDept = deptService.addDept(dept);
-        if (INSERT_OPERATION_SUCCESS.getCode().equals(addDept.get("code"))) {
-            return super.insertOperationSuccess();
+        if (OPERATION_SUCCESS.getCode().equals(addDept.get("code"))) {
+            return super.operationSuccess();
         }
-        return super.insertOperationFailed();
+        return super.operationFailed();
     }
 
     /**
@@ -51,10 +51,10 @@ public class DeptController extends CommonController<Dept> {
     @PostMapping("/delDept")
     public ResultData delDept(@RequestBody List<Long> ids) {
         Map<String, Object> resultMap = deptService.delDept(ids);
-        if (DELETE_OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.deleteOperationSuccess();
+        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+            return super.operationSuccess();
         }
-        return super.deleteOperationFailed();
+        return super.operationFailed();
     }
 
     /**
@@ -65,10 +65,10 @@ public class DeptController extends CommonController<Dept> {
     @PostMapping("/updateDept")
     public ResultData updateDept(@RequestBody Dept dept) {
         Map<String, Object> resultMap = deptService.updateDept(dept);
-        if (UPDATE_OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.updateOperationSuccess();
+        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+            return super.operationSuccess();
         }
-        return super.updateOperationFailed();
+        return super.operationFailed();
 
     }
 
@@ -80,10 +80,10 @@ public class DeptController extends CommonController<Dept> {
     @PostMapping("/selectAllDept")
     public ResultData selectAllDept(@RequestBody Dept dept) {
         Map<String, Object> resultMap = deptService.selectAllDept(dept);
-        if (SELECT_OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.selectOperationSuccess();
+        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+            return super.operationSuccess();
         }
-        return super.selectOperationFailed();
+        return super.operationFailed();
     }
 
     /**
@@ -94,10 +94,10 @@ public class DeptController extends CommonController<Dept> {
     @PostMapping("/selectAllDeptByNameOrTime")
     public ResultData selectAllDeptByNameOrTime(@RequestBody Dept dept) {
         Map<String, Object> resultMap = deptService.selectAllDeptByNameOrTime(dept);
-        if (SELECT_OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.selectOperationSuccess();
+        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+            return super.operationSuccess();
         }
-        return super.selectOperationFailed();
+        return super.operationFailed();
     }
 
 }
