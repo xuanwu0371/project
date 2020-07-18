@@ -7,11 +7,11 @@ import lombok.experimental.Accessors;
 
 import java.util.Date;
 import javax.persistence.*;
+@Table(name = "t_role")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Accessors(chain = true)
-@Table(name = "t_role")
 public class Role {
     /**
      * 角色ID

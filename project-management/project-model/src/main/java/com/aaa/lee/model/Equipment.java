@@ -1,8 +1,10 @@
 package com.aaa.lee.model;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -84,7 +86,6 @@ public class Equipment {
 
     /**
      * 创建时间
-
      */
     @Column(name = "create_time")
     private Date createTime;

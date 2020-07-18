@@ -1,8 +1,10 @@
 package com.aaa.lee.model;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -210,15 +212,13 @@ public class MappingProject {
     private String fundingSource;
 
     /**
-     * 
-委托单位
+     * 委托单位
      */
     @Column(name = "entrust_unit")
     private String entrustUnit;
 
     /**
-     * 
-承建单位
+     * 承建单位
      */
     @Column(name = "accept_unit")
     private String acceptUnit;
@@ -231,7 +231,7 @@ public class MappingProject {
 
     /**
      * 固定
-电话
+     * 电话
      */
     private String phone;
 

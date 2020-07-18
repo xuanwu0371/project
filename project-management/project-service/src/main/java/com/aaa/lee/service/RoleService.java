@@ -175,16 +175,16 @@ public class RoleService extends BaseService<Role> {
                     if (i1 > 0) {
                         //说明权限已经全部删除了 接下来判断是否要给他换上新的权限
                         //如果传进来了权限
-                        if (roleVo.getMenuId().size() >0  ){
+                        if (roleVo.getMenuId().size() > 0) {
                             List<RoleMenu> arr = new ArrayList<RoleMenu>();
-                            for (long mid :roleVo.getMenuId()){
+                            for (long mid : roleVo.getMenuId()) {
                                 RoleMenu rm = new RoleMenu();
                                 rm.setMenuId(mid);
                                 rm.setRoleId(roleVo.getRole().getRoleId());
                                 arr.add(rm);
                             }
                             int i2 = roleMenuMapper.batchInsertRoleMenu(arr);
-                            if (i2>0){
+                            if (i2 > 0) {
                                 //说明修改彻底结束
                                 return true;
                             }

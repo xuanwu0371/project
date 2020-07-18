@@ -235,7 +235,7 @@ public interface IProjectService {
      * 查询所有新闻
      */
     @PostMapping("/news/selectNews")
-    ResultData selectNews();
+    ResultData selectNews(@RequestBody News news);
 
     /**
      * @author yang
@@ -313,5 +313,47 @@ public interface IProjectService {
      */
     @PostMapping("/dept/selectAllDeptByNameOrTime")
     ResultData selectAllDeptByNameOrTime(@RequestBody Dept dept);
+
+
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/17 22:07
+     * Description: 新增重要人
+     **/
+    @PostMapping("/addPrincipal")
+    ResultData addPrincipal(@RequestBody Principal principal);
+
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/17 22:07
+     * Description: 批量删除重要人
+     **/
+    @PostMapping("/delPrincipal")
+    ResultData delPrincipal(@RequestBody List<Long> ids);
+
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/17 22:07
+     * Description: 修改重要人信息
+     **/
+    @PostMapping("/updatePrincipal")
+    ResultData updatePrincipal(@RequestBody Principal principal);
+
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/17 22:08
+     * Description: 查询重要人信息
+     **/
+    @PostMapping("/selectPrincipalAll")
+    ResultData selectPrincipalAll(Principal principal);
+
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/17 22:09
+     * Description: 带条件查询重要人信息
+     **/
+    @PostMapping("/selectPrincipal")
+    ResultData selectPrincipal(@RequestBody HashMap map);
+
 
 }

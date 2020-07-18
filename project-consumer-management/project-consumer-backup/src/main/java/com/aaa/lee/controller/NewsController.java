@@ -69,9 +69,10 @@ public class NewsController extends BaseController {
      * 查询所有新闻
      */
     @PostMapping("/selectNews")
-    @ApiOperation(value = "查询新闻",notes = "新闻管理的查询新闻")
-    public ResultData selectNews(){
-        return iProjectService.selectNews();
+    @ApiOperation(value = "查询新闻",notes = "新闻管理的下旬新闻")
+    public ResultData selectNews(News news){
+        return iProjectService.selectNews(news);
     }
+    //todo 杨海鹏
 
 }

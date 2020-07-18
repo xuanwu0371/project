@@ -32,11 +32,11 @@ public class NewsService extends BaseService<News> {
     /**
      * @author yang
      * @date 2020/7/16 18:35
-     *Description
-     *    新增新闻
+     * Description
+     * 新增新闻
      */
-    public Map<String,Object> addNews(News news){
-        Map<String,Object> resultMap = new HashMap<>();
+    public Map<String, Object> addNews(News news) {
+        Map<String, Object> resultMap = new HashMap<>();
         news.setGmtCreate(new Date());
         int addResult = newsMapper.insert(news);
         if (addResult > 0) {
@@ -52,14 +52,14 @@ public class NewsService extends BaseService<News> {
     /**
      * @author yang
      * @date 2020/7/16 19:03
-     *Description
-     *      删除新闻
+     * Description
+     * 删除新闻
      */
-    public Map<String,Object> delNews(List<Long> ids){
+    public Map<String, Object> delNews(List<Long> ids) {
         Map<String, Object> resultMap = new HashMap<>();
         Example example = Example.builder(News.class).where(Sqls.custom().andIn("id", ids)).build();
         int i = newsMapper.deleteByExample(example);
-        if (i > 0 ) {
+        if (i > 0) {
             resultMap.put("code", DELETE_OPERATION_SUCCESS.getCode());
             resultMap.put("msg", DELETE_OPERATION_SUCCESS.getMsg());
         } else {
@@ -72,19 +72,19 @@ public class NewsService extends BaseService<News> {
     /**
      * @author yang
      * @date 2020/7/16 19:10
-     *Description
+     * Description
      * 修改新闻
      */
-    public Map<String,Object> updateNews(News news){
-        Map<String,Object> resultMap = new HashMap<>();
+    public Map<String, Object> updateNews(News news) {
+        Map<String, Object> resultMap = new HashMap<>();
         news.setGmtCreate(new Date());
         int i = newsMapper.updateByPrimaryKey(news);
-        if (i > 0 ) {
-            resultMap.put("code",UPDATE_OPERATION_SUCCESS.getCode());
+        if (i > 0) {
+            resultMap.put("code", UPDATE_OPERATION_SUCCESS.getCode());
             resultMap.put("msg", UPDATE_OPERATION_SUCCESS.getMsg());
         } else {
-            resultMap.put("code",UPDATE_OPERATION_FAILED.getCode());
-            resultMap.put("msg",UPDATE_OPERATION_FAILED.getMsg());
+            resultMap.put("code", UPDATE_OPERATION_FAILED.getCode());
+            resultMap.put("msg", UPDATE_OPERATION_FAILED.getMsg());
         }
         return resultMap;
     }
@@ -92,31 +92,34 @@ public class NewsService extends BaseService<News> {
     /**
      * @author yang
      * @date 2020/7/16 19:13
-     *Description
+     * Description
      * 查询新闻
      */
-    public Map<String,Object> selectNews(){
-        Map<String,Object> resultMap = new HashMap<>();
+    public Map<String, Object> selectNews() {
+        Map<String, Object> resultMap = new HashMap<>();
         List<News> newsList = newsMapper.selectAll();
         if (null != newsList && !newsList.isEmpty()) {
-            resultMap.put("code",SELECT_OPERATION_SUCCESS.getCode());
-            resultMap.put("msg",SELECT_OPERATION_SUCCESS.getMsg());
+            resultMap.put("code", SELECT_OPERATION_SUCCESS.getCode());
+            resultMap.put("msg", SELECT_OPERATION_SUCCESS.getMsg());
+            resultMap.put("data", newsList);
+            System.out.println(resultMap.get("data"));
             return resultMap;
         } else {
-            resultMap.put("code",SELECT_OPERATION_FAILED.getCode());
-            resultMap.put("msg",SELECT_OPERATION_FAILED.getMsg());
+            resultMap.put("code", SELECT_OPERATION_FAILED.getCode());
+            resultMap.put("msg", SELECT_OPERATION_FAILED.getMsg());
+            return resultMap;
         }
-        return resultMap;
+
     }
 
     /**
      * @author yang
      * @date 2020/7/16 19:18
-     *Description
+     * Description
      * 分页条件查询
      */
-    public PageInfo<HashMap> selectNewsPageInfo(HashMap map){
-        PageHelper.startPage(BaseUtil.transToInt(map.get("pageNo")),BaseUtil.transToInt(map.get("pageNumber")));
+    public PageInfo<HashMap> selectNewsPageInfo(HashMap map) {
+        PageHelper.startPage(BaseUtil.transToInt(map.get("pageNo")), BaseUtil.transToInt(map.get("pageNumber")));
         List<HashMap> list = newsMapper.selectNewsAll(map);
         PageInfo<HashMap> pageInfo = new PageInfo<>(list);
         if (null != pageInfo && !"".equals(pageInfo)) {
@@ -128,20 +131,20 @@ public class NewsService extends BaseService<News> {
     /**
      * @author yang
      * @date 2020/7/16 19:26
-     *Description
-     *       分页查询新闻
+     * Description
+     * 分页查询新闻
      */
-    public Map<String,Object> selectAllNews(HashMap map, RedisService redisService){
-        Map<String,Object> resultMap = new HashMap<>();
-        if (map.size() > 0 ) {
+    public Map<String, Object> selectAllNews(HashMap map, RedisService redisService) {
+        Map<String, Object> resultMap = new HashMap<>();
+        if (map.size() > 0) {
             PageInfo<HashMap> pageInfo = selectNewsPageInfo(map);
-            if (null != pageInfo && pageInfo.getSize() > 0 ) {
-                resultMap.put("code",SELECT_OPERATION_SUCCESS.getCode());
-                resultMap.put("msg",SELECT_OPERATION_SUCCESS.getMsg());
+            if (null != pageInfo && pageInfo.getSize() > 0) {
+                resultMap.put("code", SELECT_OPERATION_SUCCESS.getCode());
+                resultMap.put("msg", SELECT_OPERATION_SUCCESS.getMsg());
                 return resultMap;
             } else {
-                resultMap.put("code",SELECT_OPERATION_FAILED.getCode());
-                resultMap.put("msg",SELECT_OPERATION_FAILED.getMsg());
+                resultMap.put("code", SELECT_OPERATION_FAILED.getCode());
+                resultMap.put("msg", SELECT_OPERATION_FAILED.getMsg());
             }
         }
         return resultMap;

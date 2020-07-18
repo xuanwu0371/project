@@ -77,7 +77,7 @@ public class MenuService extends BaseService<Menu> {
      * @date : 2020/7/16 10:34
      * Description: 新增菜单或者按钮
      **/
-    public Map<String, Object> insertMenuOrButton( Menu menu) {
+    public Map<String, Object> insertMenuOrButton(Menu menu) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         Date createTime = new Date();
         menu.setCreateTime(createTime);
@@ -130,7 +130,7 @@ public class MenuService extends BaseService<Menu> {
      * @date : 2020/7/16 10:42
      * Description: 根据主键id删除菜单或者按钮
      **/
-    public Map<String,Object> deleteMenuOrButton(Long menuId) {
+    public Map<String, Object> deleteMenuOrButton(Long menuId) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         int Result = menuMapper.deleteByPrimaryKey(menuId);
         if (Result > 0) {
