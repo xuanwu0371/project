@@ -46,7 +46,7 @@ public class PrincipalController extends CommonController<Principal> {
     @PostMapping("/addPrincipal")
     ResultData addPrincipal(@RequestBody Principal principal) {
         Map<String, Object> addResult = principalService.addPrincipal(principal);
-        if (OPERATION_SUCCESS.getCode().equals(addResult.get("code"))) {
+        if (addResult.get("code").equals(INSERT_SUCCESS.getCode())) {
             return super.operationSuccess();
         }
         return super.operationFailed();
@@ -60,7 +60,7 @@ public class PrincipalController extends CommonController<Principal> {
     @PostMapping("/delPrincipal")
     ResultData delPrincipal(@RequestBody List<Long> ids) {
         Map<String, Object> resultMap = principalService.delPrincipal(ids);
-        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+        if (resultMap.get("code").equals(DELETE_SUCCESS.getCode())) {
             return super.operationSuccess();
         }
         return super.operationFailed();
@@ -74,7 +74,7 @@ public class PrincipalController extends CommonController<Principal> {
     @PostMapping("/updatePrincipal")
     ResultData updatePrincipal(@RequestBody Principal principal) {
         Map<String, Object> resultMap = principalService.updatePrincipal(principal);
-        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+        if (resultMap.get("code").equals(UPDATE_SUCCESS.getCode())) {
             return super.operationSuccess();
         }
         return super.operationFailed();
@@ -90,7 +90,7 @@ public class PrincipalController extends CommonController<Principal> {
     @PostMapping("/selectPrincipalAll")
     ResultData selectPrincipalAll(Principal principal) {
         Map<String, Object> resultMap = principalService.selectPrincipalAll();
-        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+        if (resultMap.get("code").equals(SELECT_SUCCESS.getCode())) {
             return super.operationSuccess(resultMap);
         } else {
             return super.operationFailed();
@@ -105,7 +105,7 @@ public class PrincipalController extends CommonController<Principal> {
     @PostMapping("/selectPrincipal")
     ResultData selectPrincipal(@RequestBody HashMap map) {
         Map<String, Object> principalAll = principalService.selectPrincipalsAll(map, redisService);
-        if (OPERATION_SUCCESS.getCode().equals(principalAll.get("code"))) {
+        if (principalAll.get("code").equals(SELECT_SUCCESS.getCode())) {
             return super.operationSuccess(principalAll);
         } else {
             return super.operationFailed();

@@ -40,11 +40,11 @@ public class NewsService extends BaseService<News> {
         news.setGmtCreate(new Date());
         int addResult = newsMapper.insert(news);
         if (addResult > 0) {
-            resultMap.put("code", OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
+            resultMap.put("code",INSERT_SUCCESS .getCode());
+            resultMap.put("msg", INSERT_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", OPERATION_FAILED.getCode());
-            resultMap.put("msg", OPERATION_FAILED.getMsg());
+            resultMap.put("code", INSERT_FAILED.getCode());
+            resultMap.put("msg",INSERT_FAILED .getMsg());
         }
         return resultMap;
     }
@@ -60,11 +60,11 @@ public class NewsService extends BaseService<News> {
         Example example = Example.builder(News.class).where(Sqls.custom().andIn("id", ids)).build();
         int i = newsMapper.deleteByExample(example);
         if (i > 0) {
-            resultMap.put("code", OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
+            resultMap.put("code", DELETE_SUCCESS.getCode());
+            resultMap.put("msg",DELETE_SUCCESS .getMsg());
         } else {
-            resultMap.put("code", OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
+            resultMap.put("code",DELETE_FAILED .getCode());
+            resultMap.put("msg", DELETE_FAILED.getMsg());
         }
         return resultMap;
     }
@@ -80,11 +80,11 @@ public class NewsService extends BaseService<News> {
         news.setGmtCreate(new Date());
         int i = newsMapper.updateByPrimaryKey(news);
         if (i > 0) {
-            resultMap.put("code", OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
+            resultMap.put("code",UPDATE_SUCCESS .getCode());
+            resultMap.put("msg",UPDATE_SUCCESS .getMsg());
         } else {
-            resultMap.put("code", OPERATION_FAILED.getCode());
-            resultMap.put("msg", OPERATION_FAILED.getMsg());
+            resultMap.put("code",UPDATE_FAILED.getCode());
+            resultMap.put("msg",UPDATE_FAILED .getMsg());
         }
         return resultMap;
     }
@@ -99,12 +99,12 @@ public class NewsService extends BaseService<News> {
         Map<String, Object> resultMap = new HashMap<>();
         List<News> newsList = newsMapper.selectAll();
         if (null != newsList && !newsList.isEmpty()) {
-            resultMap.put("code", OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
+            resultMap.put("code", SELECT_SUCCESS.getCode());
+            resultMap.put("msg", SELECT_SUCCESS.getMsg());
             resultMap.put("data", newsList);
         } else {
-            resultMap.put("code", OPERATION_FAILED.getCode());
-            resultMap.put("msg", OPERATION_FAILED.getMsg());
+            resultMap.put("code", SELECT_FAILED.getCode());
+            resultMap.put("msg",SELECT_FAILED .getMsg());
         }
         return resultMap;
 
@@ -137,11 +137,11 @@ public class NewsService extends BaseService<News> {
         if (map.size() > 0) {
             PageInfo<HashMap> pageInfo = selectNewsPageInfo(map);
             if (null != pageInfo && pageInfo.getSize() > 0) {
-                resultMap.put("code", OPERATION_SUCCESS.getCode());
-                resultMap.put("msg", OPERATION_SUCCESS.getMsg());
+                resultMap.put("code", SELECT_SUCCESS.getCode());
+                resultMap.put("msg",SELECT_SUCCESS .getMsg());
             } else {
-                resultMap.put("code", OPERATION_FAILED.getCode());
-                resultMap.put("msg", OPERATION_FAILED.getMsg());
+                resultMap.put("code", SELECT_FAILED.getCode());
+                resultMap.put("msg", SELECT_FAILED.getMsg());
             }
         }
         return resultMap;

@@ -58,12 +58,12 @@ public class RoleService extends BaseService<Role> {
         try {
             if (null != rolePageInfo) {
                 //说明查到了数据
-                resultData.setCode(OPERATION_SUCCESS.getCode());
-                resultData.setMsg(OPERATION_SUCCESS.getMsg());
+                resultData.setCode(SELECT_SUCCESS.getCode());
+                resultData.setMsg(SELECT_SUCCESS.getMsg());
                 resultData.setData(rolePageInfo);
             } else {
-                resultData.setCode(OPERATION_FAILED.getCode());
-                resultData.setMsg(OPERATION_FAILED.getCode());
+                resultData.setCode(SELECT_FAILED.getCode());
+                resultData.setMsg(SELECT_FAILED.getCode());
             }
             return resultData;
         } catch (Exception e) {

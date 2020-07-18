@@ -37,7 +37,7 @@ public class DeptController extends CommonController<Dept> {
     @PostMapping("/addDept")
     public ResultData addDept(@RequestBody Dept dept) {
         Map<String, Object> addDept = deptService.addDept(dept);
-        if (OPERATION_SUCCESS.getCode().equals(addDept.get("code"))) {
+        if (INSERT_SUCCESS.getCode().equals(addDept.get("code"))) {
             return super.operationSuccess();
         }
         return super.operationFailed();
@@ -51,7 +51,7 @@ public class DeptController extends CommonController<Dept> {
     @PostMapping("/delDept")
     public ResultData delDept(@RequestBody List<Long> ids) {
         Map<String, Object> resultMap = deptService.delDept(ids);
-        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+        if (DELETE_SUCCESS.getCode().equals(resultMap.get("code"))) {
             return super.operationSuccess();
         }
         return super.operationFailed();
@@ -65,7 +65,7 @@ public class DeptController extends CommonController<Dept> {
     @PostMapping("/updateDept")
     public ResultData updateDept(@RequestBody Dept dept) {
         Map<String, Object> resultMap = deptService.updateDept(dept);
-        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+        if (UPDATE_SUCCESS.getCode().equals(resultMap.get("code"))) {
             return super.operationSuccess();
         }
         return super.operationFailed();
@@ -80,7 +80,7 @@ public class DeptController extends CommonController<Dept> {
     @PostMapping("/selectAllDept")
     public ResultData selectAllDept(@RequestBody Dept dept) {
         Map<String, Object> resultMap = deptService.selectAllDept(dept);
-        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+        if (SELECT_SUCCESS.getCode().equals(resultMap.get("code"))) {
             return super.operationSuccess();
         }
         return super.operationFailed();
@@ -94,7 +94,7 @@ public class DeptController extends CommonController<Dept> {
     @PostMapping("/selectAllDeptByNameOrTime")
     public ResultData selectAllDeptByNameOrTime(@RequestBody Dept dept) {
         Map<String, Object> resultMap = deptService.selectAllDeptByNameOrTime(dept);
-        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+        if (SELECT_SUCCESS.getCode().equals(resultMap.get("code"))) {
             return super.operationSuccess();
         }
         return super.operationFailed();

@@ -42,7 +42,7 @@ public abstract class BaseService<T> {
      * @author Seven Lee
      * @description
      *      新增数据
-     * @param [t]
+     * @param -[t]
      * @date 2020/7/9
      * @return java.lang.Integer
      * @throws
@@ -55,7 +55,7 @@ public abstract class BaseService<T> {
      * @author Seven Lee
      * @description
      *      根据主键进行删除
-     * @param [t]
+     * @param -[t]
      * @date 2020/7/9
      * @return java.lang.Integer
      * @throws
@@ -68,7 +68,7 @@ public abstract class BaseService<T> {
      * @author Seven Lee
      * @description
      *      根据主键进行批量删除
-     * @param [ids]
+     * @param -[ids]
      * @date 2020/7/9
      * @return java.lang.Integer
      * @throws
@@ -86,7 +86,7 @@ public abstract class BaseService<T> {
      * @author Seven Lee
      * @description
      *      更新操作
-     * @param [t]
+     * @param -[t]
      * @date 2020/7/9
      * @return java.lang.Integer
      * @throws
@@ -99,7 +99,7 @@ public abstract class BaseService<T> {
      * @author Seven Lee
      * @description
      *      update username = ?  from user where id in (1,2,3,4,5,6,7)
-     * @param [t, ids]
+     * @param -[t, ids]
      * @date 2020/7/9
      * @return java.lang.Integer
      * @throws
@@ -114,7 +114,7 @@ public abstract class BaseService<T> {
      * @description
      *      查询一条数据
      *      形参中的t所传递的数据--->主键，唯一键(username, phone number....)
-     * @param [t]
+     * @param -[t]
      * @date 2020/7/9
      * @return T
      * @throws
@@ -134,7 +134,7 @@ public abstract class BaseService<T> {
      *          address
      *          select * from user where password = xxxx and age = xx and address = xxx
      *
-     * @param [where, orderByFiled, fileds]
+     * @param -[where, orderByFiled, fileds]
      * @date 2020/7/9
      * @return T
      * @throws
@@ -147,7 +147,7 @@ public abstract class BaseService<T> {
      * @author Seven Lee
      * @description
      *      通过条件查询一个列表
-     * @param [where, orderByField, fields]
+     * @param -[where, orderByField, fields]
      * @date 2020/7/9
      * @return java.util.List<T>
      * @throws
@@ -160,7 +160,7 @@ public abstract class BaseService<T> {
      * @author Seven Lee
      * @description
      *      实现条件查询的分页
-     * @param [pageNo, pageSize, where, orderFiled, fileds]
+     * @param -[pageNo, pageSize, where, orderFiled, fileds]
      * @date 2020/7/9
      * @return com.github.pagehelper.PageInfo<T>
      * @throws
@@ -173,7 +173,7 @@ public abstract class BaseService<T> {
      * @author Seven Lee
      * @description
      *      查询集合，条件查询
-     * @param [t]
+     * @param
      * @date 2020/7/9
      * @return java.util.List<T>
      * @throws
@@ -186,7 +186,7 @@ public abstract class BaseService<T> {
      * @author Seven Lee
      * @description
      *      查询集合，分页查询
-     * @param []
+     * @param
      * @date 2020/7/9
      * @return com.github.pagehelper.PageInfo<T>
      * @throws
@@ -202,7 +202,7 @@ public abstract class BaseService<T> {
      * @author Seven Lee
      * @description
      *      Map转换实体类型
-     * @param [map]
+     * @param
      * @date 2020/7/9
      * @return T
      * @throws
@@ -217,7 +217,7 @@ public abstract class BaseService<T> {
      *      实现查询通用
      *          不但可以作用于分页，还可以作用于排序，还能作用于多条件查询
      *      orderByFiled:是所要排序的字段
-     * @param []
+     * @param
      * @date 2020/7/9
      * @return java.util.List<T>
      * @throws
@@ -258,7 +258,7 @@ public abstract class BaseService<T> {
      * @author Seven Lee
      * @description
      *      获取子类泛型类型
-     * @param []
+     * @param
      * @date 2020/7/9
      * @return java.lang.Class<T>
      * @throws
@@ -281,7 +281,7 @@ public abstract class BaseService<T> {
      *       如果你的项目中也需要把某一些配置一开始就托管给spring
      *       需要获取到spring的上下文(ApplicationContext)
      *
-     * @param []
+     * @param
      * @date 2020/7/9
      * @return org.springframework.context.ApplicationContext
      * @throws

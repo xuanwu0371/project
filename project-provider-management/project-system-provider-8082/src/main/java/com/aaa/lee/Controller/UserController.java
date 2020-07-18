@@ -8,9 +8,14 @@ import com.aaa.lee.model.User;
 import com.aaa.lee.redis.RedisService;
 import com.aaa.lee.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.internal.util.privilegedactions.NewInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tk.mybatis.mapper.common.BaseMapper;
+import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.util.Sqls;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,115 +32,74 @@ import static com.aaa.lee.status.OperationStatus.*;
 public class UserController extends CommonController<User> {
     @Autowired
     private UserService userService;
-
     @Autowired
     private RedisService redisService;
 
     @Override
-    public BaseService getBaseService() {
-        return null;
+    public BaseService<User> getBaseService() {
+        return userService;
     }
+
 
     /**
      * @Author: Lee ShiHao
      * @date : 2020/7/16 11:17
-     * Description: 用户管理中的新增用户
+     * Description: 新增用户
      **/
-
     @PostMapping("/addUser")
-    ResultData addUser(@RequestBody User user) {
-        Map<String, Object> addResult = userService.addUser(user);
-        if (addResult.get("code").equals(OPERATION_SUCCESS.getCode())) {
-            return super.operationSuccess();
-        }
-        return super.operationFailed();
+    public ResultData addUser(@RequestBody User user) {
+        ResultData resultData = userService.addUser(user);
+        return (resultData.getCode().equals(INSERT_SUCCESS.getCode()))
+                ? resultData : super.insertOperationFailed();
     }
 
     /**
-     * @author luyu
-     * @date 2020/7/16 18:53
-     * Description
-     *  批量删除用户
-     */
-    @PostMapping("/delUser")
-    ResultData delUser(@RequestBody List<Long> ids) {
-        Map<String, Object> resultMap = userService.delUser(ids);
-        if (resultMap.get("code").equals(OPERATION_SUCCESS.getCode())) {
-            return super.operationSuccess();
-        }
-        return super.operationFailed();
+     * @Author: Lee ShiHao
+     * @date : 2020/7/18 20:37
+     * Description: 根据主键删除用户
+     **/
+    @PostMapping("/delUserByKey")
+    public ResultData delUserByKey(@RequestBody User user) {
+        ResultData resultData = userService.delUserByKey(user);
+        return (resultData.getCode().equals(DELETE_SUCCESS.getCode()))
+                ? resultData : super.deleteOperationFailed();
     }
 
     /**
-     * @author luyu
-     * @date 2020/7/16 19:01
-     * Description
-     * 修改用户信息
-     */
-    @PostMapping("/updateUser")
-    ResultData updateUser(@RequestBody User user) {
-        Map<String, Object> resultMap = userService.updateUser(user);
-        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.operationSuccess();
-        }
-        return super.operationFailed();
+     * @Author: Lee ShiHao
+     * @date : 2020/7/18 20:44
+     * Description: 根据id批量删除用户
+     **/
+    @PostMapping("/delUserByIds")
+    public ResultData delUserByIds(@RequestBody Integer[] ids) {
+        ResultData resultData = super.batchDelete(ids);
+        return resultData.getCode().equals(operationSuccess().getCode()) ?
+                resultData : super.deleteOperationFailed();
 
     }
 
     /**
      * @Author: Lee ShiHao
-     * @date : 2020/7/17 18:56
-     * Description: 查询用户信息
+     * @date : 2020/7/18 21:03
+     * Description: 查询所有用户
      **/
-    //todo 没有加@RequestBody
-    @PostMapping("/selectAll")
-    ResultData selectAll(User user) {
-        Map<String, Object> resultMap = userService.selectAll();
-
-        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.operationSuccess(resultMap);
-        } else {
-            return super.operationFailed();
-        }
+    @PostMapping("/selUser")
+    public ResultData selUser(User user) {
+        ResultData resultData = userService.selUser(user);
+        return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
+                resultData : super.selectOperationFailed();
     }
 
     /**
-     * @author luyu
-     * @date 2020/7/16 19:09
-     * Description
-     * 查询并导出用户信息
-     */
-
-    ResultData selectAll() {
-        //TODO   使用Excel导出用户信息，需完善
-        return null;
-    }
-
-    /**
-     * @author luyu
-     * @date 2020/7/16 19:09
-     * Description
-     * 分页条件查询
-     */
-    ResultData selectUserPageInfo(HashMap map) {
-        return null;
-        //TODO 不一定用得上，先空着
-    }
-
-    /**
-     * @author luyu
-     * @date 2020/7/16 19:11
-     * Description
-     * 带条件查询用户信息
-     */
-    @PostMapping("/selectUser")
-    ResultData selectUser(@RequestBody HashMap map) {
-        Map<String, Object> userAll = userService.selectUserAll(map, redisService);
-        if (operationSuccess().getCode().equals(userAll.get("code"))) {
-            return super.operationSuccess(userAll);
-        } else {
-            return super.operationFailed();
-        }
+     * @Author: Lee ShiHao
+     * @date : 2020/7/18 15:50
+     * Description: 查询一条数据
+     **/
+    @PostMapping("/selUserById")
+    public ResultData selUserById(@RequestBody User id) {
+        ResultData resultData = userService.selUserById(id);
+        return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
+                resultData : super.selectOperationFailed();
     }
 
 

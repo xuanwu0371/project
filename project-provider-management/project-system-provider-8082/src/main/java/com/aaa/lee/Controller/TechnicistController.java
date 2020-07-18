@@ -46,7 +46,7 @@ public class TechnicistController extends CommonController<Technicist> {
     @PostMapping("/addTechnicist")
     ResultData addTechnicist(@RequestBody Technicist technicist) {
         Map<String, Object> addResult = technicistService.addTechnicist(technicist);
-        if (addResult.get("code").equals(OPERATION_SUCCESS.getCode())) {
+        if (addResult.get("code").equals(INSERT_SUCCESS.getCode())) {
             return super.operationSuccess();
         }
         return super.operationFailed();
@@ -60,7 +60,7 @@ public class TechnicistController extends CommonController<Technicist> {
     @PostMapping("/delTechnicist")
     ResultData delTechnicist(@RequestBody List<Long> ids) {
         Map<String, Object> resultMap = technicistService.delTechnicist(ids);
-        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+        if (resultMap.get("code").equals(DELETE_SUCCESS.getCode())) {
             return super.operationSuccess();
         }
         return super.operationFailed();
@@ -74,7 +74,7 @@ public class TechnicistController extends CommonController<Technicist> {
     @PostMapping("/updateTechnicist")
     ResultData updateTechnicist(@RequestBody Technicist technicist) {
         Map<String, Object> resultMap = technicistService.updateTechnicist(technicist);
-        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+        if (resultMap.get("code").equals(UPDATE_SUCCESS.getCode())) {
             return super.operationSuccess();
         }
         return super.operationFailed();
@@ -89,7 +89,7 @@ public class TechnicistController extends CommonController<Technicist> {
     @PostMapping("/selectAllTechnicist")
     ResultData selectAllTechnicist(Technicist technicist) {
         Map<String, Object> resultMap = technicistService.selectAllTechnicist();
-        if (OPERATION_SUCCESS.getCode().equals(resultMap.get("code"))) {
+        if (resultMap.get("code").equals(SELECT_SUCCESS.getCode())) {
             return super.operationSuccess(resultMap);
         } else {
             return super.operationFailed();
@@ -104,7 +104,7 @@ public class TechnicistController extends CommonController<Technicist> {
     @PostMapping("/selectTechnicistPageInfo")
     ResultData selectTechnicistPageInfo(@RequestBody HashMap map) {
         Map<String, Object> userAll = technicistService.selectTechnicistAll(map, redisService);
-        if (OPERATION_SUCCESS.getCode().equals(userAll.get("code"))) {
+        if (userAll.get("code").equals(SELECT_SUCCESS.getCode())) {
             return super.operationSuccess(userAll);
         } else {
             return super.operationFailed();
