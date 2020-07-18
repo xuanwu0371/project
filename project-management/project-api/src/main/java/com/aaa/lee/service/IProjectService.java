@@ -268,10 +268,10 @@ public interface IProjectService {
      * @author yang
      * @date 2020/7/17 17:00
      *Description
-     * 分页查询仪器设备信息
+     * 查询仪器设备信息
      */
-    @PostMapping("/equipment/selectAllEquipmentByPage")
-    ResultData selectAllEquipmentByPage(@RequestBody HashMap hashMap);
+    @PostMapping("/equipment/selectAllEquipment")
+    ResultData selectAllEquipmentByPage(@RequestBody Equipment equipment);
 
 
     /**
@@ -380,6 +380,7 @@ public interface IProjectService {
     ResultData updateTechnicist(@RequestBody Technicist technicist);
 
     /**
+<<<<<<< Updated upstream
      * @Author: Lee ShiHao
      * @date : 2020/7/18 9:27
      * Description: 查询技术员信息
@@ -395,4 +396,97 @@ public interface IProjectService {
      **/
     @PostMapping("/selectTechnicist")
     ResultData selectTechnicist(@RequestBody HashMap map);
+     /**
+     * @author yang
+     * @date 2020/7/18 9:27
+     *Description
+     * 新增测绘项目
+     */
+    @PostMapping("/addMappingProject")
+    ResultData addMappingProject(@RequestBody MappingProject mappingProject);
+
+    /**
+     * @author yang
+     * @date 2020/7/18 9:28
+     *Description
+     * 批量删除测绘项目
+     */
+    @PostMapping("/delMappingProject")
+    ResultData delMappingProject(@RequestBody List<Long> ids);
+
+    /**
+     * @author yang
+     * @date 2020/7/18 9:29
+     *Description
+     * 修改测绘项目信息
+     */
+    @PostMapping("/updateMappingProject")
+    ResultData updateMappingProject(@RequestBody MappingProject mappingProject);
+
+    /**
+     * @author yang
+     * @date 2020/7/18 9:30
+     *Description
+     * 查询测绘项目
+     */
+    @PostMapping("/selectMappingProjectAll")
+    ResultData selectMappingProjectAll(MappingProject mappingProject);
+
+    /**
+     * @author yang
+     * @date 2020/7/18 9:31
+     *Description
+     * 条件查询测绘项目信息
+     */
+    @PostMapping("/selectMappingProject")
+    ResultData selectMappingProject(@RequestBody HashMap map);
+
+
+    /**
+     * @author yang
+     * @date 2020/7/18 11:19
+     *Description
+     * 新增测绘单位
+     */
+    @PostMapping("/addMappingUnit")
+    ResultData addMappingUnit(@RequestBody MappingUnit mappingUnit);
+
+    /**
+     * @author yang
+     * @date 2020/7/18 11:20
+     *Description
+     * 批量删除测绘单位信息
+     */
+    @PostMapping("/delMappingUnit")
+    ResultData delMappingUnit(@RequestBody List<Long> ids);
+
+    /**
+     * @author yang
+     * @date 2020/7/18 11:21
+     *Description
+     * 修改测绘单位信息
+     */
+    @PostMapping("/updateMappingUnit")
+    ResultData updateMappingUnit(@RequestBody MappingUnit mappingUnit);
+
+    /**
+     * @author yang
+     * @date 2020/7/18 11:23
+     *Description
+     * 查询测绘单位信息
+     */
+    @PostMapping("/selectMappingUnitAll")
+    ResultData selectMappingUnitAll(MappingUnit mappingUnit);
+
+    /**
+     * @author yang
+     * @date 2020/7/18 11:23
+     *Description
+     * 条件查询测绘单位信息
+     */
+    @PostMapping("/selectMappingUnit")
+    ResultData selectMappingUnit(@RequestBody HashMap map);
+
+
+
 }

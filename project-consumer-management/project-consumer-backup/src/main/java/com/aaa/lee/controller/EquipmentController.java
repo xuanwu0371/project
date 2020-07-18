@@ -61,10 +61,10 @@ public class EquipmentController extends BaseController {
      * @author yang
      * @date 2020/7/17 17:12
      *Description
-     * 分页查询仪器设备信息
+     * 查询仪器设备信息
      */
-    @PostMapping("/selectAllEquipmentByPage")
-    public ResultData selectAllEquipmentByPage(@RequestBody HashMap hashMap){
-        return iProjectService.selectAllEquipmentByPage(hashMap);
+    @PostMapping("/selectAllEquipment")
+    public ResultData selectAllEquipment(@RequestBody Equipment equipment){
+        return iProjectService.selectAllEquipmentByPage(equipment);
     }
 }
