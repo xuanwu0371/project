@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tk.mybatis.mapper.util.Sqls;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,50 +34,47 @@ public class NewsController extends CommonController<News> {
     private NewsService newsService;
     @Autowired
     private RedisService redisService;
+    public BaseService getBaseService() {
+        return null;
+    }
 
     /**
      * @author yang
      * @date 2020/7/17 9:17
      * Description
-     * 新闻管理：新增新闻
+     * 新增新闻
      */
     @PostMapping("/addNews")
-    ResultData addNews(@RequestBody News news) {
-        Map<String, Object> addResult = newsService.addNews(news);
-        if (INSERT_SUCCESS.getCode().equals(addResult.get("code"))) {
-            return super.operationSuccess();
-        }
-        return super.operationFailed();
+    public ResultData addNews(@RequestBody News news) {
+        ResultData resultData = newsService.addNews(news);
+        return (resultData.getCode().equals(INSERT_SUCCESS.getCode()))
+                ? resultData : super.insertOperationFailed();
     }
 
     /**
      * @author yang
      * @date 2020/7/17 9:18
      * Description
-     * 删除新闻
+     * 根据id批量删除新闻
      */
-    @PostMapping("/delNews")
-    ResultData delNews(@RequestBody List<Long> ids) {
-        Map<String, Object> resultMap = newsService.delNews(ids);
-        if (DELETE_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.operationSuccess();
-        }
-        return super.operationFailed();
+    @PostMapping("/delNewsByIds")
+    public ResultData delNewsByIds(@RequestBody Integer[] ids) {
+        ResultData resultData = super.batchDelete(ids);
+        return resultData.getCode().equals(operationSuccess().getCode()) ?
+                resultData : super.deleteOperationFailed();
     }
 
     /**
      * @author yang
      * @date 2020/7/17 9:26
      * Description
-     * 修改新闻信息
+     * 根据主键(id)修改新闻信息
      */
-    @RequestMapping("/updateNews")
-    ResultData updateNews(@RequestBody News news) {
-        Map<String, Object> resultMap = newsService.updateNews(news);
-        if (UPDATE_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.operationSuccess();
-        }
-        return super.operationFailed();
+    @RequestMapping("/updateNewsById")
+    public ResultData updateNewsById(News news) {
+        ResultData resultData = newsService.updateNewsBuId(news);
+        return resultData.getCode().equals(UPDATE_SUCCESS.getCode()) ?
+                resultData : super.updateOperationFailed();
     }
 
     /**
@@ -85,46 +83,48 @@ public class NewsController extends CommonController<News> {
      * Description
      * 查询全部新闻
      */
-    @PostMapping("/selectNews")
-    public ResultData selectNews() {
-        Map<String, Object> resultMap = newsService.selectNews();
-        if (SELECT_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.operationSuccess(resultMap);
-        }
-        return super.operationFailed();
+    @PostMapping("/selNews")
+    public ResultData selNews(News news) {
+        ResultData resultData = newsService.selNews(news);
+        return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
+                resultData : super.selectOperationFailed();
+    }
+
+    /**
+     * @author : yang
+     * @date : 2020/7/19 15:44a
+     *Description :查询一条数据
+     */
+    @PostMapping("/selNewsById")
+    public ResultData selNewsById(@RequestBody News id) {
+        ResultData resultData = newsService.selNewsById(id);
+        return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
+                resultData : super.selectOperationFailed();
     }
 
     /**
      * @author yang
      * @date 2020/7/17 9:34
      * Description
-     * 分页查询全部新闻
+     * 分页查询新闻
      */
-    @PostMapping("/selectAllNews")
-    ResultData selectAllNews(@RequestBody HashMap map) {
-        Map<String, Object> resultMap = newsService.selectAllNews(map, redisService);
-        if (SELECT_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.operationSuccess(resultMap);
-        } else {
-            return super.operationFailed();
-        }
+    @PostMapping("/selNewsByPage")
+    public ResultData selNewsByPage(News news,Integer pageNumber,Integer pageSize){
+        ResultData resultData = newsService.selAuditByPage(news, pageNumber, pageSize);
+        return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
+                resultData : super.selectOperationFailed();
     }
 
     /**
      * @author yang
      * @date 2020/7/17 9:56
      * Description
-     * 分页条件查询
+     * 根据条件分页查询新闻
      */
-    @PostMapping("/selectNewsPageInfo")
-    ResultData selectNewsPageInfo(HashMap map) {
-        return null;
-
-    }
-//TODO 分页查询
-
-
-    public BaseService getBaseService() {
-        return null;
+    @PostMapping("/selNewsByPageFiled")
+    public ResultData selNewsByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds){
+        ResultData resultData = newsService.selNewsByPageFiled(number, pageSize, where, orderFiled, fileds);
+        return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
+                resultData : super.selectOperationFailed();
     }
 }

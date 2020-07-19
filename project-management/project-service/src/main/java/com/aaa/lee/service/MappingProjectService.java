@@ -1,6 +1,7 @@
 package com.aaa.lee.service;
 
 import com.aaa.lee.base.BaseService;
+import com.aaa.lee.base.ResultData;
 import com.aaa.lee.mapper.MappingProjectMapper;
 import com.aaa.lee.model.MappingProject;
 import com.aaa.lee.redis.RedisService;
@@ -33,68 +34,58 @@ public class MappingProjectService extends BaseService<MappingProject> {
     @Autowired
     private MappingProjectMapper mappingProjectMapper;
 
+    private ResultData resultData = new ResultData();
+
     /**
      * @author yang
      * @date 2020/7/18 8:29
      *Description
      *     增加测绘项目
      */
-    public Map<String,Object> addMappingProject(MappingProject mappingProject){
-        Map<String,Object> resultMap = new HashMap<String, Object>();
+    public ResultData addMappingProject(MappingProject mappingProject){
         mappingProject.setModifyTime(DateUtil.formatDate(new Date(), TIME_FORMAT));
-        int addResult = mappingProjectMapper.insert(mappingProject);
-        if (addResult > 0) {
-            resultMap.put("code", OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
-            return resultMap;
+        int insert = super.add(mappingProject);
+        if (insert > 0) {
+            resultData.setCode(INSERT_SUCCESS.getCode()).setMsg(INSERT_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", OPERATION_FAILED.getCode());
-            resultMap.put("msg", OPERATION_FAILED.getMsg());
-            return resultMap;
+            resultData.setCode(INSERT_FAILED.getCode()).setMsg(INSERT_FAILED.getMsg());
         }
+        return resultData;
     }
 
     /**
      * @author yang
      * @date 2020/7/18 8:44
      *Description
-     * 测绘项目删除
+     * 根据id批量测删除绘项目
      */
-    public Map<String,Object> delMappingProject(List<Long> ids){
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        //获取到参数类型,然后添加一个where条件,是in类型,id属于ids中的
-        Example example = Example.builder(MappingProject.class).where(Sqls.custom().andIn("id", ids)).build();
-        int i = mappingProjectMapper.deleteByExample(example);
-        if (i > 0) {
-            resultMap.put("code", OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
-            return resultMap;
+    public ResultData delMappingProjectBuIds(List<Integer> ids){
+        Integer delete = super.deleteByIds(ids);
+        if (delete > 0) {
+            resultData.setCode(DELETE_SUCCESS.getCode()).setMsg(DELETE_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", OPERATION_FAILED.getCode());
-            resultMap.put("msg", OPERATION_FAILED.getMsg());
-            return resultMap;
+            resultData.setCode(DELETE_FAILED.getCode()).setMsg(DELETE_FAILED.getMsg());
         }
+        return resultData;
     }
 
     /**
      * @author yang
      * @date 2020/7/18 8:48
      *Description
-     * 修改测绘项目信息
+     * 根据主键(id)修改测绘项目信息
      */
-    public Map<String,Object> updateMappingProject(MappingProject mappingProject){
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        mappingProject.setModifyTime(DateUtil.formatDate(new Date(), TIME_FORMAT));
-        int i = mappingProjectMapper.updateByPrimaryKeySelective(mappingProject);
-        if (i > 0) {
-            resultMap.put("code", OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
-            return resultMap;
+    public ResultData updateMappingProjectById(MappingProject mappingProject){
+        Integer update = super.update(mappingProject);
+        if (update > 0) {
+            resultData.setCode(UPDATE_SUCCESS.getCode())
+                    .setMsg(UPDATE_SUCCESS.getMsg());
+
         } else {
-            resultMap.put("code", OPERATION_FAILED.getCode());
-            resultMap.put("msg", OPERATION_FAILED.getMsg());
-            return resultMap;
+            resultData.setCode(UPDATE_FAILED.getCode())
+                    .setMsg(UPDATE_FAILED.getMsg());
         }
+        return resultData;
     }
     /**
      * @author yang
@@ -102,64 +93,74 @@ public class MappingProjectService extends BaseService<MappingProject> {
      *Description
      * 查询全部测绘项目信息
      */
-    public Map<String,Object> selectMappingProjectAll(){
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        List<MappingProject> mappingProjects = mappingProjectMapper.selectAll();
-        if (null != mappingProjects && !mappingProjects.isEmpty()) {
-            resultMap.put("code", OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
-            resultMap.put("data", mappingProjects);
-            return resultMap;
+    public ResultData selMappingProject(MappingProject mappingProject){
+        List<MappingProject> mappingProjectList = super.selectList(mappingProject);
+        ResultData resultData = new ResultData();
+        if (mappingProjectList.size() > 0) {
+            resultData.setCode(SELECT_SUCCESS.getCode())
+                    .setMsg(SELECT_SUCCESS.getMsg())
+                    .setData(mappingProjectList);
+
         } else {
-            resultMap.put("code", OPERATION_FAILED.getCode());
-            resultMap.put("msg", OPERATION_FAILED.getMsg());
-            return resultMap;
+            resultData.setCode(SELECT_FAILED.getCode()).setMsg(SELECT_FAILED.getMsg());
         }
+        return resultData;
+    }
+
+    /**
+     * @author : yang
+     * @date : 2020/7/19 14:58
+     *Description :查询一条数据
+     */
+    public ResultData selMappingProjectById(MappingProject id) {
+        MappingProject mappingProject = super.selectOne(id);
+        if (!mappingProject.equals("")) {
+            resultData.setCode(SELECT_SUCCESS.getCode())
+                    .setMsg(SELECT_SUCCESS.getMsg())
+                    .setData(mappingProject);
+        } else {
+            resultData.setCode(SELECT_FAILED.getCode())
+                    .setMsg(SELECT_FAILED.getMsg());
+        }
+        return resultData;
     }
 
     /**
      * @author yang
      * @date 2020/7/18 8:53
      *Description
-     * 分页条件查询项目信息
+     * 分页查询项目信息
      */
-    public PageInfo<HashMap> selectMappingProjectPageInfo(HashMap map){
-        PageHelper.startPage(BaseUtil.transToInt(map.get("pageNo")), BaseUtil.transToInt(map.get("pageNumber")));
-        List<HashMap> list = mappingProjectMapper.selectMappingProjectAll(map);
-        PageInfo<HashMap> pageInfo = new PageInfo<HashMap>(list);
-        if (null != pageInfo && !"".equals(pageInfo)) {
-            return pageInfo;
+    public ResultData selMappingProjectByPage(MappingProject mappingProject, Integer pageNumber, Integer pageSize) {
+        PageInfo<MappingProject> userPageInfo = super.selectListByPage(mappingProject, pageNumber, pageSize);
+        if (!userPageInfo.equals("")) {
+            resultData.setCode(SELECT_SUCCESS.getCode())
+                    .setMsg(SELECT_SUCCESS.getMsg())
+                    .setData(userPageInfo);
+        } else {
+            resultData.setCode(SELECT_FAILED.getCode())
+                    .setMsg(SELECT_FAILED.getMsg());
         }
-        return null;
+        return resultData;
     }
 
     /**
      * @author yang
      * @date 2020/7/18 8:58
      *Description
-     * 分页查询全部测绘项目信息
+     * 根据条件分页查询测绘项目信息
      */
-    public Map<String, Object> selectMappingProjectsAll(HashMap map, RedisService redisService) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        Object tokenId = redisService.getOne(map.get("tokenId").toString());
-        //检测token
-        if (null == tokenId) {
-            resultMap.put("code", OPERATION_SUCCESS.getCode());
-            resultMap.put("msg", OPERATION_SUCCESS.getMsg());
-            return resultMap;
+    public ResultData selMappingProjectByPageFiled(Integer number,Integer pageSize,Sqls where, String orderFiled, String... fileds ){
+        PageInfo<MappingProject> mappingProjectPageInfo = super.selectListByPageAndFiled(number, pageSize, where, orderFiled, fileds);
+        if (mappingProjectPageInfo.equals("")){
+            resultData.setCode(SELECT_SUCCESS.getCode())
+                    .setMsg(SELECT_SUCCESS.getMsg())
+                    .setData(mappingProjectPageInfo);
+        }else {
+            resultData.setCode(SELECT_FAILED.getCode())
+                    .setMsg(SELECT_FAILED.getMsg());
         }
-        if (map.size() > 0) {
-            PageInfo<HashMap> pageInfo = selectMappingProjectPageInfo(map);
-            if (null != pageInfo && pageInfo.getSize() > 0) {
-                resultMap.put("code", OPERATION_SUCCESS.getCode());
-                resultMap.put("msg", OPERATION_SUCCESS.getMsg());
-                return resultMap;
-            } else {
-                resultMap.put("code", OPERATION_FAILED.getCode());
-                resultMap.put("msg", OPERATION_FAILED.getMsg());
-            }
+        return resultData;
 
-        }
-        return resultMap;
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tk.mybatis.mapper.util.Sqls;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,73 +44,85 @@ public class MappingProjectController extends CommonController<MappingProject> {
      *     新增测绘项目
      */
     @PostMapping("/addMappingProject")
-    ResultData addMappingProject(@RequestBody MappingProject mappingProject){
-        Map<String, Object> addResult = mappingProjectService.addMappingProject(mappingProject);
-        if (addResult.get("code").equals(OPERATION_SUCCESS.getCode())) {
-            return super.operationSuccess();
-        }
-        return super.operationFailed();
+    public ResultData addMappingProject(@RequestBody MappingProject mappingProject) {
+        ResultData resultData = mappingProjectService.addMappingProject(mappingProject);
+        return (resultData.getCode().equals(INSERT_SUCCESS.getCode()))
+                ? resultData : super.insertOperationFailed();
     }
 
     /**
      * @author yang
      * @date 2020/7/18 9:14
      *Description
-     *   批量删除测绘项目
+     *    根据id批量删除测绘项目
      */
-    @PostMapping("/delMappingProject")
-    ResultData delMappingProject(@RequestBody List<Long> ids){
-        Map<String, Object> resultMap = mappingProjectService.delMappingProject(ids);
-        if (resultMap.get("code").equals(OPERATION_SUCCESS.getCode())) {
-            return super.operationSuccess();
-        }
-        return super.operationFailed();
+    @PostMapping("/delMappingProjectByIds")
+    public ResultData delMappingProjectByIds(@RequestBody Integer[] ids){
+        ResultData resultData = super.batchDelete(ids);
+        return resultData.getCode().equals(operationSuccess().getCode()) ?
+                resultData : super.deleteOperationFailed();
     }
 
     /**
      * @author yang
      * @date 2020/7/18 9:16
      *Description
-     *   修改测绘项目信息
+     *   根据主键(id)修改测绘项目信息
      */
-    @PostMapping("/updateMappingProject")
-    ResultData updateMappingProject(@RequestBody MappingProject mappingProject){
-        Map<String,Object> resultMap = mappingProjectService.updateMappingProject(mappingProject);
-        if (resultMap.get("code").equals(OPERATION_SUCCESS.getCode())) {
-            return super.operationSuccess();
-        }
-        return super.operationFailed();
+    @PostMapping("/updateMappingProjectById")
+    public ResultData updateMappingProjectById(@RequestBody MappingProject mappingProject){
+        ResultData resultData = mappingProjectService.updateMappingProjectById(mappingProject);
+        return resultData.getCode().equals(UPDATE_SUCCESS.getCode()) ?
+                resultData : super.updateOperationFailed();
     }
 
     /**
      * @author yang
      * @date 2020/7/18 9:19
      *Description
-     * 查询测绘项目信息
+     * 查询所有测绘项目信息
      */
-    @PostMapping("/selectMappingProjectAll")
-    ResultData selectMappingProjectAll(MappingProject mappingProject){
-        Map<String, Object> resultMap = mappingProjectService.selectMappingProjectAll();
-        if (resultMap.get("code").equals(OPERATION_SUCCESS.getCode())) {
-            return super.operationSuccess(resultMap);
-        } else {
-            return super.operationFailed();
-        }
+    @PostMapping("/selMappingProject")
+    public ResultData selMappingProject(MappingProject mappingProject){
+        ResultData resultData = mappingProjectService.selMappingProject(mappingProject);
+        return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
+                resultData : super.selectOperationFailed();
+    }
+
+    /**
+     * @author : yang
+     * @date : 2020/7/19 15:34
+     *Description :查询一条数据
+     */
+    @PostMapping("/selMappingProjectById")
+    public ResultData selMappingProjectById(@RequestBody MappingProject id) {
+        ResultData resultData = mappingProjectService.selMappingProjectById(id);
+        return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
+                resultData : super.selectOperationFailed();
+    }
+
+    /**
+     * @author : yang
+     * @date : 2020/7/19 15:35
+     *Description :分页查询测绘项目信息
+     */
+    @PostMapping("/selMappingProjectByPage")
+    public ResultData selMappingProjectByPage(MappingProject mappingProject,Integer pageNumber,Integer pageSize){
+        ResultData resultData = mappingProjectService.selMappingProjectByPage(mappingProject, pageNumber, pageSize);
+        return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
+                resultData : super.selectOperationFailed();
     }
 
     /**
      * @author yang
      * @date 2020/7/18 9:23
      *Description
-     * 条件查询测绘项目信息
+     * 根据条件查询测绘项目信息
      */
-    @PostMapping("/selectMappingProject")
-    ResultData selectMappingProject(@RequestBody HashMap map){
-        Map<String,Object> mappingProjectAll = mappingProjectService.selectMappingProjectsAll(map,redisService);
-        if (mappingProjectAll.get("code").equals(OPERATION_SUCCESS.getCode())) {
-            return super.operationSuccess(mappingProjectAll);
-        } else {
-            return super.operationFailed();
-        }
+    @PostMapping("/selMappingProjectByPageFiled")
+    public ResultData selMappingProjectByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds){
+        ResultData resultData = mappingProjectService.selMappingProjectByPageFiled(number, pageSize, where, orderFiled, fileds);
+        return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
+                resultData : super.selectOperationFailed();
     }
 }

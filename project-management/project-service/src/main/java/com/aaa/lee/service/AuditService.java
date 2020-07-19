@@ -2,47 +2,38 @@ package com.aaa.lee.service;
 
 import com.aaa.lee.base.BaseService;
 import com.aaa.lee.base.ResultData;
-import com.aaa.lee.mapper.NewsMapper;
-import com.aaa.lee.model.News;
-import com.aaa.lee.redis.RedisService;
-import com.aaa.lee.utils.BaseUtil;
-import com.github.pagehelper.PageHelper;
+import com.aaa.lee.mapper.AuditMapper;
+import com.aaa.lee.model.Audit;
 import com.github.pagehelper.PageInfo;
-import jdk.internal.org.objectweb.asm.tree.InnerClassNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.Sqls;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.aaa.lee.status.OperationStatus.*;
-
 /**
  * @author Yang
- * @date 2020-07-16 18:32
+ * @date 2020-07-19 14:01
  */
 @Service
 @Slf4j
-public class NewsService extends BaseService<News> {
+public class AuditService extends BaseService<Audit> {
     @Autowired
-    private NewsMapper newsMapper;
-    
-    private ResultData resultData;
+    private AuditMapper auditMapper;
+
+    private ResultData resultData = new ResultData();
 
     /**
-     * @author yang
-     * @date 2020/7/16 18:35
-     * Description
-     * 新增新闻
+     * @author : yang
+     * @date : 2020/7/19 14:07
+     *Description :添加审核信息
      */
-    public ResultData addNews(News news) {
-        news.setGmtCreate(new Date());
-        int insert = super.add(news);
+    public ResultData addAudit(Audit audit){
+        audit.setCreateTime(new Date());
+        int insert = super.add(audit);
         if (insert > 0) {
             resultData.setCode(INSERT_SUCCESS.getCode()).setMsg(INSERT_SUCCESS.getMsg());
         } else {
@@ -52,12 +43,11 @@ public class NewsService extends BaseService<News> {
     }
 
     /**
-     * @author yang
-     * @date 2020/7/16 19:03
-     * Description
-     * 根据id批量删除新闻
+     * @author : yang
+     * @date : 2020/7/19 14:14
+     *Description :根据id批量删除审核信息
      */
-    public ResultData delNewsByIds(List<Integer> ids){
+    public ResultData delAuditByIds(List<Integer> ids){
         Integer delete = super.deleteByIds(ids);
         if (delete > 0) {
             resultData.setCode(DELETE_SUCCESS.getCode()).setMsg(DELETE_SUCCESS.getMsg());
@@ -68,13 +58,12 @@ public class NewsService extends BaseService<News> {
     }
 
     /**
-     * @author yang
-     * @date 2020/7/16 19:10
-     * Description
-     * 根据主键（id）修改新闻
+     * @author : yang
+     * @date : 2020/7/19 14:18
+     *Description :根据主键（id）修改审核信息
      */
-    public ResultData updateNewsBuId(News news){
-        Integer update = super.update(news);
+    public ResultData updateAuditBuId(Audit audit){
+        Integer update = super.update(audit);
         if (update > 0) {
             resultData.setCode(UPDATE_SUCCESS.getCode())
                     .setMsg(UPDATE_SUCCESS.getMsg());
@@ -87,36 +76,35 @@ public class NewsService extends BaseService<News> {
     }
 
     /**
-     * @author yang
-     * @date 2020/7/16 19:13
-     * Description
-     * 查询所有新闻信息
+     * @author : yang
+     * @date : 2020/7/19 14:20
+     *Description :查询所有审核信息
      */
-    public ResultData selNews(News news){
-        List<News> newsList = super.selectList(news);
+    public ResultData selAudit(Audit audit){
+        List<Audit> auditList = super.selectList(audit);
         ResultData resultData = new ResultData();
-        if (newsList.size() > 0) {
+        if (auditList.size() > 0) {
             resultData.setCode(SELECT_SUCCESS.getCode())
                     .setMsg(SELECT_SUCCESS.getMsg())
-                    .setData(newsList);
+                    .setData(auditList);
 
         } else {
             resultData.setCode(SELECT_FAILED.getCode()).setMsg(SELECT_FAILED.getMsg());
         }
         return resultData;
     }
-    
+
     /**
      * @author : yang
-     * @date : 2020/7/19 15:05
+     * @date : 2020/7/19 14:22
      *Description :查询一条数据
      */
-    public ResultData selNewsById(News id) {
-        News news = super.selectOne(id);
-        if (!news.equals("")) {
+    public ResultData selAuditById(Audit id) {
+        Audit audit = super.selectOne(id);
+        if (!audit.equals("")) {
             resultData.setCode(SELECT_SUCCESS.getCode())
                     .setMsg(SELECT_SUCCESS.getMsg())
-                    .setData(news);
+                    .setData(audit);
         } else {
             resultData.setCode(SELECT_FAILED.getCode())
                     .setMsg(SELECT_FAILED.getMsg());
@@ -125,13 +113,12 @@ public class NewsService extends BaseService<News> {
     }
 
     /**
-     * @author yang
-     * @date 2020/7/16 19:18
-     * Description
-     * 分页查询新闻信息
+     * @author : yang
+     * @date : 2020/7/19 14:23
+     *Description :分页查询审核信息
      */
-    public ResultData selAuditByPage(News news, Integer pageNumber, Integer pageSize) {
-        PageInfo<News> userPageInfo = super.selectListByPage(news, pageNumber, pageSize);
+    public ResultData selAuditByPage(Audit audit, Integer pageNumber, Integer pageSize) {
+        PageInfo<Audit> userPageInfo = super.selectListByPage(audit, pageNumber, pageSize);
         if (!userPageInfo.equals("")) {
             resultData.setCode(SELECT_SUCCESS.getCode())
                     .setMsg(SELECT_SUCCESS.getMsg())
@@ -144,17 +131,16 @@ public class NewsService extends BaseService<News> {
     }
 
     /**
-     * @author yang
-     * @date 2020/7/16 19:26
-     * Description
-     * 根据条件分页查询新闻信息
+     * @author : yang
+     * @date : 2020/7/19 14:24
+     *Description :根据条件分页查询审核信息
      */
-    public ResultData selNewsByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds ){
-        PageInfo<News> newsPageInfo = super.selectListByPageAndFiled(number, pageSize, where, orderFiled, fileds);
-        if (newsPageInfo.equals("")){
+    public ResultData selAuditByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds ){
+        PageInfo<Audit> auditPageInfo = super.selectListByPageAndFiled(number, pageSize, where, orderFiled, fileds);
+        if (auditPageInfo.equals("")){
             resultData.setCode(SELECT_SUCCESS.getCode())
                     .setMsg(SELECT_SUCCESS.getMsg())
-                    .setData(newsPageInfo);
+                    .setData(auditPageInfo);
         }else {
             resultData.setCode(SELECT_FAILED.getCode())
                     .setMsg(SELECT_FAILED.getMsg());

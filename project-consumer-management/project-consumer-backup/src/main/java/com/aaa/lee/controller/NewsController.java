@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tk.mybatis.mapper.util.Sqls;
 
 import java.util.List;
 
@@ -20,7 +21,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/news")
-@Api(value = "新闻管理",tags = "新闻管理接口")
 public class NewsController extends BaseController {
 
     @Autowired
@@ -33,8 +33,7 @@ public class NewsController extends BaseController {
      *       新增新闻
      */
     @PostMapping("/addNews")
-    @ApiOperation(value = "添加新闻",notes = "新闻管理的新增新闻")
-    public ResultData addNews(@RequestBody News news){
+    public ResultData addNews(@RequestBody News news) {
         return iProjectService.addNews(news);
     }
 
@@ -42,24 +41,22 @@ public class NewsController extends BaseController {
      * @author yang
      * @date 2020/7/17 10:44
      *Description
-     * 删除新闻
+     * 根据id批量删除新闻
      */
-    @PostMapping("/delNews")
-    @ApiOperation(value = "删除新闻",notes ="新闻管理的删除新闻")
-    public ResultData delNews(@RequestBody List<Long> ids){
-        return iProjectService.delNews(ids);
+    @PostMapping("/delNewsByIds")
+    public ResultData delNewsByIds(@RequestBody Integer[] ids) {
+       return iProjectService.delNewsByIds(ids);
     }
 
     /**
      * @author yang
      * @date 2020/7/17 10:47
      *Description
-     * 修改新闻信息
+     * 根据主键(id)修改新闻信息
      */
-    @PostMapping("/updateNews")
-    @ApiOperation(value = "修改新闻",notes = "新闻管理的修改新闻信息")
-    public ResultData updateNews(@RequestBody News news){
-        return iProjectService.updateNews(news);
+    @RequestMapping("/updateNewsById")
+    public ResultData updateNewsById(News news) {
+       return iProjectService.updateNewsById(news);
     }
 
     /**
@@ -68,10 +65,38 @@ public class NewsController extends BaseController {
      *Description
      * 查询所有新闻
      */
-    @PostMapping("/selectNews")
-    @ApiOperation(value = "查询新闻",notes = "新闻管理的查询新闻")
-    public ResultData selectNews(News news){
-        return iProjectService.selectNews(news);
+    @PostMapping("/selNews")
+    public ResultData selNews(News news) {
+        return iProjectService.selNews(news);
     }
 
+    /**
+     * @author : yang
+     * @date : 2020/7/19 16:35
+     *Description :查询一条数据
+     */
+    @PostMapping("/selNewsById")
+    public ResultData selNewsById(@RequestBody News id) {
+       return iProjectService.selNewsById(id);
+    }
+
+    /**
+     * @author : yang
+     * @date : 2020/7/19 16:35
+     *Description :分页查询新闻
+     */
+    @PostMapping("/selNewsByPage")
+    public ResultData selNewsByPage(News news,Integer pageNumber,Integer pageSize){
+       return iProjectService.selNewsByPage(news,pageNumber,pageSize);
+    }
+
+    /**
+     * @author : yang
+     * @date : 2020/7/19 16:36
+     *Description :根据条件分页查询新闻
+     */
+    @PostMapping("/selNewsByPageFiled")
+    public ResultData selNewsByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds){
+        return iProjectService.selNewsByPageFiled(number, pageSize, where, orderFiled, fileds);
+    }
 }
