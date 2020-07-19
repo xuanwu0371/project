@@ -4,23 +4,15 @@ import com.aaa.lee.base.BaseService;
 import com.aaa.lee.base.ResultData;
 import com.aaa.lee.mapper.UserMapper;
 import com.aaa.lee.model.User;
-import com.aaa.lee.redis.RedisService;
-import com.aaa.lee.utils.BaseUtil;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.httpclient.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.Sqls;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.aaa.lee.staticproerties.TimeFormatProperties.TIME_FORMAT;
 import static com.aaa.lee.status.OperationStatus.*;
@@ -33,7 +25,7 @@ import static com.aaa.lee.status.OperationStatus.DELETE_FAILED;
  */
 @Service
 @Slf4j
-public class UserService extends BaseService<User> {
+public class UserService extends BaseService<User>   {
     @Autowired
     private UserMapper userMapper;
 
@@ -78,6 +70,7 @@ public class UserService extends BaseService<User> {
      * Description: 根据主键(id)修改用户信息
      **/
     public ResultData updateUserById(User user) {
+        user.setModifyTime(DateUtil.formatDate(new Date(),TIME_FORMAT));
         Integer update = super.update(user);
         if (update > 0) {
             resultData.setCode(UPDATE_SUCCESS.getCode())
@@ -97,7 +90,6 @@ public class UserService extends BaseService<User> {
      **/
     public ResultData selUser(User user) {
         List<User> userList = super.selectList(user);
-        ResultData resultData = new ResultData();
         if (userList.size() > 0) {
             resultData.setCode(SELECT_SUCCESS.getCode())
                     .setMsg(SELECT_SUCCESS.getMsg())
@@ -114,12 +106,12 @@ public class UserService extends BaseService<User> {
      * @date : 2020/7/18 20:30
      * Description: 查询一条数据
      **/
-    public ResultData selUserById(User id) {
-        User user = super.selectOne(id);
-        if (!user.equals("")) {
+    public ResultData selUserById(User user) {
+        User user1 = super.selectOne(user);
+        if (!user1.equals("")) {
             resultData.setCode(SELECT_SUCCESS.getCode())
                     .setMsg(SELECT_SUCCESS.getMsg())
-                    .setData(user);
+                    .setData(user1);
         } else {
             resultData.setCode(SELECT_FAILED.getCode())
                     .setMsg(SELECT_FAILED.getMsg());
@@ -132,7 +124,7 @@ public class UserService extends BaseService<User> {
      * @date : 2020/7/19 9:42
      * Description: 分页查询用户
      **/
-    public ResultData SelUserByPage(User user, Integer pageNumber, Integer pageSize) {
+    public ResultData selUserByPage(User user, Integer pageNumber, Integer pageSize) {
         PageInfo<User> userPageInfo = super.selectListByPage(user, pageNumber, pageSize);
         if (!userPageInfo.equals("")) {
             resultData.setCode(SELECT_SUCCESS.getCode())
@@ -150,7 +142,7 @@ public class UserService extends BaseService<User> {
      * @date : 2020/7/19 10:00
      * Description: 根据条件分页查询用户
     **/
-    public ResultData SelUserByPageFiled(Integer number,Integer pageSize,Sqls where, String orderFiled, String... fileds ){
+    public ResultData selUserByPageFiled(Integer number,Integer pageSize,Sqls where, String orderFiled, String... fileds ){
         PageInfo<User> userPageInfo = super.selectListByPageAndFiled(number, pageSize, where, orderFiled, fileds);
         if (userPageInfo.equals("")){
             resultData.setCode(SELECT_SUCCESS.getCode())

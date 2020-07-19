@@ -1,115 +1,99 @@
 package com.aaa.lee.service;
 
 import com.aaa.lee.base.BaseService;
+import com.aaa.lee.base.ResultData;
 import com.aaa.lee.mapper.DictMapper;
 import com.aaa.lee.model.Dict;
+import com.aaa.lee.model.User;
 import com.aaa.lee.utils.BaseUtil;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.httpclient.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.Sqls;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.aaa.lee.status.OperationStatus.*;
 
 /**
- * create by: LiShiHao
- * create Time:  2020/7/17 10:54
- * description:字典管理的service
- */
+ * @Author: Lee ShiHao
+ * @date : 2020/7/19 14:32
+ * Description: 字典管理
+**/
 @Service
 public class DictService extends BaseService<Dict> {
 
     @Autowired
     private DictMapper dictMapper;
-
+    private ResultData resultData = new ResultData<>();
 
     /**
      * @Author: Lee ShiHao
-     * @date : 2020/7/17 11:13
-     * Description: 新增字典信息
-     **/
-    public Map<String, Object> insertDict(Dict dict) {
-        Map<String, Object> resultMap = new HashMap<>();
-        int i = dictMapper.insert(dict);
-        if (i > 0) {
-            resultMap.put("code", INSERT_SUCCESS.getCode());
-            resultMap.put("msg", INSERT_SUCCESS.getMsg());
+     * @date : 2020/7/19 14:32
+     * Description: 新增字典
+    **/
+    public ResultData addDict(Dict dict) {
+        int insert = super.add(dict);
+        if (insert > 0) {
+            resultData.setCode(INSERT_SUCCESS.getCode()).setMsg(INSERT_SUCCESS.getMsg());
         } else {
-            resultMap.put("code",INSERT_FAILED .getCode());
-            resultMap.put("msg", INSERT_FAILED.getMsg());
+            resultData.setCode(INSERT_FAILED.getCode()).setMsg(INSERT_FAILED.getMsg());
         }
-        return resultMap;
+        return resultData;
     }
 
     /**
      * @Author: Lee ShiHao
-     * @date : 2020/7/17 11:03
+     * @date : 2020/7/19 14:33
      * Description: 通过id批量删除字典
-     **/
-    public Map<String, Object> delDictsById(List<Long> ids) {
-        Map<String, Object> resultMap = new HashMap<>();
-        //获取参数类型,添加一个where条件
-        Example id = Example.builder(Dict.class).where(Sqls.custom().andIn("id", ids)).build();
-        int i = dictMapper.deleteByExample(id);
-        if (i > 0) {
-            resultMap.put("code",DELETE_SUCCESS .getCode());
-            resultMap.put("msg", DELETE_SUCCESS.getMsg());
+    **/
+    public ResultData delDictByIds(List<Integer> ids) {
+        Integer delete = super.deleteByIds(ids);
+        if (delete > 0) {
+            resultData.setCode(DELETE_SUCCESS.getCode()).setMsg(DELETE_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", DELETE_FAILED.getCode());
-            resultMap.put("msg", DELETE_FAILED.getMsg());
+            resultData.setCode(DELETE_FAILED.getCode()).setMsg(DELETE_FAILED.getMsg());
         }
-        return resultMap;
+        return resultData;
     }
 
     /**
      * @Author: Lee ShiHao
-     * @date : 2020/7/17 11:09
-     * Description: 修改字典信息
-     **/
-    public Map<String, Object> updateDict(Dict dict) {
-        Map<String, Object> resultMap = new HashMap<>();
-        if (dict != null) {
-            int i = dictMapper.updateByPrimaryKey(dict);
-            if (i > 0) {
-                resultMap.put("code", UPDATE_SUCCESS.getCode());
-                resultMap.put("msg", UPDATE_SUCCESS.getMsg());
+     * @date : 2020/7/19 14:34
+     * Description: 根据主键(id)修改字典信息
+    **/
+    public ResultData updateDictById(Dict dict) {
+        Integer update = super.update(dict);
+        if (update > 0) {
+            resultData.setCode(UPDATE_SUCCESS.getCode())
+                    .setMsg(UPDATE_SUCCESS.getMsg());
 
-            } else {
-                resultMap.put("code",UPDATE_FAILED .getCode());
-                resultMap.put("msg",UPDATE_FAILED .getMsg());
-
-            }
         } else {
-            resultMap.put("code", UPDATE_FAILED.getCode());
-            resultMap.put("msg",UPDATE_FAILED .getMsg());
+            resultData.setCode(UPDATE_FAILED.getCode())
+                    .setMsg(UPDATE_FAILED.getMsg());
         }
-        return resultMap;
+        return resultData;
     }
-
     /**
      * @Author: Lee ShiHao
-     * @date : 2020/7/17 10:55
-     * Description: 分页查询字典
-     **/
-    public Map<String, Object> selectAllDictByPage(HashMap hashMap) {
-        Map<String, Object> resultMap = new HashMap<>();
-        Dict dict = new Dict();
-        PageInfo<Dict> dictPageInfo = super.selectListByPage(dict, BaseUtil.transToInt(hashMap.get("pageNo")), BaseUtil.transToInt(hashMap.get("pageNumber")));
-        if (null != dictPageInfo && dictPageInfo.getSize() > 0) {
-            resultMap.put("code", SELECT_SUCCESS.getCode());
-            resultMap.put("msg", SELECT_SUCCESS.getMsg());
-            resultMap.put("data", dictPageInfo);
-        } else {
-            resultMap.put("code", SELECT_FAILED.getCode());
-            resultMap.put("msg", SELECT_FAILED.getMsg());
+     * @date : 2020/7/19 14:39
+     * Description: 根据条件分页查询字典
+    **/
+    public ResultData SelDictByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds ){
+        PageInfo<Dict> dictPageInfo = super.selectListByPageAndFiled(number, pageSize, where, orderFiled, fileds);
+        if (dictPageInfo.equals("")){
+            resultData.setCode(SELECT_SUCCESS.getCode())
+                    .setMsg(SELECT_SUCCESS.getMsg())
+                    .setData(dictPageInfo);
+        }else {
+            resultData.setCode(SELECT_FAILED.getCode())
+                    .setMsg(SELECT_FAILED.getMsg());
         }
-        return resultMap;
+        return resultData;
+
     }
+
 
 
 }

@@ -4,11 +4,9 @@ import com.aaa.lee.base.BaseService;
 import com.aaa.lee.base.ResultData;
 import com.aaa.lee.mapper.DeptMapper;
 import com.aaa.lee.model.Dept;
-import com.aaa.lee.utils.DateUtils;
-import org.apache.commons.httpclient.util.DateUtil;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.Sqls;
 
 import java.util.Date;
@@ -51,7 +49,7 @@ public class DeptService extends BaseService<Dept> {
      * @date : 2020/7/19 11:34
      * Description: 批量删除部门
     **/
-    public ResultData delDept(List<Integer> ids) {
+    public ResultData delDeptById(List<Integer> ids) {
         Integer delete = super.deleteByIds(ids);
         if (delete > 0) {
             resultData.setCode(DELETE_SUCCESS.getCode()).setMsg(DELETE_SUCCESS.getMsg());
@@ -66,62 +64,57 @@ public class DeptService extends BaseService<Dept> {
      * @date : 2020/7/19 11:34
      * Description: 根据主键修改部门信息
     **/
-    public Map<String, Object> updateDept(Dept dept) {
+    public ResultData updateDeptById(Dept dept) {
         Map<String, Object> resultMap = new HashMap<>();
         //设置修改时间
         dept.setModifyTime(new Date());
         //获取当前部门的信息
-        Dept dept1 = deptMapper.selectByPrimaryKey(dept);
-        if (dept1 != null) {
-            dept.setCreateTime(dept1.getCreateTime());
-        }
-        int updateResult = deptMapper.updateByPrimaryKey(dept);
-        if (updateResult > 0) {
-            resultMap.put("code",UPDATE_SUCCESS .getCode());
-            resultMap.put("msg", UPDATE_SUCCESS.getMsg());
+        Integer update = super.update(dept);
+        if (update > 0) {
+            resultData.setCode(UPDATE_SUCCESS.getCode())
+                    .setMsg(UPDATE_SUCCESS.getMsg());
+
         } else {
-            resultMap.put("code", UPDATE_FAILED.getCode());
-            resultMap.put("msg",UPDATE_FAILED .getMsg());
+            resultData.setCode(UPDATE_FAILED.getCode())
+                    .setMsg(UPDATE_FAILED.getMsg());
         }
-        return resultMap;
+        return resultData;
     }
 
     /**
-     * @author luyu
-     * @date 2020/7/17 9:24
-     * Description:查询所有部门
-     */
-    public Map<String, Object> selectAllDept(Dept dept) {
-        Map<String, Object> reultMap = new HashMap<>();
-        List<Dept> list = deptMapper.selectAll();
+     * @Author: Lee ShiHao
+     * @date : 2020/7/19 14:05
+     * Description: 查询所有部门
+    **/
+    public ResultData selectAllDept(Dept dept) {
+        List<Dept> list = super.selectList(dept);
         if (list.size() > 0) {
-            reultMap.put("code", SELECT_SUCCESS.getCode());
-            reultMap.put("msg", SELECT_SUCCESS.getMsg());
+            resultData.setCode(SELECT_SUCCESS.getCode())
+                    .setMsg(SELECT_SUCCESS.getMsg())
+                    .setData(list);
+
         } else {
-            reultMap.put("code",SELECT_FAILED .getCode());
-            reultMap.put("msg", SELECT_FAILED.getMsg());
+            resultData.setCode(SELECT_FAILED.getCode()).setMsg(SELECT_FAILED.getMsg());
         }
-        return reultMap;
+        return resultData;
     }
 
     /**
-     * @author luyu
-     * @date 2020/7/17 10:02
-     * Description:根据条件查询部门信息
-     */
-    public Map<String, Object> selectAllDeptByNameOrTime(Dept dept) {
-        Map<String, Object> resultMap = new HashMap<>();
-        //根据条件查询部门信息
-        List<Dept> depts = deptMapper.selectDeptByNameOrTime(dept);
-        if (depts.size() > 0 && depts != null) {
-            resultMap.put("code",SELECT_SUCCESS .getCode());
-            resultMap.put("msg", SELECT_SUCCESS.getMsg());
-            resultMap.put("data", depts);
-        } else {
-            resultMap.put("code", SELECT_FAILED.getCode());
-            resultMap.put("msg",SELECT_FAILED .getMsg());
+     * @Author: Lee ShiHao
+     * @date : 2020/7/19 14:17
+     * Description: 根据条件分页查询部门
+    **/
+    public ResultData SelDeptByPageAndFiled(Integer pageNumber,Integer pageSize,Sqls where, String orderFiled, String... fileds ){
+        PageInfo<Dept> deptPageInfo = super.selectListByPageAndFiled(pageNumber, pageSize, where, orderFiled, fileds);
+        if (deptPageInfo.equals("")){
+            resultData.setCode(SELECT_SUCCESS.getCode())
+                    .setMsg(SELECT_SUCCESS.getMsg())
+                    .setData(deptPageInfo);
+        }else {
+            resultData.setCode(SELECT_FAILED.getCode())
+                    .setMsg(SELECT_FAILED.getMsg());
         }
-        return resultMap;
-    }
+        return resultData;
 
+    }
 }

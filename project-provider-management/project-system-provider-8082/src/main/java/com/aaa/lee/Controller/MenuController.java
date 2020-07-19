@@ -8,8 +8,7 @@ import com.aaa.lee.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
+
 
 import static com.aaa.lee.status.OperationStatus.*;
 
@@ -74,7 +73,7 @@ public class MenuController extends CommonController<Menu> {
      * @date : 2020/7/16 11:11
      * Description: 查询所有菜单
     **/
-    @GetMapping("/selectAllMenus")
+    @PostMapping("/selectAllMenus")
     public ResultData selectAllMenus(){
         ResultData resultData = menuService.selectAllMenus();
         return resultData.getCode().equals(UPDATE_SUCCESS.getCode()) ?

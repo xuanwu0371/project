@@ -6,7 +6,6 @@ import com.aaa.lee.mapper.RoleMapper;
 import com.aaa.lee.mapper.RoleMenuMapper;
 import com.aaa.lee.model.Role;
 import com.aaa.lee.model.RoleMenu;
-import com.aaa.lee.model.User;
 import com.aaa.lee.vo.RoleVo;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
