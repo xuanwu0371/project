@@ -6,6 +6,7 @@ import com.aaa.lee.mapper.UserMapper;
 import com.aaa.lee.model.User;
 import com.aaa.lee.redis.RedisService;
 import com.aaa.lee.utils.BaseUtil;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sun.org.apache.bcel.internal.generic.NEW;
@@ -36,7 +37,7 @@ public class UserService extends BaseService<User> {
     @Autowired
     private UserMapper userMapper;
 
-     private ResultData resultData = new ResultData<>();
+    private ResultData resultData = new ResultData<>();
 
     /**
      * @Author: lee
@@ -45,7 +46,7 @@ public class UserService extends BaseService<User> {
      **/
     public ResultData addUser(User user) {
         user.setCreateTime(DateUtil.formatDate(new Date(), TIME_FORMAT));
-        int insert = userMapper.insert(user);
+        int insert = super.add(user);
         if (insert > 0) {
             resultData.setCode(INSERT_SUCCESS.getCode()).setMsg(INSERT_SUCCESS.getMsg());
         } else {
@@ -53,85 +54,113 @@ public class UserService extends BaseService<User> {
         }
         return resultData;
     }
-    /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/18 20:01
-     * Description: 根据主键删除用户
-    **/
-    public ResultData delUserByKey(User user){
-        Integer delete = userMapper.deleteByPrimaryKey(user);
-        if (delete >0){
-            resultData.setCode(DELETE_SUCCESS.getCode()).setMsg(DELETE_SUCCESS.getMsg());
-        }else {
-            resultData.setCode(DELETE_FAILED.getCode()).setMsg(DELETE_FAILED.getMsg());
-        }
-        return resultData;
-    }
+
+
+
     /**
      * @Author: Lee ShiHao
      * @date : 2020/7/18 20:05
      * Description: 根据id批量删除用户
-    **/
-    public ResultData delUserByIds(List<Integer> ids){
+     **/
+    public ResultData delUserByIds(List<Integer> ids) {
         Integer delete = super.deleteByIds(ids);
-        if (delete >0){
+        if (delete > 0) {
             resultData.setCode(DELETE_SUCCESS.getCode()).setMsg(DELETE_SUCCESS.getMsg());
-        }else {
+        } else {
             resultData.setCode(DELETE_FAILED.getCode()).setMsg(DELETE_FAILED.getMsg());
         }
         return resultData;
     }
+
     /**
      * @Author: Lee ShiHao
      * @date : 2020/7/18 20:24
-     * Description: 根据id修改用户信息
-    **/
-    public ResultData updateUserById(User user){
+     * Description: 根据主键(id)修改用户信息
+     **/
+    public ResultData updateUserById(User user) {
         Integer update = super.update(user);
-        if (update>0){
+        if (update > 0) {
             resultData.setCode(UPDATE_SUCCESS.getCode())
                     .setMsg(UPDATE_SUCCESS.getMsg());
 
-        }else {
+        } else {
             resultData.setCode(UPDATE_FAILED.getCode())
                     .setMsg(UPDATE_FAILED.getMsg());
         }
-        return  resultData;
+        return resultData;
     }
+
     /**
      * @Author: Lee ShiHao
      * @date : 2020/7/18 18:22
      * Description: 查询所有用户
      **/
     public ResultData selUser(User user) {
-        List<User> userList = userMapper.selectAll();
+        List<User> userList = super.selectList(user);
         ResultData resultData = new ResultData();
         if (userList.size() > 0) {
             resultData.setCode(SELECT_SUCCESS.getCode())
-           .setMsg(SELECT_SUCCESS.getMsg())
-           .setData(userList);
+                    .setMsg(SELECT_SUCCESS.getMsg())
+                    .setData(userList);
 
-        }else {
+        } else {
             resultData.setCode(SELECT_FAILED.getCode()).setMsg(SELECT_FAILED.getMsg());
         }
         return resultData;
     }
+
     /**
      * @Author: Lee ShiHao
      * @date : 2020/7/18 20:30
-     * Description: 通过主键查询用户
-    **/
-    public ResultData selUserById(User id){
-        User user = selectOne(id);
-        if (!user.equals("")){
+     * Description: 查询一条数据
+     **/
+    public ResultData selUserById(User id) {
+        User user = super.selectOne(id);
+        if (!user.equals("")) {
             resultData.setCode(SELECT_SUCCESS.getCode())
                     .setMsg(SELECT_SUCCESS.getMsg())
                     .setData(user);
-        }else {
+        } else {
             resultData.setCode(SELECT_FAILED.getCode())
                     .setMsg(SELECT_FAILED.getMsg());
         }
         return resultData;
     }
 
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/19 9:42
+     * Description: 分页查询用户
+     **/
+    public ResultData SelUserByPage(User user, Integer pageNumber, Integer pageSize) {
+        PageInfo<User> userPageInfo = super.selectListByPage(user, pageNumber, pageSize);
+        if (!userPageInfo.equals("")) {
+            resultData.setCode(SELECT_SUCCESS.getCode())
+                    .setMsg(SELECT_SUCCESS.getMsg())
+                    .setData(userPageInfo);
+        } else {
+            resultData.setCode(SELECT_FAILED.getCode())
+                    .setMsg(SELECT_FAILED.getMsg());
+        }
+        return resultData;
+
+    }
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/19 10:00
+     * Description: 根据条件分页查询用户
+    **/
+    public ResultData SelUserByPageFiled(Integer number,Integer pageSize,Sqls where, String orderFiled, String... fileds ){
+        PageInfo<User> userPageInfo = super.selectListByPageAndFiled(number, pageSize, where, orderFiled, fileds);
+        if (userPageInfo.equals("")){
+            resultData.setCode(SELECT_SUCCESS.getCode())
+                    .setMsg(SELECT_SUCCESS.getMsg())
+                    .setData(userPageInfo);
+        }else {
+            resultData.setCode(SELECT_FAILED.getCode())
+                    .setMsg(SELECT_FAILED.getMsg());
+        }
+        return resultData;
+
+    }
 }

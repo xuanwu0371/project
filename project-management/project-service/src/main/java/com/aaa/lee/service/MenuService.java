@@ -1,6 +1,7 @@
 package com.aaa.lee.service;
 
 import com.aaa.lee.base.BaseService;
+import com.aaa.lee.base.ResultData;
 import com.aaa.lee.mapper.MenuMapper;
 import com.aaa.lee.model.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,79 @@ import static com.aaa.lee.status.OperationStatus.*;
 public class MenuService extends BaseService<Menu> {
     @Autowired
     private MenuMapper menuMapper;
+    private ResultData resultData = new ResultData();
 
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/16 10:34
+     * Description: 新增菜单或者按钮
+     **/
+    public ResultData insertMenuOrButton(Menu menu) {
+
+        Date createTime = new Date();
+        menu.setCreateTime(createTime);
+        try {
+            Integer add = super.add(menu);
+            if (add > 0) {
+                resultData.setCode(INSERT_SUCCESS.getCode())
+                        .setMsg(INSERT_SUCCESS.getMsg());
+            } else {
+                resultData.setCode(INSERT_FAILED.getCode())
+                        .setMsg(INSERT_FAILED.getMsg());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultData;
+    }
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/16 10:42
+     * Description: 根据主键id删除菜单或者按钮
+     **/
+    public ResultData deleteMenuOrButton(Long menuId) {
+
+        int Result = menuMapper.deleteByPrimaryKey(menuId);
+        if (Result > 0) {
+            resultData.setCode(DELETE_SUCCESS.getCode())
+                    .setMsg(DELETE_SUCCESS.getMsg());
+        } else {
+            resultData.setCode(DELETE_FAILED.getCode())
+                    .setMsg(DELETE_FAILED.getMsg());
+        }
+        return resultData;
+    }
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/16 10:39
+     * Description: 根据主键修改菜单或者按钮的信息
+     **/
+    public ResultData updateMenuOrButton(Menu menu) {
+        Date date = new Date();
+        menu.setModifyTime(date);
+        try {
+            Integer update = super.update(menu);
+            if (update > 0) {
+                resultData.setCode(UPDATE_SUCCESS.getCode())
+                        .setMsg(UPDATE_SUCCESS.getMsg());
+
+
+            } else {
+                resultData.setCode(UPDATE_FAILED.getCode())
+                        .setMsg(UPDATE_FAILED.getMsg());
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultData;
+    }
     /**
      * @Author: LiShiHao
      * @date : 2020/7/16 10:19
      * Description: 获取菜单信息
      **/
-    public List<Menu> selectAllMenus() {
+    public ResultData selectAllMenus() {
         //菜单树
         List<Menu> menuList = new ArrayList<>();
         //菜单的全部信息
@@ -44,8 +111,9 @@ public class MenuService extends BaseService<Menu> {
             for (Menu menu : menuList) {
                 menu.setSubMenu(getSubMenu(menu.getMenuId(), menuListAll));
             }
+            resultData.setData(menuList);
         }
-        return menuList;
+        return resultData;
     }
 
     /**
@@ -72,77 +140,10 @@ public class MenuService extends BaseService<Menu> {
         return subMenus;
     }
 
-    /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/16 10:34
-     * Description: 新增菜单或者按钮
-     **/
-    public Map<String, Object> insertMenuOrButton(Menu menu) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        Date createTime = new Date();
-        menu.setCreateTime(createTime);
-        try {
-            Integer add = super.add(menu);
-            if (add > 0) {
-                resultMap.put("code", INSERT_SUCCESS.getCode());
-                resultMap.put("msg", INSERT_SUCCESS.getMsg());
-                return resultMap;
-            } else {
-                resultMap.put("code",INSERT_FAILED .getCode());
-                resultMap.put("msg", INSERT_FAILED.getMsg());
-                return resultMap;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return resultMap;
-    }
 
-    /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/16 10:39
-     * Description: 根据主键修改菜单或者按钮的信息
-     **/
-    public Map<String, Object> updateMenuOrButton(Menu menu) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        Date date = new Date();
-        menu.setModifyTime(date);
-        try {
-            Integer update = super.update(menu);
-            if (update > 0) {
-                resultMap.put("code", UPDATE_SUCCESS.getCode());
-                resultMap.put("msg", UPDATE_SUCCESS.getMsg());
-                return resultMap;
 
-            } else {
-                resultMap.put("code",UPDATE_FAILED .getCode());
-                resultMap.put("msg", UPDATE_FAILED.getMsg());
-                return resultMap;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return resultMap;
-    }
 
-    /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/16 10:42
-     * Description: 根据主键id删除菜单或者按钮
-     **/
-    public Map<String, Object> deleteMenuOrButton(Long menuId) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        int Result = menuMapper.deleteByPrimaryKey(menuId);
-        if (Result > 0) {
-            resultMap.put("code", DELETE_SUCCESS.getCode());
-            resultMap.put("msg", DELETE_SUCCESS.getMsg());
-            return resultMap;
-        } else {
-            resultMap.put("code", DELETE_FAILED.getCode());
-            resultMap.put("msg", DELETE_FAILED.getMsg());
-            return resultMap;
-        }
-    }
+
 
 
 }
