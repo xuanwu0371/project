@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tk.mybatis.mapper.util.Sqls;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,78 +27,75 @@ public class DeptController extends CommonController<Dept> {
 
     @Override
     public BaseService<Dept> getBaseService() {
-        return null;
+        return deptService;
     }
 
     /**
-     * @author luyu
-     * @date 2020/7/17 15:42
-     * Description:增加部门
-     */
+     * @Author: Lee ShiHao
+     * @date : 2020/7/19 14:24
+     * Description: 增加部门
+    **/
     @PostMapping("/addDept")
     public ResultData addDept(@RequestBody Dept dept) {
-        Map<String, Object> addDept = deptService.addDept(dept);
-        if (INSERT_SUCCESS.getCode().equals(addDept.get("code"))) {
-            return super.operationSuccess();
-        }
-        return super.operationFailed();
+        ResultData resultData = deptService.addDept(dept);
+        return (resultData.getCode().equals(INSERT_SUCCESS.getCode()))
+                ? resultData : super.insertOperationFailed();
     }
 
     /**
-     * @author luyu
-     * @date 2020/7/17 16:02
-     * Description:批量删除部门
-     */
-    @PostMapping("/delDept")
-    public ResultData delDept(@RequestBody List<Long> ids) {
-        Map<String, Object> resultMap = deptService.delDept(ids);
-        if (DELETE_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.operationSuccess();
-        }
-        return super.operationFailed();
+     * @Author: Lee ShiHao
+     * @date : 2020/7/19 14:20
+     * Description: 根据id批量删除部门
+    **/
+    @PostMapping("/delDeptById")
+    public ResultData delDeptById(@RequestBody List<Integer> ids) {
+        ResultData resultData = deptService.delDeptById(ids);
+        return resultData.getCode().equals(operationSuccess().getCode()) ?
+                resultData : super.deleteOperationFailed();
     }
 
     /**
-     * @author luyu
-     * @date 2020/7/17 16:22
-     * Description:修改部门
-     */
-    @PostMapping("/updateDept")
-    public ResultData updateDept(@RequestBody Dept dept) {
-        Map<String, Object> resultMap = deptService.updateDept(dept);
-        if (UPDATE_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.operationSuccess();
-        }
-        return super.operationFailed();
+     * @Author: Lee ShiHao
+     * @date : 2020/7/19 14:24
+     * Description: 修改部门
+    **/
+    @PostMapping("/updateDeptById")
+    public ResultData updateDeptById(@RequestBody Dept dept) {
+        ResultData resultData = deptService.updateDeptById(dept);
+        return resultData.getCode().equals(UPDATE_SUCCESS.getCode()) ?
+                resultData : super.updateOperationFailed();
 
     }
 
     /**
-     * @author luyu
-     * @date 2020/7/17 16:42
-     * Description:查询所有部门信息
-     */
+     * @Author: Lee ShiHao
+     * @date : 2020/7/19 14:24
+     * Description: 查询所有部门信息
+    **/
     @PostMapping("/selectAllDept")
     public ResultData selectAllDept(@RequestBody Dept dept) {
-        Map<String, Object> resultMap = deptService.selectAllDept(dept);
-        if (SELECT_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.operationSuccess();
-        }
-        return super.operationFailed();
+        ResultData resultData = deptService.selectAllDept(dept);
+        return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
+                resultData : super.selectOperationFailed();
     }
 
     /**
-     * @author luyu
-     * @date 2020/7/17 16:50
-     * Description:根据条件查询部门信息
-     */
-    @PostMapping("/selectAllDeptByNameOrTime")
-    public ResultData selectAllDeptByNameOrTime(@RequestBody Dept dept) {
-        Map<String, Object> resultMap = deptService.selectAllDeptByNameOrTime(dept);
-        if (SELECT_SUCCESS.getCode().equals(resultMap.get("code"))) {
-            return super.operationSuccess();
+     * @Author: Lee ShiHao
+     * @date : 2020/7/19 14:25
+     * Description: 根据条件查询部门信息
+    **/
+    @PostMapping("/SelDeptByPageFiled")
+    public ResultData SelDeptByPageAndFiled(@RequestBody Integer pageNumber, Integer pageSize, Sqls where, String orderFiled, String... fileds) {
+        ResultData resultData = deptService.SelDeptByPageAndFiled(pageNumber, pageSize, where, orderFiled, fileds);
+        if (resultData.equals("")){
+            resultData.setCode(SELECT_SUCCESS.getCode())
+                    .setMsg(SELECT_SUCCESS.getMsg())
+                    .setData(resultData);
+        }else {
+            resultData.setCode(SELECT_FAILED.getCode())
+                    .setMsg(SELECT_FAILED.getMsg());
         }
-        return super.operationFailed();
+        return resultData;
     }
 
 }

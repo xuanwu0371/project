@@ -8,17 +8,9 @@ import com.aaa.lee.model.User;
 import com.aaa.lee.redis.RedisService;
 import com.aaa.lee.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.internal.util.privilegedactions.NewInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tk.mybatis.mapper.common.BaseMapper;
-import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.Sqls;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static com.aaa.lee.status.OperationStatus.*;
 
@@ -107,8 +99,8 @@ public class UserController extends CommonController<User> {
      * Description: 分页查询用户
     **/
     @PostMapping("/selUserByPage")
-    public ResultData SelUserByPage(User user,Integer pageNumber,Integer pageSize){
-        ResultData resultData = userService.SelUserByPage(user, pageNumber, pageSize);
+    public ResultData selUserByPage(User user, Integer pageNumber, Integer pageSize){
+        ResultData resultData = userService.selUserByPage(user, pageNumber, pageSize);
         return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
                 resultData : super.selectOperationFailed();
     }
@@ -117,9 +109,9 @@ public class UserController extends CommonController<User> {
      * @date : 2020/7/19 10:13
      * Description: 根据条件分页查询用户
     **/
-    @PostMapping("/SelUserByPageFiled")
-    public ResultData SelUserByPageFiled(Integer number,Integer pageSize,Sqls where, String orderFiled, String... fileds){
-        ResultData resultData = userService.SelUserByPageFiled(number, pageSize, where, orderFiled, fileds);
+    @PostMapping("/selUserByPageFiled")
+    public ResultData selUserByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds){
+        ResultData resultData = userService.selUserByPageFiled(number, pageSize, where, orderFiled, fileds);
         return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
                 resultData : super.selectOperationFailed();
     }
