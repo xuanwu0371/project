@@ -1,6 +1,7 @@
 package com.aaa.lee.service;
 
 import com.aaa.lee.base.BaseService;
+import com.aaa.lee.base.ResultData;
 import com.aaa.lee.mapper.DeptMapper;
 import com.aaa.lee.model.Dept;
 import com.aaa.lee.utils.DateUtils;
@@ -18,63 +19,53 @@ import java.util.Map;
 import static com.aaa.lee.status.OperationStatus.*;
 
 /**
- * @author luyu
- * @date 2020/7/17 9:04
- * Description
- * 部门业务
- */
+ * @Author: Lee ShiHao
+ * @date : 2020/7/19 11:34
+ * Description: 部门业务
+**/
 @Service
 public class DeptService extends BaseService<Dept> {
     @Autowired
     private DeptMapper deptMapper;
+    private ResultData resultData = new ResultData<>();
 
     /**
-     * @author luyu
-     * @date 2020/7/17 9:04
-     * Description
-     * 新增部门
-     */
-    public Map<String, Object> addDept(Dept dept) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+     * @Author: Lee ShiHao
+     * @date : 2020/7/19 11:34
+     * Description: 新增部门
+    **/
+    public ResultData addDept(Dept dept) {
         //设置创建时间
         dept.setCreateTime(new Date());
-        int addResult = deptMapper.insert(dept);
-        if (addResult > 0) {
-            resultMap.put("code",INSERT_SUCCESS .getCode());
-            resultMap.put("msg", INSERT_SUCCESS.getMsg());
+        Integer add = super.add(dept);
+        if (add > 0) {
+            resultData.setCode(INSERT_SUCCESS.getCode()).setMsg(INSERT_SUCCESS.getMsg());
         } else {
-            resultMap.put("code", INSERT_FAILED.getCode());
-            resultMap.put("msg", INSERT_FAILED.getMsg());
+            resultData.setCode(INSERT_FAILED.getCode()).setMsg(INSERT_FAILED.getMsg());
         }
-        return resultMap;
+        return resultData;
     }
 
     /**
-     * @author luyu
-     * @date 2020/7/17 9:18
-     * Description:批量删除部门
-     */
-    public Map<String, Object> delDept(List<Long> ids) {
-        Map<String, Object> resultMap = new HashMap<>();
-        //获取到参数类型，然后添加一个where条件，是in类型，id属于ids中的
-        Example example = Example.builder(Dept.class).where(Sqls.custom().andIn("deptId", ids)).build();
-        int delsultmap = deptMapper.deleteByExample(example);
-        if (delsultmap > 0) {
-            resultMap.put("code",DELETE_SUCCESS .getCode());
-            resultMap.put("msg", DELETE_SUCCESS.getMsg());
+     * @Author: Lee ShiHao
+     * @date : 2020/7/19 11:34
+     * Description: 批量删除部门
+    **/
+    public ResultData delDept(List<Integer> ids) {
+        Integer delete = super.deleteByIds(ids);
+        if (delete > 0) {
+            resultData.setCode(DELETE_SUCCESS.getCode()).setMsg(DELETE_SUCCESS.getMsg());
         } else {
-            resultMap.put("code",DELETE_FAILED .getCode());
-            resultMap.put("msg",DELETE_FAILED .getMsg());
+            resultData.setCode(DELETE_FAILED.getCode()).setMsg(DELETE_FAILED.getMsg());
         }
-
-        return resultMap;
+        return resultData;
     }
 
     /**
-     * @author luyu
-     * @date 2020/7/17 11:02
-     * Description:修改部门信息
-     */
+     * @Author: Lee ShiHao
+     * @date : 2020/7/19 11:34
+     * Description: 根据主键修改部门信息
+    **/
     public Map<String, Object> updateDept(Dept dept) {
         Map<String, Object> resultMap = new HashMap<>();
         //设置修改时间

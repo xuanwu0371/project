@@ -37,12 +37,9 @@ public class MenuController extends CommonController<Menu> {
      **/
     @PostMapping("/insertMenuOrButton")
     public ResultData insertMenuOrButton(@RequestBody Menu menu){
-        Map<String, Object> Result = menuService.insertMenuOrButton(menu);
-        if (Result.get("code").equals(INSERT_SUCCESS.getCode())){
-            return super.operationSuccess();
-        }else {
-            return super.operationFailed();
-        }
+        ResultData resultData = menuService.insertMenuOrButton(menu);
+        return resultData.getCode().equals(INSERT_SUCCESS.getCode()) ?
+                resultData : super.insertOperationFailed();
     }
 
 
@@ -53,12 +50,9 @@ public class MenuController extends CommonController<Menu> {
      **/
     @PostMapping("/deleteMenuOrButton")
     public ResultData deleteMenuOrButton(@RequestParam("menuId") Long menuId){
-        Map<String, Object> Result = menuService.deleteMenuOrButton(menuId);
-        if (Result.get("code").equals(DELETE_SUCCESS.getCode())){
-            return super.operationSuccess();
-        }else {
-            return super.operationFailed();
-        }
+        ResultData resultData = menuService.deleteMenuOrButton(menuId);
+        return resultData.getCode().equals(DELETE_SUCCESS.getCode()) ?
+                resultData : super.deleteOperationFailed();
     }
 
 
@@ -69,12 +63,9 @@ public class MenuController extends CommonController<Menu> {
      **/
     @PostMapping("/updateMenuOrButton")
     public ResultData updateMenuOrButton(@RequestBody Menu menu){
-        Map<String, Object> Result = menuService.updateMenuOrButton(menu);
-        if (Result.get("code").equals(UPDATE_SUCCESS.getCode())){
-            return super.operationSuccess();
-        }else {
-            return super.operationFailed();
-        }
+        ResultData resultData = menuService.updateMenuOrButton(menu);
+        return resultData.getCode().equals(UPDATE_SUCCESS.getCode()) ?
+                resultData : super.updateOperationFailed();
     }
 
 
@@ -83,9 +74,12 @@ public class MenuController extends CommonController<Menu> {
      * @date : 2020/7/16 11:11
      * Description: 查询所有菜单
     **/
-    @GetMapping("/getMenus")
-    public List<Menu> selectAllMenus(){
-        return menuService.selectAllMenus();
+    @GetMapping("/selectAllMenus")
+    public ResultData selectAllMenus(){
+        ResultData resultData = menuService.selectAllMenus();
+        return resultData.getCode().equals(UPDATE_SUCCESS.getCode()) ?
+                resultData : super.updateOperationFailed();
+
     }
 
 

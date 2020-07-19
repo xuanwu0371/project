@@ -53,17 +53,7 @@ public class UserController extends CommonController<User> {
                 ? resultData : super.insertOperationFailed();
     }
 
-    /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/18 20:37
-     * Description: 根据主键删除用户
-     **/
-    @PostMapping("/delUserByKey")
-    public ResultData delUserByKey(@RequestBody User user) {
-        ResultData resultData = userService.delUserByKey(user);
-        return (resultData.getCode().equals(DELETE_SUCCESS.getCode()))
-                ? resultData : super.deleteOperationFailed();
-    }
+
 
     /**
      * @Author: Lee ShiHao
@@ -77,7 +67,17 @@ public class UserController extends CommonController<User> {
                 resultData : super.deleteOperationFailed();
 
     }
-
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/19 9:53
+     * Description: 根据主键(id)修改用户信息
+    **/
+    @PostMapping("/updateUserById")
+    public ResultData updateUserById(User user){
+        ResultData resultData = userService.updateUserById(user);
+        return resultData.getCode().equals(UPDATE_SUCCESS.getCode()) ?
+                resultData : super.updateOperationFailed();
+    }
     /**
      * @Author: Lee ShiHao
      * @date : 2020/7/18 21:03
@@ -101,6 +101,26 @@ public class UserController extends CommonController<User> {
         return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
                 resultData : super.selectOperationFailed();
     }
-
-
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/19 9:57
+     * Description: 分页查询用户
+    **/
+    @PostMapping("/selUserByPage")
+    public ResultData SelUserByPage(User user,Integer pageNumber,Integer pageSize){
+        ResultData resultData = userService.SelUserByPage(user, pageNumber, pageSize);
+        return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
+                resultData : super.selectOperationFailed();
+    }
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/19 10:13
+     * Description: 根据条件分页查询用户
+    **/
+    @PostMapping("/SelUserByPageFiled")
+    public ResultData SelUserByPageFiled(Integer number,Integer pageSize,Sqls where, String orderFiled, String... fileds){
+        ResultData resultData = userService.SelUserByPageFiled(number, pageSize, where, orderFiled, fileds);
+        return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
+                resultData : super.selectOperationFailed();
+    }
 }

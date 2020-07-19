@@ -9,6 +9,9 @@ import com.aaa.lee.vo.RoleVo;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tk.mybatis.mapper.util.Sqls;
+
+import static com.aaa.lee.status.OperationStatus.*;
 
 /**
  * create by: LiShiHao
@@ -25,6 +28,7 @@ public class RoleController extends CommonController<Role> {
     public BaseService getBaseService() {
         return null;
     }
+
     /**
      * @Author: Lee ShiHao
      * @date : 2020/7/16 19:35
@@ -32,12 +36,9 @@ public class RoleController extends CommonController<Role> {
      **/
     @PostMapping("/insertRole")
     public ResultData insertRole(@RequestBody RoleVo roleVo) {
-        Boolean insertRole = roleService.insertRole(roleVo);
-        if (insertRole) {
-            return super.operationSuccess();
-        }else {
-            return super.operationFailed();
-        }
+        ResultData resultData = roleService.insertRole(roleVo);
+        return resultData.getCode().equals(INSERT_SUCCESS.getCode()) ?
+                resultData : super.insertOperationFailed();
     }
 
     /**
@@ -47,12 +48,9 @@ public class RoleController extends CommonController<Role> {
      **/
     @PostMapping("/deleteRole")
     public ResultData deleteRole(@RequestParam("roleId") Long roleId) {
-        Boolean role = roleService.deleteRole(roleId);
-        if (role) {
-            return super.operationSuccess();
-        } else {
-            return super.operationFailed();
-        }
+        ResultData resultData = roleService.deleteRole(roleId);
+        return resultData.getCode().equals(DELETE_SUCCESS.getCode()) ?
+                resultData : super.deleteOperationFailed();
     }
 
     /**
@@ -61,41 +59,34 @@ public class RoleController extends CommonController<Role> {
      * Description: 修改角色及权限
      **/
     @PostMapping("/updateRole")
-    public ResultData updateRole(@RequestBody RoleVo roleVo){
-        Boolean updateRole = roleService.updateRole(roleVo);
-        if (updateRole){
-            return super.operationSuccess();
-        }else {
-            return super.operationFailed();
-        }
+    public ResultData updateRole(@RequestBody RoleVo roleVo) {
+        ResultData resultData = roleService.updateRole(roleVo);
+        return resultData.getCode().equals(UPDATE_SUCCESS.getCode()) ?
+                resultData : super.updateOperationFailed();
     }
 
     /**
      * @Author: Lee ShiHao
      * @date : 2020/7/16 19:23
-     * Description: 查询所有的角色
+     * Description: 查询所有的角色,分页
      **/
-    @PostMapping ("/allRoles")
-    public ResultData selectAllRole() {
-        ResultData resultData = roleService.selectAllRole();
-        if (resultData.getMsg().equals("查询成功")) {
-            return operationSuccess(resultData.getCode());
-        } else {
-            return operationFailed();
-        }
+    @PostMapping("/selRoleByPage")
+    public ResultData selRoleByPage(Role role, Integer pageNumber, Integer pageSize) {
+        ResultData resultData = roleService.selRoleByPage(role, pageNumber, pageSize);
+        return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
+                resultData : super.selectOperationFailed();
     }
+
     /**
      * @Author: Lee ShiHao
      * @date : 2020/7/16 19:27
      * Description: 简单的分页查询
      **/
-    @PostMapping("/pageRoles")
-    public ResultData selectAllRoleByPage(@RequestBody RoleVo roleVo) {
-        ResultData<PageInfo<Role>> resultData = roleService.selectAllRoleByPage(roleVo);
-        if (resultData.getCode().equals("1")) {
-            return operationSuccess(resultData.getCode());
-        } else {
-            return operationFailed();
-        }
+    @PostMapping("/selRoleByPageByFiled")
+    public ResultData selRoleByPageByFiled(Integer pageNo, Integer pageSize, Sqls where, String orderFiled, String... fileds) {
+        ResultData resultData = roleService.selRoleByPageByFiled(pageNo, pageSize, where, orderFiled, fileds);
+        return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
+                resultData : super.selectOperationFailed();
+
     }
 }
