@@ -230,7 +230,6 @@ public interface IProjectService {
 
     @PostMapping("/selEquipmentByPage")
     ResultData selEquipmentByPage(Equipment equipment, Integer pageNumber, Integer pageSize);
-
     @PostMapping("/selEquipmentByPageFiled")
     ResultData selEquipmentByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds);
 
