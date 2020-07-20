@@ -2,46 +2,37 @@ package com.aaa.lee.service;
 
 import com.aaa.lee.base.BaseService;
 import com.aaa.lee.base.ResultData;
-import com.aaa.lee.mapper.EquipmentMapper;
-import com.aaa.lee.model.Equipment;
-import com.aaa.lee.model.Equipment;
-import com.aaa.lee.utils.BaseUtil;
+import com.aaa.lee.mapper.SpecialPostMapper;
+import com.aaa.lee.model.SpecialPost;
 import com.github.pagehelper.PageInfo;
-import org.apache.commons.httpclient.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.Sqls;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static com.aaa.lee.staticproerties.TimeFormatProperties.TIME_FORMAT;
 import static com.aaa.lee.status.OperationStatus.*;
-
 /**
  * @author luyu
- * @date 2020/7/19 17:07
- * Description:设备模块
+ * @date 2020/7/19 17:30
+ * Description:特殊岗位人员模块
  */
 @Service
-public class EquipmentService extends BaseService<Equipment> {
-
+public class SpecialPostService  extends BaseService<SpecialPost> {
     @Autowired
-    private EquipmentMapper equipmentMapper;
+    private SpecialPostMapper specialPostMapper;
 
     private ResultData resultData = new ResultData();
 
     /**
      * @Author: luyu
      * @date : 2020/7/15 19:59
-     * Description: 添加设备
+     * Description: 添加特殊岗位人员
      **/
-    public ResultData addEquipment(Equipment equipment) {
-        equipment.setCreateTime(new Date());
-        int insert = super.add(equipment);
+    public ResultData addSpecialPost(SpecialPost specialPost) {
+        specialPost.setCreateTime(new Date());
+        int insert = super.add(specialPost);
         if (insert > 0) {
             resultData.setCode(INSERT_SUCCESS.getCode()).setMsg(INSERT_SUCCESS.getMsg());
         } else {
@@ -55,9 +46,9 @@ public class EquipmentService extends BaseService<Equipment> {
     /**
      * @Author: luyu
      * @date : 2020/7/18 20:05
-     * Description: 根据id批量删除设备
+     * Description: 根据id批量删除特殊岗位人员
      **/
-    public ResultData delEquipmentByIds(List<Integer> ids) {
+    public ResultData delSpecialPostByIds(List<Integer> ids) {
         Integer delete = super.deleteByIds(ids);
         if (delete > 0) {
             resultData.setCode(DELETE_SUCCESS.getCode()).setMsg(DELETE_SUCCESS.getMsg());
@@ -70,10 +61,10 @@ public class EquipmentService extends BaseService<Equipment> {
     /**
      * @Author: luyu
      * @date : 2020/7/18 20:24
-     * Description: 根据主键(id)修改设备信息
+     * Description: 根据主键(id)修改特殊岗位人员信息
      **/
-    public ResultData updateEquipmentById(Equipment equipment) {
-        Integer update = super.update(equipment);
+    public ResultData updateSpecialPostById(SpecialPost specialPost) {
+        Integer update = super.update(specialPost);
         if (update > 0) {
             resultData.setCode(UPDATE_SUCCESS.getCode())
                     .setMsg(UPDATE_SUCCESS.getMsg());
@@ -88,15 +79,15 @@ public class EquipmentService extends BaseService<Equipment> {
     /**
      * @Author: luyu
      * @date : 2020/7/18 18:22
-     * Description: 查询所有设备
+     * Description: 查询所有特殊岗位人员
      **/
-    public ResultData selEquipment(Equipment equipment) {
-        List<Equipment> equipmentList = super.selectList(equipment);
+    public ResultData selSpecialPost(SpecialPost specialPost) {
+        List<SpecialPost> specialPostList = super.selectList(specialPost);
         ResultData resultData = new ResultData();
-        if (equipmentList.size() > 0) {
+        if (specialPostList.size() > 0) {
             resultData.setCode(SELECT_SUCCESS.getCode())
                     .setMsg(SELECT_SUCCESS.getMsg())
-                    .setData(equipmentList);
+                    .setData(specialPostList);
 
         } else {
             resultData.setCode(SELECT_FAILED.getCode()).setMsg(SELECT_FAILED.getMsg());
@@ -106,14 +97,14 @@ public class EquipmentService extends BaseService<Equipment> {
     /**
      * @Author: luyu
      * @date : 2020/7/19 9:42
-     * Description: 分页查询设备
+     * Description: 分页查询特殊岗位人员
      **/
-    public ResultData selEquipmentByPage(Equipment equipment, Integer pageNumber, Integer pageSize) {
-        PageInfo<Equipment> equipmentPageInfo = super.selectListByPage(equipment, pageNumber, pageSize);
-        if (!equipmentPageInfo.equals("")) {
+    public ResultData selSpecialPostByPage(SpecialPost specialPost, Integer pageNumber, Integer pageSize) {
+        PageInfo<SpecialPost> specialPostPageInfo = super.selectListByPage(specialPost, pageNumber, pageSize);
+        if (!specialPostPageInfo.equals("")) {
             resultData.setCode(SELECT_SUCCESS.getCode())
                     .setMsg(SELECT_SUCCESS.getMsg())
-                    .setData(equipmentPageInfo);
+                    .setData(specialPostPageInfo);
         } else {
             resultData.setCode(SELECT_FAILED.getCode())
                     .setMsg(SELECT_FAILED.getMsg());
@@ -124,14 +115,14 @@ public class EquipmentService extends BaseService<Equipment> {
     /**
      * @Author: luyu
      * @date : 2020/7/19 10:00
-     * Description: 根据条件分页查询设备
+     * Description: 根据条件分页查询特殊岗位人员
      **/
-    public ResultData selEquipmentByPageFiled(Integer number,Integer pageSize,Sqls where, String orderFiled, String... fileds ){
-        PageInfo<Equipment> equipmentPageInfo = super.selectListByPageAndFiled(number, pageSize, where, orderFiled, fileds);
-        if (equipmentPageInfo.equals("")){
+    public ResultData selSpecialPostByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds ){
+        PageInfo<SpecialPost> specialPostPageInfo = super.selectListByPageAndFiled(number, pageSize, where, orderFiled, fileds);
+        if (specialPostPageInfo.equals("")){
             resultData.setCode(SELECT_SUCCESS.getCode())
                     .setMsg(SELECT_SUCCESS.getMsg())
-                    .setData(equipmentPageInfo);
+                    .setData(specialPostPageInfo);
         }else {
             resultData.setCode(SELECT_FAILED.getCode())
                     .setMsg(SELECT_FAILED.getMsg());
@@ -139,4 +130,12 @@ public class EquipmentService extends BaseService<Equipment> {
         return resultData;
 
     }
+
+
+
+
+
+
+
+
 }

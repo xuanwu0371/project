@@ -29,7 +29,7 @@ public class UserService extends BaseService<User>   {
     @Autowired
     private UserMapper userMapper;
 
-    private ResultData resultData = new ResultData<>();
+    private ResultData resultData = new ResultData();
 
     /**
      * @Author: lee

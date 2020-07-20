@@ -1,13 +1,16 @@
 package com.aaa.lee.service;
 
 import com.aaa.lee.base.BaseService;
+import com.aaa.lee.base.ResultData;
 import com.aaa.lee.mapper.PrincipalMapper;
+import com.aaa.lee.model.Principal;
 import com.aaa.lee.model.Principal;
 import com.aaa.lee.redis.RedisService;
 import com.aaa.lee.utils.BaseUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.httpclient.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -18,13 +21,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.aaa.lee.staticproerties.TimeFormatProperties.TIME_FORMAT;
 import static com.aaa.lee.status.OperationStatus.*;
 
 
 /**
- * create by: LiShiHao
- * create Time:  2020/7/17 21:46
- * description:
+ * @author luyu
+ * @date 2020/7/19 14:31
+ * Description:单位负责人模块
  */
 @Service
 @Slf4j
@@ -32,126 +36,112 @@ public class PrincipalService extends BaseService<Principal> {
     @Autowired
     private PrincipalMapper principalMapper;
 
+    private ResultData resultData = new ResultData();
+
+
     /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/17 21:49
-     * Description: 重要人增加
+     * @Author: Luyu
+     * @date : 2020/7/15 19:59
+     * Description: 添加负责人
      **/
-    public Map<String, Object> addPrincipal(Principal principal) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        principal.setModifyTime(new Date());
-        int addResult = principalMapper.insert(principal);
-        if (addResult > 0) {
-            resultMap.put("code",INSERT_SUCCESS .getCode());
-            resultMap.put("msg",INSERT_SUCCESS .getMsg());
+    public ResultData addPrincipal(Principal principal) {
+        principal.setCreateTime(new Date());
+        int insert = super.add(principal);
+        if (insert > 0) {
+            resultData.setCode(INSERT_SUCCESS.getCode()).setMsg(INSERT_SUCCESS.getMsg());
         } else {
-            resultMap.put("code",INSERT_FAILED .getCode());
-            resultMap.put("msg", INSERT_FAILED.getMsg());
+            resultData.setCode(INSERT_FAILED.getCode()).setMsg(INSERT_FAILED.getMsg());
         }
-        return resultMap;
-
+        return resultData;
     }
 
+
+
     /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/17 21:56
-     * Description: 重要人删除
+     * @Author: Luyu
+     * @date : 2020/7/18 20:05
+     * Description: 根据id批量删除负责人
      **/
-    public Map<String, Object> delPrincipal(List<Long> ids) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        //获取到参数类型,然后添加一个where条件,是in类型,id属于ids中的
-        Example example = Example.builder(Principal.class).where(Sqls.custom().andIn("id", ids)).build();
-        int i = principalMapper.deleteByExample(example);
-        if (i > 0) {
-            resultMap.put("code",DELETE_SUCCESS .getCode());
-            resultMap.put("msg", DELETE_SUCCESS.getMsg());
+    public ResultData delPrincipalByIds(List<Integer> ids) {
+        Integer delete = super.deleteByIds(ids);
+        if (delete > 0) {
+            resultData.setCode(DELETE_SUCCESS.getCode()).setMsg(DELETE_SUCCESS.getMsg());
         } else {
-            resultMap.put("code",DELETE_FAILED .getCode());
-            resultMap.put("msg", DELETE_FAILED.getMsg());
+            resultData.setCode(DELETE_FAILED.getCode()).setMsg(DELETE_FAILED.getMsg());
         }
-        return resultMap;
+        return resultData;
     }
 
     /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/17 21:57
-     * Description: 修改重要人信息
+     * @Author: Luyu
+     * @date : 2020/7/18 20:24
+     * Description: 根据主键(id)修改负责人信息
      **/
-    public Map<String, Object> updatePrincipal(Principal principal) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        principal.setModifyTime(new Date());
-        int i = principalMapper.updateByPrimaryKeySelective(principal);
-        if (i > 0) {
-            resultMap.put("code",UPDATE_SUCCESS .getCode());
-            resultMap.put("msg",UPDATE_SUCCESS .getMsg());
+    public ResultData updatePrincipalById(Principal principal) {
+        Integer update = super.update(principal);
+        if (update > 0) {
+            resultData.setCode(UPDATE_SUCCESS.getCode())
+                    .setMsg(UPDATE_SUCCESS.getMsg());
+
         } else {
-            resultMap.put("code",UPDATE_FAILED .getCode());
-            resultMap.put("msg", UPDATE_FAILED.getMsg());
+            resultData.setCode(UPDATE_FAILED.getCode())
+                    .setMsg(UPDATE_FAILED.getMsg());
         }
-        return resultMap;
-
+        return resultData;
     }
 
     /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/17 21:58
-     * Description: 查询全部重要人信息，可用于重要人信息导出
-     **/
-    public Map<String, Object> selectPrincipalAll() {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        List<Principal> principals = principalMapper.selectAll();
-        if (null != principals && !principals.isEmpty()) {
-            resultMap.put("code",SELECT_SUCCESS.getCode());
-            resultMap.put("msg",SELECT_SUCCESS .getMsg());
-            resultMap.put("data", principals);
+     * @author luyu
+     * @date 2020/7/19 14:36
+     * Description:查询所有单位负责人
+     */
+    public ResultData selPrincipal(Principal principal) {
+        List<Principal> principalList = super.selectList(principal);
+        ResultData resultData = new ResultData();
+        if (principalList.size() > 0) {
+            resultData.setCode(SELECT_SUCCESS.getCode())
+                    .setMsg(SELECT_SUCCESS.getMsg())
+                    .setData(principalList);
+
         } else {
-            resultMap.put("code",SELECT_FAILED .getCode());
-            resultMap.put("msg",SELECT_FAILED .getMsg());
+            resultData.setCode(SELECT_FAILED.getCode()).setMsg(SELECT_FAILED.getMsg());
         }
-        return resultMap;
+        return resultData;
     }
 
     /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/17 22:00
-     * Description: 分页条件查询
-     **/
-    public PageInfo<HashMap> selectPrincipalsPageInfo(HashMap map) {
-        PageHelper.startPage(BaseUtil.transToInt(map.get("pageNo")), BaseUtil.transToInt(map.get("pageNumber")));
-        List<HashMap> list = principalMapper.selectPrincipalAll(map);
-        PageInfo<HashMap> pageInfo = new PageInfo<HashMap>(list);
-        if (null != pageInfo && !"".equals(pageInfo)) {
-
-            return pageInfo;
+     * @author luyu
+     * @date 2020/7/19 14:38
+     * Description:分页查询负责人
+     */
+    public ResultData selPrincipalByPage(Principal principal, Integer pageNumber, Integer pageSize) {
+        PageInfo<Principal> principalPageInfo = super.selectListByPage(principal, pageNumber, pageSize);
+        if (!principalPageInfo.equals("")) {
+            resultData.setCode(SELECT_SUCCESS.getCode())
+                    .setMsg(SELECT_SUCCESS.getMsg())
+                    .setData(principalPageInfo);
+        } else {
+            resultData.setCode(SELECT_FAILED.getCode())
+                    .setMsg(SELECT_FAILED.getMsg());
         }
-        return null;
+        return resultData;
     }
 
     /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/17 22:03
-     * Description: 分页查询全部重要人
-     **/
-    public Map<String, Object> selectPrincipalsAll(HashMap map, RedisService redisService) {
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        Object tokenId = redisService.getOne(map.get("tokenId").toString());
-        //检测token
-        if (null == tokenId) {
-            resultMap.put("code",SELECT_FAILED .getCode());
-            resultMap.put("msg",SELECT_FAILED .getMsg());
+     * @author luyu
+     * @date 2020/7/19 14:41
+     * Description:根据条件分页查询负责人
+     */
+    public ResultData selPrincipalByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds) {
+        PageInfo<Principal> principalPageInfo = super.selectListByPageAndFiled(number, pageSize, where, orderFiled, fileds);
+        if (principalPageInfo.equals("")) {
+            resultData.setCode(SELECT_SUCCESS.getCode())
+                    .setMsg(SELECT_SUCCESS.getMsg())
+                    .setData(principalPageInfo);
+        } else {
+            resultData.setCode(SELECT_FAILED.getCode())
+                    .setMsg(SELECT_FAILED.getMsg());
         }
-        if (map.size() > 0) {
-            PageInfo<HashMap> pageInfo = selectPrincipalsPageInfo(map);
-            if (null != pageInfo && pageInfo.getSize() > 0) {
-                resultMap.put("code", SELECT_SUCCESS.getCode());
-                resultMap.put("msg", SELECT_SUCCESS.getMsg());
-            } else {
-                resultMap.put("code",SELECT_FAILED .getCode());
-                resultMap.put("msg",SELECT_FAILED .getMsg());
-            }
-
-        }
-        return resultMap;
+        return resultData;
     }
-
 }

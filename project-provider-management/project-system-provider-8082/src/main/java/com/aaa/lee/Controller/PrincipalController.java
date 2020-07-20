@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tk.mybatis.mapper.util.Sqls;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,9 +21,9 @@ import java.util.Map;
 import static com.aaa.lee.status.OperationStatus.*;
 
 /**
- * create by: LiShiHao
- * create Time:  2020/7/17 22:04
- * description:
+ * @author luyu
+ * @date 2020/7/19 14:44
+ * Description:负责人模块
  */
 @RestController
 @Slf4j
@@ -39,77 +40,77 @@ public class PrincipalController extends CommonController<Principal> {
     }
 
     /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/17 22:07
-     * Description: 新增重要人
+     * @Author: luyu
+     * @date : 2020/7/16 11:17
+     * Description: 新增负责人
      **/
     @PostMapping("/addPrincipal")
-    ResultData addPrincipal(@RequestBody Principal principal) {
-        Map<String, Object> addResult = principalService.addPrincipal(principal);
-        if (addResult.get("code").equals(INSERT_SUCCESS.getCode())) {
-            return super.operationSuccess();
-        }
-        return super.operationFailed();
+    public ResultData addPrincipal(@RequestBody Principal principal) {
+        ResultData resultData = principalService.addPrincipal(principal);
+        return (resultData.getCode().equals(INSERT_SUCCESS.getCode()))
+                ? resultData : super.insertOperationFailed();
     }
 
+
     /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/17 22:07
-     * Description: 批量删除重要人
+     * @Author: luyu
+     * @date : 2020/7/18 20:44
+     * Description: 根据id批量删除负责人
      **/
-    @PostMapping("/delPrincipal")
-    ResultData delPrincipal(@RequestBody List<Long> ids) {
-        Map<String, Object> resultMap = principalService.delPrincipal(ids);
-        if (resultMap.get("code").equals(DELETE_SUCCESS.getCode())) {
-            return super.operationSuccess();
-        }
-        return super.operationFailed();
+    @PostMapping("/delPrincipalByIds")
+    public ResultData delPrincipalByIds(@RequestBody Integer[] ids) {
+        ResultData resultData = super.batchDelete(ids);
+        return resultData.getCode().equals(operationSuccess().getCode()) ?
+                resultData : super.deleteOperationFailed();
+
     }
 
     /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/17 22:07
-     * Description: 修改重要人信息
+     * @Author: luyu
+     * @date : 2020/7/19 9:53
+     * Description: 根据主键(id)修改负责人信息
      **/
-    @PostMapping("/updatePrincipal")
-    ResultData updatePrincipal(@RequestBody Principal principal) {
-        Map<String, Object> resultMap = principalService.updatePrincipal(principal);
-        if (resultMap.get("code").equals(UPDATE_SUCCESS.getCode())) {
-            return super.operationSuccess();
-        }
-        return super.operationFailed();
-
+    @PostMapping("/updatePrincipalById")
+    public ResultData updatePrincipalById(Principal principal) {
+        ResultData resultData = principalService.updatePrincipalById(principal);
+        return resultData.getCode().equals(UPDATE_SUCCESS.getCode()) ?
+                resultData : super.updateOperationFailed();
     }
 
     /**
-     * @Author: Lee ShiHao
+     * @Author: luyu
      * @date : 2020/7/17 22:08
-     * Description: 查询重要人信息
+     * Description: 查询所有负责人
      **/
-    //todo 没有加@RequestBody
-    @PostMapping("/selectPrincipalAll")
-    ResultData selectPrincipalAll(Principal principal) {
-        Map<String, Object> resultMap = principalService.selectPrincipalAll();
-        if (resultMap.get("code").equals(SELECT_SUCCESS.getCode())) {
-            return super.operationSuccess(resultMap);
-        } else {
-            return super.operationFailed();
-        }
+    @PostMapping("/selPrincipal")
+    public ResultData selPrincipal(Principal principal) {
+        ResultData resultData = principalService.selPrincipal(principal);
+        return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
+                resultData : super.selectOperationFailed();
     }
 
     /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/17 22:09
-     * Description: 带条件查询重要人信息
-     **/
-    @PostMapping("/selectPrincipal")
-    ResultData selectPrincipal(@RequestBody HashMap map) {
-        Map<String, Object> principalAll = principalService.selectPrincipalsAll(map, redisService);
-        if (principalAll.get("code").equals(SELECT_SUCCESS.getCode())) {
-            return super.operationSuccess(principalAll);
-        } else {
-            return super.operationFailed();
-        }
+     * @author luyu
+     * @date 2020/7/19 14:46
+     * Description:分页查询负责人
+     */
+    @PostMapping("/selPrincipalByPage")
+    public ResultData selPrincipalByPage(Principal principal, Integer pageNumber, Integer pageSize) {
+        ResultData resultData = principalService.selPrincipalByPage(principal, pageNumber, pageSize);
+        return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
+                resultData : super.selectOperationFailed();
+    }
+
+    /**
+     * @author luyu
+     * @date 2020/7/19 14:48
+     * Description:根据条件分页查询负责人
+     */
+    @PostMapping("/selPrincipalByPageFiled")
+    public ResultData selPrincipalByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds) {
+        ResultData resultData = principalService.selPrincipalByPageFiled(number, pageSize, where, orderFiled, fileds);
+        return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
+                resultData : super.selectOperationFailed();
     }
 
 }
