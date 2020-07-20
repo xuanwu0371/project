@@ -22,58 +22,64 @@ public class MappingUnitController extends BaseController {
 
     @Autowired
     private IProjectService iProjectService;
+
     /**
      * @author luyu
      * @date 2020/7/19 16:39
      * Description:新增、注册单位
      */
     @PostMapping("/addMappingUnit")
-    ResultData addMappingUnit(@RequestBody MappingUnit mappingUnit){
+    ResultData addMappingUnit(@RequestBody MappingUnit mappingUnit) {
         return iProjectService.addMappingUnit(mappingUnit);
     }
+
     /**
      * @author luyu
      * @date 2020/7/19 16:39
      * Description:通过id批量删除单位
      */
     @PostMapping("/delMappingUnitByIds")
-    ResultData delMappingUnitByIds(@RequestBody Integer[] ids){
-      return iProjectService.delMappingUnitByIds(ids);
+    ResultData delMappingUnitByIds(@RequestBody Integer[] ids) {
+        return iProjectService.delMappingUnitByIds(ids);
     }
+
     /**
      * @author luyu
      * @date 2020/7/19 16:39
      * Description:通过主键id修改单位
      */
     @PostMapping("/updateMappingUnitById")
-    ResultData updateMappingUnitById(MappingUnit mappingUnit){
+    ResultData updateMappingUnitById(MappingUnit mappingUnit) {
         return iProjectService.updateMappingUnitById(mappingUnit);
     }
+
     /**
      * @author luyu
      * @date 2020/7/19 16:39
      * Description:查询全部单位信息
      */
     @PostMapping("/selMappingUnit")
-    ResultData selMappingUnit(MappingUnit mappingUnit){
+    ResultData selMappingUnit(MappingUnit mappingUnit) {
         return iProjectService.selMappingUnit(mappingUnit);
     }
+
     /**
      * @author luyu
      * @date 2020/7/19 16:39
      * Description:分页查询单位
      */
     @PostMapping("/selMappingUnitByPage")
-    ResultData selMappingUnitByPage(MappingUnit mappingUnit,Integer pageNumber,Integer pageSize){
-        return iProjectService.selMappingUnitByPage(mappingUnit,pageNumber,pageSize);
+    ResultData selMappingUnitByPage(MappingUnit mappingUnit, Integer pageNumber, Integer pageSize) {
+        return iProjectService.selMappingUnitByPage(mappingUnit, pageNumber, pageSize);
     }
+
     /**
      * @author luyu
      * @date 2020/7/19 16:40
      * Description:根据条件分页查询单位
      */
     @PostMapping("/selMappingUnitByPageFiled")
-    ResultData selMappingUnitByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds){
-        return iProjectService.selTechnicistByPageFiled(number,pageSize,where,orderFiled,fileds);
+    ResultData selMappingUnitByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds) {
+        return iProjectService.selTechnicistByPageFiled(number, pageSize, where, orderFiled, fileds);
     }
 }

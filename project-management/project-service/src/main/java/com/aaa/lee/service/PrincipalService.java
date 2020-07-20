@@ -56,7 +56,6 @@ public class PrincipalService extends BaseService<Principal> {
     }
 
 
-
     /**
      * @Author: Luyu
      * @date : 2020/7/18 20:05

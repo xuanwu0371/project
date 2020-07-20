@@ -13,13 +13,14 @@ import java.util.Date;
 import java.util.List;
 
 import static com.aaa.lee.status.OperationStatus.*;
+
 /**
  * @author luyu
  * @date 2020/7/19 17:30
  * Description:特殊岗位人员模块
  */
 @Service
-public class SpecialPostService  extends BaseService<SpecialPost> {
+public class SpecialPostService extends BaseService<SpecialPost> {
     @Autowired
     private SpecialPostMapper specialPostMapper;
 
@@ -40,7 +41,6 @@ public class SpecialPostService  extends BaseService<SpecialPost> {
         }
         return resultData;
     }
-
 
 
     /**
@@ -94,6 +94,7 @@ public class SpecialPostService  extends BaseService<SpecialPost> {
         }
         return resultData;
     }
+
     /**
      * @Author: luyu
      * @date : 2020/7/19 9:42
@@ -112,30 +113,25 @@ public class SpecialPostService  extends BaseService<SpecialPost> {
         return resultData;
 
     }
+
     /**
      * @Author: luyu
      * @date : 2020/7/19 10:00
      * Description: 根据条件分页查询特殊岗位人员
      **/
-    public ResultData selSpecialPostByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds ){
+    public ResultData selSpecialPostByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds) {
         PageInfo<SpecialPost> specialPostPageInfo = super.selectListByPageAndFiled(number, pageSize, where, orderFiled, fileds);
-        if (specialPostPageInfo.equals("")){
+        if (specialPostPageInfo.equals("")) {
             resultData.setCode(SELECT_SUCCESS.getCode())
                     .setMsg(SELECT_SUCCESS.getMsg())
                     .setData(specialPostPageInfo);
-        }else {
+        } else {
             resultData.setCode(SELECT_FAILED.getCode())
                     .setMsg(SELECT_FAILED.getMsg());
         }
         return resultData;
 
     }
-
-
-
-
-
-
 
 
 }

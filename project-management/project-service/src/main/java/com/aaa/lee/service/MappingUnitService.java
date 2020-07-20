@@ -27,27 +27,28 @@ public class MappingUnitService extends BaseService<MappingUnit> {
     @Autowired
     private MappingUnitMapper mappingUnitMapper;
     private ResultData resultData = new ResultData();
-/**
- * @author luyu
- * @date 2020/7/19 16:19
- * Description:添加单位、单位注册
- */
-public ResultData addMappingUnit(MappingUnit mappingUnit) {
-    mappingUnit.setCreateTime(new Date());
-    int insert = super.add(mappingUnit);
-    if (insert > 0) {
-        resultData.setCode(INSERT_SUCCESS.getCode()).setMsg(INSERT_SUCCESS.getMsg());
-    } else {
-        resultData.setCode(INSERT_FAILED.getCode()).setMsg(INSERT_FAILED.getMsg());
-    }
-    return resultData;
-}
 
-   /**
-    * @author luyu
-    * @date 2020/7/19 16:28
-    * Description:根据id批量删除单位
-    */
+    /**
+     * @author luyu
+     * @date 2020/7/19 16:19
+     * Description:添加单位、单位注册
+     */
+    public ResultData addMappingUnit(MappingUnit mappingUnit) {
+        mappingUnit.setCreateTime(new Date());
+        int insert = super.add(mappingUnit);
+        if (insert > 0) {
+            resultData.setCode(INSERT_SUCCESS.getCode()).setMsg(INSERT_SUCCESS.getMsg());
+        } else {
+            resultData.setCode(INSERT_FAILED.getCode()).setMsg(INSERT_FAILED.getMsg());
+        }
+        return resultData;
+    }
+
+    /**
+     * @author luyu
+     * @date 2020/7/19 16:28
+     * Description:根据id批量删除单位
+     */
     public ResultData delMappingUnitByIds(List<Integer> ids) {
         Integer delete = super.deleteByIds(ids);
         if (delete > 0) {
@@ -58,11 +59,11 @@ public ResultData addMappingUnit(MappingUnit mappingUnit) {
         return resultData;
     }
 
-   /**
-    * @author luyu
-    * @date 2020/7/19 16:28
-    * Description:根据主键(id)修改单位信息
-    */
+    /**
+     * @author luyu
+     * @date 2020/7/19 16:28
+     * Description:根据主键(id)修改单位信息
+     */
     public ResultData updateMappingUnitById(MappingUnit mappingUnit) {
         Integer update = super.update(mappingUnit);
         if (update > 0) {
@@ -76,7 +77,7 @@ public ResultData addMappingUnit(MappingUnit mappingUnit) {
         return resultData;
     }
 
-    
+
     /**
      * @author luyu
      * @date 2020/7/19 13:51
@@ -90,13 +91,14 @@ public ResultData addMappingUnit(MappingUnit mappingUnit) {
         } else {
             resultData.setCode(SELECT_FAILED.getCode()).setMsg(SELECT_FAILED.getMsg());
         }
-        return  resultData;
+        return resultData;
     }
- /**
-  * @author luyu
-  * @date 2020/7/19 16:28
-  * Description:分页查询单位信息
-  */
+
+    /**
+     * @author luyu
+     * @date 2020/7/19 16:28
+     * Description:分页查询单位信息
+     */
     public ResultData selMappingUnitByPage(MappingUnit mappingUnit, Integer pageNumber, Integer pageSize) {
         PageInfo<MappingUnit> mappingUnitPageInfo = super.selectListByPage(mappingUnit, pageNumber, pageSize);
         if (!mappingUnitPageInfo.equals("")) {
@@ -110,18 +112,19 @@ public ResultData addMappingUnit(MappingUnit mappingUnit) {
         return resultData;
 
     }
-/**
- * @author luyu
- * @date 2020/7/19 16:28
- * Description:根据条件分页查询单位
- */
-    public ResultData selMappingUnitByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds ){
+
+    /**
+     * @author luyu
+     * @date 2020/7/19 16:28
+     * Description:根据条件分页查询单位
+     */
+    public ResultData selMappingUnitByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds) {
         PageInfo<MappingUnit> mappingUnitPageInfo = super.selectListByPageAndFiled(number, pageSize, where, orderFiled, fileds);
-        if (mappingUnitPageInfo.equals("")){
+        if (mappingUnitPageInfo.equals("")) {
             resultData.setCode(SELECT_SUCCESS.getCode())
                     .setMsg(SELECT_SUCCESS.getMsg())
                     .setData(mappingUnitPageInfo);
-        }else {
+        } else {
             resultData.setCode(SELECT_FAILED.getCode())
                     .setMsg(SELECT_FAILED.getMsg());
         }

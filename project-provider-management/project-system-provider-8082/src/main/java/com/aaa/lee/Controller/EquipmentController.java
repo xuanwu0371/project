@@ -36,6 +36,7 @@ public class EquipmentController extends CommonController<Equipment> {
     public BaseService<Equipment> getBaseService() {
         return null;
     }
+
     /**
      * @Author: luyu
      * @date : 2020/7/16 11:17
@@ -47,7 +48,6 @@ public class EquipmentController extends CommonController<Equipment> {
         return (resultData.getCode().equals(INSERT_SUCCESS.getCode()))
                 ? resultData : super.insertOperationFailed();
     }
-
 
 
     /**
@@ -62,17 +62,19 @@ public class EquipmentController extends CommonController<Equipment> {
                 resultData : super.deleteOperationFailed();
 
     }
+
     /**
      * @Author: luyu
      * @date : 2020/7/19 9:53
      * Description: 根据主键(id)修改设备信息
      **/
     @PostMapping("/updateEquipmentById")
-    public ResultData updateEquipmentById(Equipment equipment){
+    public ResultData updateEquipmentById(Equipment equipment) {
         ResultData resultData = equipmentService.updateEquipmentById(equipment);
         return resultData.getCode().equals(UPDATE_SUCCESS.getCode()) ?
                 resultData : super.updateOperationFailed();
     }
+
     /**
      * @Author: luyu
      * @date : 2020/7/18 21:03
@@ -84,24 +86,26 @@ public class EquipmentController extends CommonController<Equipment> {
         return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
                 resultData : super.selectOperationFailed();
     }
+
     /**
      * @Author: luyu
      * @date : 2020/7/19 9:57
      * Description: 分页查询设备
      **/
     @PostMapping("/selEquipmentByPage")
-    public ResultData selEquipmentByPage(Equipment equipment,Integer pageNumber,Integer pageSize){
+    public ResultData selEquipmentByPage(Equipment equipment, Integer pageNumber, Integer pageSize) {
         ResultData resultData = equipmentService.selEquipmentByPage(equipment, pageNumber, pageSize);
         return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
                 resultData : super.selectOperationFailed();
     }
+
     /**
      * @Author: luyu
      * @date : 2020/7/19 10:13
      * Description: 根据条件分页查询设备
      **/
     @PostMapping("/selEquipmentByPageFiled")
-    public ResultData selEquipmentByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds){
+    public ResultData selEquipmentByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds) {
         ResultData resultData = equipmentService.selEquipmentByPageFiled(number, pageSize, where, orderFiled, fileds);
         return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
                 resultData : super.selectOperationFailed();

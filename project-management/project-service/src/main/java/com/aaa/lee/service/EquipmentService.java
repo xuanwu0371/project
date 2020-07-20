@@ -51,7 +51,6 @@ public class EquipmentService extends BaseService<Equipment> {
     }
 
 
-
     /**
      * @Author: luyu
      * @date : 2020/7/18 20:05
@@ -103,6 +102,7 @@ public class EquipmentService extends BaseService<Equipment> {
         }
         return resultData;
     }
+
     /**
      * @Author: luyu
      * @date : 2020/7/19 9:42
@@ -121,18 +121,19 @@ public class EquipmentService extends BaseService<Equipment> {
         return resultData;
 
     }
+
     /**
      * @Author: luyu
      * @date : 2020/7/19 10:00
      * Description: 根据条件分页查询设备
      **/
-    public ResultData selEquipmentByPageFiled(Integer number,Integer pageSize,Sqls where, String orderFiled, String... fileds ){
+    public ResultData selEquipmentByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds) {
         PageInfo<Equipment> equipmentPageInfo = super.selectListByPageAndFiled(number, pageSize, where, orderFiled, fileds);
-        if (equipmentPageInfo.equals("")){
+        if (equipmentPageInfo.equals("")) {
             resultData.setCode(SELECT_SUCCESS.getCode())
                     .setMsg(SELECT_SUCCESS.getMsg())
                     .setData(equipmentPageInfo);
-        }else {
+        } else {
             resultData.setCode(SELECT_FAILED.getCode())
                     .setMsg(SELECT_FAILED.getMsg());
         }

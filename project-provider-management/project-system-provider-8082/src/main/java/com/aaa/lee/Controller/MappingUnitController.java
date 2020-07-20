@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import tk.mybatis.mapper.util.Sqls;
 
 import static com.aaa.lee.status.OperationStatus.*;
+
 /**
  * @author luyu
  * @date 2020/7/19 16:33
@@ -30,11 +31,11 @@ public class MappingUnitController extends CommonController<MappingUnit> {
         return null;
     }
 
-   /**
-    * @author luyu
-    * @date 2020/7/19 16:33
-    * Description:新增、注册单位
-    */
+    /**
+     * @author luyu
+     * @date 2020/7/19 16:33
+     * Description:新增、注册单位
+     */
     @PostMapping("/addMappingUnit")
     public ResultData addMappingUnit(@RequestBody MappingUnit mappingUnit) {
         ResultData resultData = mappingUnitService.addMappingUnit(mappingUnit);
@@ -43,12 +44,11 @@ public class MappingUnitController extends CommonController<MappingUnit> {
     }
 
 
-
- /**
-  * @author luyu
-  * @date 2020/7/19 16:34
-  * Description:根据id批量删除单位
-  */
+    /**
+     * @author luyu
+     * @date 2020/7/19 16:34
+     * Description:根据id批量删除单位
+     */
     @PostMapping("/delMappingUnitByIds")
     public ResultData delMappingUnitByIds(@RequestBody Integer[] ids) {
         ResultData resultData = super.batchDelete(ids);
@@ -56,17 +56,19 @@ public class MappingUnitController extends CommonController<MappingUnit> {
                 resultData : super.deleteOperationFailed();
 
     }
-/**
- * @author luyu
- * @date 2020/7/19 16:34
- * Description:根据主键修改单位信息
- */
+
+    /**
+     * @author luyu
+     * @date 2020/7/19 16:34
+     * Description:根据主键修改单位信息
+     */
     @PostMapping("/updateMappingUnitById")
-    public ResultData updateMappingUnitById(MappingUnit mappingUnit){
+    public ResultData updateMappingUnitById(MappingUnit mappingUnit) {
         ResultData resultData = mappingUnitService.updateMappingUnitById(mappingUnit);
         return resultData.getCode().equals(UPDATE_SUCCESS.getCode()) ?
                 resultData : super.updateOperationFailed();
     }
+
     /**
      * @author luyu
      * @date 2020/7/19 14:14
@@ -81,24 +83,25 @@ public class MappingUnitController extends CommonController<MappingUnit> {
         return super.selectOperationFailed();
     }
 
-   /**
-    * @author luyu
-    * @date 2020/7/19 16:34
-    * Description:分页查询单位信息
-    */
+    /**
+     * @author luyu
+     * @date 2020/7/19 16:34
+     * Description:分页查询单位信息
+     */
     @PostMapping("/selMappingUnitByPage")
-    public ResultData selMappingUnitByPage(MappingUnit mappingUnit,Integer pageNumber,Integer pageSize){
+    public ResultData selMappingUnitByPage(MappingUnit mappingUnit, Integer pageNumber, Integer pageSize) {
         ResultData resultData = mappingUnitService.selMappingUnitByPage(mappingUnit, pageNumber, pageSize);
         return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
                 resultData : super.selectOperationFailed();
     }
-/**
- * @author luyu
- * @date 2020/7/19 16:34
- * Description:根据条件分页查询单位信息
- */
+
+    /**
+     * @author luyu
+     * @date 2020/7/19 16:34
+     * Description:根据条件分页查询单位信息
+     */
     @PostMapping("/selMappingUnitByPageFiled")
-    public ResultData selMappingUnitByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds){
+    public ResultData selMappingUnitByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds) {
         ResultData resultData = mappingUnitService.selMappingUnitByPageFiled(number, pageSize, where, orderFiled, fileds);
         return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
                 resultData : super.selectOperationFailed();
