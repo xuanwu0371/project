@@ -29,7 +29,7 @@ public interface IProjectService {
      * @Author: Lee ShiHao
      * @date : 2020/7/19 15:54
      * Description: 新增日志
-    **/
+     **/
     @PostMapping("/addLoginLog")
     Integer addLoginLog(@RequestBody LoginLog loginlog);
 
@@ -139,134 +139,130 @@ public interface IProjectService {
     ResultData SelDictByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds);
 
 
-
-
-
     /**
-     * @author yang
-     * @date 2020/7/17 16:46
-     * Description
-     * 新增仪器设备信息
+     * @author luyu
+     * @date 2020/7/19 14:28
+     * Description:单位模块
      */
-    @PostMapping("/equipment/insertEquipment")
-    ResultData insertEquipment(@RequestBody Equipment equipment);
+    @PostMapping("/addMappingUnit")
+    ResultData addMappingUnit(@RequestBody MappingUnit mappingUnit);
+
+    @PostMapping("/delMappingUnitByIds")
+    ResultData delMappingUnitByIds(@RequestBody Integer[] ids);
+
+    @PostMapping("/updateMappingUnitById")
+    ResultData updateMappingUnitById(MappingUnit mappingUnit);
+
+    @PostMapping("/selMappingUnit")
+    ResultData selMappingUnit(MappingUnit mappingUnit);
+
+    @PostMapping("/selMappingUnitByPage")
+    ResultData selMappingUnitByPage(MappingUnit mappingUnit, Integer pageNumber, Integer pageSize);
+
+    @PostMapping("/selMappingUnitByPageFiled")
+    ResultData selMappingUnitByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds);
+
 
     /**
-     * @author yang
-     * @date 2020/7/17 16:57
-     * Description
-     * 通过id批量删除仪器设备信息
+     * @author luyu
+     * @date 2020/7/19 14:54
+     * Description:负责人模块
      */
-    @PostMapping("/equipment/delEquipment")
-    ResultData delEquipmentById(@RequestBody List<Long> ids);
-
-    /**
-     * @author yang
-     * @date 2020/7/17 16:58
-     * Description
-     * 修改仪器设备信息
-     */
-    @PostMapping("/equipment/updateEquipment")
-    ResultData updateEquipment(@RequestBody Equipment equipment);
-
-    /**
-     * @author yang
-     * @date 2020/7/17 17:00
-     * Description
-     * 分页查询仪器设备信息
-     */
-    @PostMapping("/equipment/selectAllEquipmentByPage")
-    ResultData selectAllEquipmentByPage(@RequestBody HashMap hashMap);
-
-
-    /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/17 22:07
-     * Description: 新增重要人
-     **/
     @PostMapping("/addPrincipal")
-    ResultData addPrincipal(@RequestBody Principal principal);
+    ResultData addPrincipal(Principal principal);
+
+    @PostMapping("/delPrincipalByIds")
+    ResultData delPrincipalByIds(@RequestBody Integer[] ids);
+
+    @PostMapping("/updatePrincipalById")
+    ResultData updatePrincipalById(Principal principal);
+
+    @PostMapping("/selPrincipal")
+    ResultData selPrincipal(Principal principal);
+
+    @PostMapping("/selPrincipalByPage")
+    ResultData selPrincipalByPage(Principal principal, Integer pageNumber, Integer pageSize);
+
+    @PostMapping("/selPrincipalByPageFiled")
+    ResultData selPrincipalByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds);
+
 
     /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/17 22:07
-     * Description: 批量删除重要人
-     **/
-    @PostMapping("/delPrincipal")
-    ResultData delPrincipal(@RequestBody List<Long> ids);
-
-    /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/17 22:07
-     * Description: 修改重要人信息
-     **/
-    @PostMapping("/updatePrincipal")
-    ResultData updatePrincipal(@RequestBody Principal principal);
-
-    /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/17 22:08
-     * Description: 查询重要人信息
-     **/
-    @PostMapping("/selectPrincipalAll")
-    ResultData selectPrincipalAll(Principal principal);
-
-    /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/17 22:09
-     * Description: 带条件查询重要人信息
-     **/
-    @PostMapping("/selectPrincipal")
-    ResultData selectPrincipal(@RequestBody HashMap map);
-
-    /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/18 9:24
-     * Description: 新增技术员
-     **/
+     * @author luyu
+     * @date 2020/7/19 15:34
+     * Description:技术人员模块
+     */
     @PostMapping("/addTechnicist")
     ResultData addTechnicist(@RequestBody Technicist technicist);
 
-    /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/18 9:25
-     * Description: 批量删除技术员
-     **/
-    @PostMapping("/delTechnicist")
-    ResultData delTechnicist(@RequestBody List<Long> ids);
+    @PostMapping("/delTechnicistByIds")
+    ResultData delTechnicist(@RequestBody Integer[] ids);
 
-    /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/18 9:26
-     * Description: 修改技术员信息
-     **/
-    @PostMapping("/updateTechnicist")
-    ResultData updateTechnicist(@RequestBody Technicist technicist);
+    @PostMapping("/updateTechnicistById")
+    ResultData updateTechnicistById(@RequestBody Technicist technicist);
 
-    /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/18 9:27
-     * Description: 查询技术员信息
-     **/
-    //todo 没有加@RequestBody
-    @PostMapping("/selectAllTechnicist")
-    ResultData selectAllTechnicist();
+    @PostMapping("/selTechnicist")
+    ResultData selTechnicist(Technicist technicist);
+
+    @PostMapping("/selTechnicistByPage")
+    ResultData selTechnicistByPage(Technicist technicist, Integer pageNumber, Integer pageSize);
+
+    @PostMapping("/selTechnicistByPageFiled")
+    ResultData selTechnicistByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds);
+
 
     /**
-     * @Author: Lee ShiHao
-     * @date : 2020/7/18 9:30
-     * Description: 带条件查询用户信息
-     **/
-    @PostMapping("/selectTechnicist")
-    ResultData selectTechnicist(@RequestBody HashMap map);
+     * @author luyu
+     * @date 2020/7/19 17:17
+     * Description:设备模块
+     */
+    @PostMapping("/addEquipment")
+    ResultData addEquipment(@RequestBody Equipment equipment);
+
+    @PostMapping("/delEquipmentByIds")
+    ResultData delEquipmentByIds(@RequestBody Integer[] ids);
+
+    @PostMapping("/updateEquipmentById")
+    ResultData updateEquipmentById(Equipment equipment);
+
+    @PostMapping("/selEquipment")
+    ResultData selEquipment(Equipment equipment);
+
+    @PostMapping("/selEquipmentByPage")
+    ResultData selEquipmentByPage(Equipment equipment, Integer pageNumber, Integer pageSize);
+
+    @PostMapping("/selEquipmentByPageFiled")
+    ResultData selEquipmentByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds);
 
 
+    /**
+     * @author luyu
+     * @date 2020/7/20 9:43
+     * Description:特殊人员信息模块
+     */
+    @PostMapping("/addSpecialPost")
+    ResultData addSpecialPost(@RequestBody SpecialPost specialPost);
+
+    @PostMapping("/delSpecialPostByIds")
+    ResultData delSpecialPostByIds(@RequestBody Integer[] ids);
+
+    @PostMapping("/updateSpecialPostById")
+    ResultData updateSpecialPostById(SpecialPost specialPost);
+
+    @PostMapping("/selSpecialPost")
+    ResultData selSpecialPost(SpecialPost specialPost);
+
+    @PostMapping("/selSpecialPostByPage")
+    ResultData selSpecialPostByPage(SpecialPost specialPost, Integer pageNumber, Integer pageSize);
+
+    @PostMapping("/selSpecialPostByPageFiled")
+    ResultData selSpecialPostByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds);
 
 
     /**
      * @author : yang
      * @date : 2020/7/19 15:49
-     *Description :审核信息
+     * Description :审核信息
      */
     @PostMapping("/addAudit")
     ResultData addAudit(@RequestBody Audit audit);
@@ -284,15 +280,16 @@ public interface IProjectService {
     ResultData selAuditById(@RequestBody Audit id);
 
     @PostMapping("/selAuditByPage")
-    ResultData selAuditByPage(Audit audit,Integer pageNumber,Integer pageSize);
+    ResultData selAuditByPage(Audit audit, Integer pageNumber, Integer pageSize);
 
     @PostMapping("/selAuditByPageFiled")
     ResultData selAuditByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds);
 
+
     /**
      * @author : yang
      * @date : 2020/7/19 15:58
-     *Description :抽查人员
+     * Description :抽查人员
      */
     @PostMapping("/addCheckPerson")
     ResultData addCheckPerson(@RequestBody CheckPerson checkPerson);
@@ -310,15 +307,16 @@ public interface IProjectService {
     ResultData selCheckPersonById(@RequestBody CheckPerson id);
 
     @PostMapping("/selCheckPersonByPage")
-    ResultData selCheckPersonByPage(CheckPerson checkPerson,Integer pageNumber,Integer pageSize);
+    ResultData selCheckPersonByPage(CheckPerson checkPerson, Integer pageNumber, Integer pageSize);
 
     @PostMapping("/selCheckPersonByPageFiled")
     ResultData selCheckPersonByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds);
 
+
     /**
      * @author : yang
      * @date : 2020/7/19 16:01
-     *Description :测绘项目
+     * Description :测绘项目
      */
     @PostMapping("/addMappingProject")
     ResultData addMappingProject(@RequestBody MappingProject mappingProject);
@@ -336,14 +334,16 @@ public interface IProjectService {
     ResultData selMappingProjectById(@RequestBody MappingProject id);
 
     @PostMapping("/selMappingProjectByPage")
-    ResultData selMappingProjectByPage(MappingProject mappingProject,Integer pageNumber,Integer pageSize);
+    ResultData selMappingProjectByPage(MappingProject mappingProject, Integer pageNumber, Integer pageSize);
 
     @PostMapping("/selMappingProjectByPageFiled")
     ResultData selMappingProjectByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds);
+
+
     /**
      * @author : yang
      * @date : 2020/7/19 16:05
-     *Description :信息公开,公告栏
+     * Description :信息公开,公告栏
      */
     @PostMapping("/addNews")
     ResultData addNews(@RequestBody News news);
@@ -361,7 +361,7 @@ public interface IProjectService {
     ResultData selNewsById(@RequestBody News id);
 
     @PostMapping("/selNewsByPage")
-    ResultData selNewsByPage(News news,Integer pageNumber,Integer pageSize);
+    ResultData selNewsByPage(News news, Integer pageNumber, Integer pageSize);
 
     @PostMapping("/selNewsByPageFiled")
     ResultData selNewsByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds);
