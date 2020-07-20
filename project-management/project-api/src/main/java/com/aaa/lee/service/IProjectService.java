@@ -26,10 +26,10 @@ public interface IProjectService {
 
 
     /**
-     * @Author: lee
-     * @date : 2020/7/15 15:21
+     * @Author: Lee ShiHao
+     * @date : 2020/7/19 15:54
      * Description: 新增日志
-     **/
+    **/
     @PostMapping("/addLoginLog")
     Integer addLoginLog(@RequestBody LoginLog loginlog);
 
@@ -139,41 +139,8 @@ public interface IProjectService {
     ResultData SelDictByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds);
 
 
-    /**
-     * @author yang
-     * @date 2020/7/17 10:35
-     * Description
-     * 添加新闻
-     */
-    @PostMapping("/news/addNews")
-    ResultData addNews(@RequestBody News news);
 
-    /**
-     * @author yang
-     * @date 2020/7/17 10:40
-     * Description
-     * 删除新闻
-     */
-    @PostMapping("/news/delNews")
-    ResultData delNews(@RequestBody List<Long> ids);
 
-    /**
-     * @author yang
-     * @date 2020/7/17 10:39
-     * Description
-     * 修改新闻
-     */
-    @PostMapping("/news/updateNews")
-    ResultData updateNews(@RequestBody News news);
-
-    /**
-     * @author yang
-     * @date 2020/7/17 10:41
-     * Description
-     * 查询所有新闻
-     */
-    @PostMapping("/news/selectNews")
-    ResultData selectNews(@RequestBody News news);
 
     /**
      * @author yang
@@ -292,4 +259,111 @@ public interface IProjectService {
      **/
     @PostMapping("/selectTechnicist")
     ResultData selectTechnicist(@RequestBody HashMap map);
+
+
+
+
+    /**
+     * @author : yang
+     * @date : 2020/7/19 15:49
+     *Description :审核信息
+     */
+    @PostMapping("/addAudit")
+    ResultData addAudit(@RequestBody Audit audit);
+
+    @PostMapping("/delAudit")
+    ResultData delAudit(@RequestBody Integer[] ids);
+
+    @PostMapping("/updateAuditBuId")
+    ResultData updateAuditBuId(Audit audit);
+
+    @PostMapping("/selAudit")
+    ResultData selAudit(Audit audit);
+
+    @PostMapping("/selAuditById")
+    ResultData selAuditById(@RequestBody Audit id);
+
+    @PostMapping("/selAuditByPage")
+    ResultData selAuditByPage(Audit audit,Integer pageNumber,Integer pageSize);
+
+    @PostMapping("/selAuditByPageFiled")
+    ResultData selAuditByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds);
+
+    /**
+     * @author : yang
+     * @date : 2020/7/19 15:58
+     *Description :抽查人员
+     */
+    @PostMapping("/addCheckPerson")
+    ResultData addCheckPerson(@RequestBody CheckPerson checkPerson);
+
+    @PostMapping("/delCheckPersonByIds")
+    ResultData delCheckPersonByIds(@RequestBody Integer[] ids);
+
+    @PostMapping("/updateCheckPersonById")
+    ResultData updateCheckPersonById(CheckPerson checkPerson);
+
+    @PostMapping("/selCheckPerson")
+    ResultData selCheckPerson(CheckPerson checkPerson);
+
+    @PostMapping("/selCheckPersonById")
+    ResultData selCheckPersonById(@RequestBody CheckPerson id);
+
+    @PostMapping("/selCheckPersonByPage")
+    ResultData selCheckPersonByPage(CheckPerson checkPerson,Integer pageNumber,Integer pageSize);
+
+    @PostMapping("/selCheckPersonByPageFiled")
+    ResultData selCheckPersonByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds);
+
+    /**
+     * @author : yang
+     * @date : 2020/7/19 16:01
+     *Description :测绘项目
+     */
+    @PostMapping("/addMappingProject")
+    ResultData addMappingProject(@RequestBody MappingProject mappingProject);
+
+    @PostMapping("/delMappingProjectByIds")
+    ResultData delMappingProjectByIds(@RequestBody Integer[] ids);
+
+    @PostMapping("/updateMappingProjectById")
+    ResultData updateMappingProjectById(@RequestBody MappingProject mappingProject);
+
+    @PostMapping("/selMappingProject")
+    ResultData selMappingProject(MappingProject mappingProject);
+
+    @PostMapping("/selMappingProjectById")
+    ResultData selMappingProjectById(@RequestBody MappingProject id);
+
+    @PostMapping("/selMappingProjectByPage")
+    ResultData selMappingProjectByPage(MappingProject mappingProject,Integer pageNumber,Integer pageSize);
+
+    @PostMapping("/selMappingProjectByPageFiled")
+    ResultData selMappingProjectByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds);
+    /**
+     * @author : yang
+     * @date : 2020/7/19 16:05
+     *Description :信息公开,公告栏
+     */
+    @PostMapping("/addNews")
+    ResultData addNews(@RequestBody News news);
+
+    @PostMapping("/delNewsByIds")
+    ResultData delNewsByIds(@RequestBody Integer[] ids);
+
+    @RequestMapping("/updateNewsById")
+    ResultData updateNewsById(News news);
+
+    @PostMapping("/selNews")
+    ResultData selNews(News news);
+
+    @PostMapping("/selNewsById")
+    ResultData selNewsById(@RequestBody News id);
+
+    @PostMapping("/selNewsByPage")
+    ResultData selNewsByPage(News news,Integer pageNumber,Integer pageSize);
+
+    @PostMapping("/selNewsByPageFiled")
+    ResultData selNewsByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds);
+
 }
