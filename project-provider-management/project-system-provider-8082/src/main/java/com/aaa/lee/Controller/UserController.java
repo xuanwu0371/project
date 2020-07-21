@@ -15,10 +15,7 @@ import tk.mybatis.mapper.common.BaseMapper;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.Sqls;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.aaa.lee.status.OperationStatus.*;
 
@@ -30,6 +27,7 @@ import static com.aaa.lee.status.OperationStatus.*;
 @Slf4j
 @RequestMapping("/user")
 public class UserController extends CommonController<User> {
+
     @Autowired
     private UserService userService;
     @Autowired
@@ -47,7 +45,7 @@ public class UserController extends CommonController<User> {
      * Description: 新增用户
      **/
     @PostMapping("/addUser")
-    public ResultData addUser(@RequestBody User user) {
+    public ResultData addUser( User user) {
         ResultData resultData = userService.addUser(user);
         return (resultData.getCode().equals(INSERT_SUCCESS.getCode()))
                 ? resultData : super.insertOperationFailed();
@@ -61,11 +59,21 @@ public class UserController extends CommonController<User> {
      * Description: 根据id批量删除用户
      **/
     @PostMapping("/delUserByIds")
-    public ResultData delUserByIds(@RequestBody Integer[] ids) {
-        ResultData resultData = super.batchDelete(ids);
+    public ResultData delUserByIds( List<Integer> ids) {
+        ResultData resultData = userService.delUserByIds(ids);
         return resultData.getCode().equals(operationSuccess().getCode()) ?
                 resultData : super.deleteOperationFailed();
-
+    }
+    /**
+     * @Author: Lee ShiHao
+     * @date : 2020/7/20 19:32
+     * Description: 重置密码
+    **/
+    @PostMapping("/resetUserPwd")
+    public ResultData resetUserPwd (User user){
+        ResultData resultData = userService.resetUserPwd(user);
+        return resultData.getCode().equals(SUCCESS.getCode()) ?
+                resultData : super.updateOperationFailed();
     }
     /**
      * @Author: Lee ShiHao
@@ -96,7 +104,7 @@ public class UserController extends CommonController<User> {
      * Description: 查询一条数据
      **/
     @PostMapping("/selUserById")
-    public ResultData selUserById(@RequestBody User id) {
+    public ResultData selUserById(User id) {
         ResultData resultData = userService.selUserById(id);
         return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
                 resultData : super.selectOperationFailed();

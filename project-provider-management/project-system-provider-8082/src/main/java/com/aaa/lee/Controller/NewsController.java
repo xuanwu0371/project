@@ -45,7 +45,7 @@ public class NewsController extends CommonController<News> {
      * 新增新闻
      */
     @PostMapping("/addNews")
-    public ResultData addNews(@RequestBody News news) {
+    public ResultData addNews( News news) {
         ResultData resultData = newsService.addNews(news);
         return (resultData.getCode().equals(INSERT_SUCCESS.getCode()))
                 ? resultData : super.insertOperationFailed();

@@ -106,4 +106,5 @@ public class MappingUnitController extends CommonController<MappingUnit> {
         return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
                 resultData : super.selectOperationFailed();
     }
+
 }

@@ -35,7 +35,7 @@ public class RoleController extends CommonController<Role> {
      * Description: 新增角色以及批量新增权限
      **/
     @PostMapping("/insertRole")
-    public ResultData insertRole(@RequestBody RoleVo roleVo) {
+    public ResultData insertRole( RoleVo roleVo) {
         ResultData resultData = roleService.insertRole(roleVo);
         return resultData.getCode().equals(INSERT_SUCCESS.getCode()) ?
                 resultData : super.insertOperationFailed();
@@ -47,7 +47,7 @@ public class RoleController extends CommonController<Role> {
      * Description: 删除角色
      **/
     @PostMapping("/deleteRole")
-    public ResultData deleteRole(@RequestParam("roleId") Long roleId) {
+    public ResultData deleteRole( Long roleId) {
         ResultData resultData = roleService.deleteRole(roleId);
         return resultData.getCode().equals(DELETE_SUCCESS.getCode()) ?
                 resultData : super.deleteOperationFailed();
@@ -59,7 +59,7 @@ public class RoleController extends CommonController<Role> {
      * Description: 修改角色及权限
      **/
     @PostMapping("/updateRole")
-    public ResultData updateRole(@RequestBody RoleVo roleVo) {
+    public ResultData updateRole( RoleVo roleVo) {
         ResultData resultData = roleService.updateRole(roleVo);
         return resultData.getCode().equals(UPDATE_SUCCESS.getCode()) ?
                 resultData : super.updateOperationFailed();

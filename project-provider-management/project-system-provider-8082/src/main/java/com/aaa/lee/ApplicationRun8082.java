@@ -14,6 +14,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  */
 @SpringBootApplication(exclude = {RedisAutoConfiguration.class, RedisRepositoriesAutoConfiguration.class})
 @MapperScan("com.aaa.lee.mapper")
+
 @EnableDiscoveryClient
 @EnableCircuitBreaker
 public class ApplicationRun8082 {
