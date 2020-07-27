@@ -13,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.util.Sqls;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import static com.aaa.lee.staticproerties.TimeFormatProperties.TIME_FORMAT;
 import static com.aaa.lee.status.OperationStatus.*;
@@ -39,12 +41,31 @@ public class UserService extends BaseService<User> {
      * Description: 添加用户
      **/
     public ResultData addUser(User user) {
-        user.setCreateTime(DateUtil.formatDate(new Date(), TIME_FORMAT));
-        int insert = super.add(user);
-        if (insert > 0) {
-            resultData.setCode(INSERT_SUCCESS.getCode()).setMsg(INSERT_SUCCESS.getMsg());
-        } else {
-            resultData.setCode(INSERT_FAILED.getCode()).setMsg(INSERT_FAILED.getMsg());
+        if (user.getId() == null) {
+            user.setId(userMapper.getLastId() + 1);
+            user.setPassword("123456");
+            user.setStatus("1");
+            user.setCreateTime(DateUtil.formatDate(new Date(), TIME_FORMAT));
+            user.setType("1");
+            String token = UUID.randomUUID().toString().replaceAll("-", "");
+            user.setToken(token);
+            int insert = super.add(user);
+            if (insert > 0) {
+                resultData.setCode(INSERT_SUCCESS.getCode()).setMsg(INSERT_SUCCESS.getMsg());
+            } else {
+                resultData.setCode(INSERT_FAILED.getCode()).setMsg(INSERT_FAILED.getMsg());
+            }
+        }else {
+            user.setModifyTime(DateUtil.formatDate(new Date(), TIME_FORMAT));
+            Integer update = super.update(user);
+            if (update > 0) {
+                resultData.setCode(UPDATE_SUCCESS.getCode())
+                        .setMsg(UPDATE_SUCCESS.getMsg());
+            } else {
+                resultData.setCode(UPDATE_FAILED.getCode())
+                        .setMsg(UPDATE_FAILED.getMsg());
+            }
+
         }
         return resultData;
     }
@@ -56,8 +77,8 @@ public class UserService extends BaseService<User> {
      * Description: 根据id批量删除用户
      **/
 
-    public ResultData delUserByIds(List<Integer> ids) {
-        Integer delete = super.deleteByIds(ids);
+    public ResultData delUserById(User id) {
+        Integer delete = super.delete(id);
         if (delete > 0) {
             resultData.setCode(DELETE_SUCCESS.getCode()).setMsg(DELETE_SUCCESS.getMsg());
         } else {
@@ -91,7 +112,7 @@ public class UserService extends BaseService<User> {
      * @date : 2020/7/18 20:24
      * Description: 根据主键(id)修改用户信息
      **/
-    public ResultData updateUserById(User user) {
+    public ResultData updateUser(User user) {
         user.setModifyTime(DateUtil.formatDate(new Date(), TIME_FORMAT));
         Integer update = super.update(user);
         if (update > 0) {
@@ -139,6 +160,40 @@ public class UserService extends BaseService<User> {
                     .setMsg(SELECT_FAILED.getMsg());
         }
         return resultData;
+    }
+
+    /**
+     * @Author: Li ShiHao
+     * @Date: 2020/7/27 10:49
+     * @Description: 通过用户名查询一条数据
+     */
+    public ResultData selUserByUsername(User username) {
+        if (!username.equals("")) {
+            User user = super.selectOne(username);
+            List<User> list = new ArrayList<User>();
+            list.add(user);
+            if (!user.equals("")) {
+                this.resultData.setCode(SELECT_SUCCESS.getCode())
+                        .setMsg(SELECT_SUCCESS.getMsg())
+                        .setData(list);
+            } else {
+                this.resultData.setCode(SELECT_FAILED.getCode())
+                        .setMsg(SELECT_FAILED.getMsg());
+            }
+
+        } else {
+            List<User> list = selectList(username);
+            if (list.size() != 0) {
+                this.resultData.setCode(SELECT_SUCCESS.getCode())
+                        .setMsg(SELECT_SUCCESS.getMsg())
+                        .setData(list);
+            } else {
+                this.resultData.setCode(SELECT_FAILED.getCode())
+                        .setMsg(SELECT_FAILED.getMsg());
+            }
+
+        }
+        return this.resultData;
     }
 
     /**

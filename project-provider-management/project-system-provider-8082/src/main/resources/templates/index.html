@@ -1,96 +1,289 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="assets/css/layui.css">
-    <link rel="stylesheet" href="assets/css/admin.css">
-    <link rel="icon" href="/favicon.ico">
-    <title>管理后台</title>
+    <!-- 引入样式 -->
+    <!-- 先引入 Vue -->
+    <script src="/static/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/js/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script type="text/javascript" src="/static/js/index.js"></script>
+    <script type="text/javascript" src="/static/toastr/toastr.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="/static/toastr/toastr.min.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <style type="text/css">
+        a:hover {
+            color: yellow;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        body {
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .scroll {
+            display: inline-block;
+            overflow: hidden;
+            position: relative;
+            height: 50px;
+        }
+
+        .scroll ul {
+            transform: translateY(0);
+        }
+
+        .animate {
+            -webkit-transition: all .3s ease-out;
+        }
+
+        .scroll li {
+            overflow: hidden;
+            display: -webkit-box;
+            margin-left: 10px;
+            width: 200px;
+            height: 50px;
+            line-height: 30px;
+            color: #333;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            white-space: normal;
+        }
+
+        .scroll li img {
+            margin-top: 20px;
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+        }
+    </style>
+    <title>Easylive后台管理</title>
 </head>
-<body class="layui-layout-body">
-    <div class="layui-layout layui-layout-admin">
-        <div class="layui-header custom-header">
-            
-            <ul class="layui-nav layui-layout-left">
-                <li class="layui-nav-item slide-sidebar" lay-unselect>
-                    <a href="javascript:;" class="icon-font"><i class="ai ai-menufold"></i></a>
-                </li>
-            </ul>
 
-            <ul class="layui-nav layui-layout-right">
-                <li class="layui-nav-item">
-                    <a href="javascript:;">BieJun</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="">帮助中心</a></dd>
-                        <dd><a href="login.html">退出</a></dd>
-                    </dl>
-                </li>
-            </ul>
+<body>
+<script type="text/javascript" src="/static/js/canvas-nest.min.js"></script>
+<script src="/static/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<canvas height="926" width="1920" style="position: fixed; top: 0px; left: 0px; z-index: -1; opacity: 0.5;"
+        id="c_n1"></canvas>
+<el-container id="app">
+    <el-header style="height:130px;border-bottom: 1px solid lightgray;">
+        <div style="text-align: center;">
+            <img src="/static/img/my.png" height="50px" style="display: inline;margin-right: 20px;"/>
+            <span style="display: inline; font-size: 30px;">欢迎<span id="user"></span>登陆Easy-live管理页面</span>
         </div>
-
-        <div class="layui-side custom-admin">
-            <div class="layui-side-scroll">
-
-                <div class="custom-logo">
-                    <img src="assets/images/logo.png" alt=""/>
-                    <h1>Admin Pro</h1>
-                </div>
-                <ul id="Nav" class="layui-nav layui-nav-tree">
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">
-                            <i class="layui-icon">&#xe609;</i>
-                            <em>主页</em>
-                        </a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="views/console.html">控制台</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">
-                            <i class="layui-icon">&#xe857;</i>
-                            <em>组件</em>
-                        </a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="views/form.html">表单</a></dd>
-                            <dd>
-                                <a href="javascript:;">页面</a>
-                                <dl class="layui-nav-child">
-                                    <dd>
-                                        <a href="login.html">登录页</a>
-                                    </dd>
-                                </dl>
-                            </dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">
-                            <i class="layui-icon">&#xe612;</i>
-                            <em>用户</em>
-                        </a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="views/users.html">用户组</a></dd>
-                            <dd><a href="views/operaterule.html">权限配置</a></dd>
-                        </dl>
-                    </li>
-                </ul>
-
-            </div>
+        <div style="position: absolute;">
+            管理员：<b>admin:<em>li</em></b>
+            <el-button id="exit" type="info" style="margin-top: 3px; color: white; display: block;" @click="back">
+                退出
+            </el-button>
         </div>
+    </el-header>
+    <el-container style="height: 1000px">
+        <el-aside width="230px">
+            <el-menu default-active="2" class="el-menu-vertical-demo">
+                <el-submenu v-for="(m1,idx1) in root.list" :key="m1.id" :index="m1.id">
+                    <template slot="title">
+                        <i :class="m1.icon"></i>
+                        <span>{{m1.title}}</span>
+                    </template>
+                    <el-menu-item-group>
+                        <el-menu-item v-for="(m2,idx2) in m1.list" :key="m2.id" :index="m2.id">
+                            <a :href="m2.href" style="text-decoration: none;color:inherit" target="ifm">
+                                <i :class="m2.icon"></i>
+                                <span>{{m2.title}}</span>
+                            </a>
+                        </el-menu-item>
+                    </el-menu-item-group>
+                </el-submenu>
+            </el-menu>
+        </el-aside>
+        <el-main>
+            <iframe name="ifm" frameborder="0" src="/toMainPage" border="0px" scrolling="auto"
+                    style="height: 900px;width: 100%;">
+                aaa
+            </iframe>
+        </el-main>
+    </el-container>
 
-        <div class="layui-body">
-             <div class="layui-tab app-container" lay-allowClose="true" lay-filter="tabs">
-                <ul id="appTabs" class="layui-tab-title custom-tab"></ul>
-                <div id="appTabPage" class="layui-tab-content"></div>
-            </div>
-        </div>
-
-
-
-        <div class="mobile-mask"></div>
-    </div>
-    <script src="assets/layui.js"></script>
-    <script src="index.js" data-main="home"></script>
+</el-container>
 </body>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            now: 1,
+            formLabelWidth: "120px",
+            dialogFormVisible: false,
+            root: {
+                list: [{
+                    id: 1,
+                    title: "用户管理",
+                    icon: "el-icon-success",
+                    list: [{
+                        id: 2,
+                        title: "用户信息",
+                        href: "user",
+                        icon: "el-icon-news"
+                    }]
+                }, {
+                    id: 3,
+                    title: "权限菜单管理",
+                    icon: "el-icon-setting",
+                    list: [{
+                        id: 4,
+                        title: "权限信息",
+                        href: "permission.html",
+                        icon: "el-icon-circle-plus"
+                    }]
+                }, {
+                    id: 5,
+                    title: "经纪人中心",
+                    icon: "el-icon-info",
+                    list: [{
+                        id: 6,
+                        title: "个人中心",
+                        href: "myinfo.html",
+                        icon: "el-icon-message"
+                    }, {
+                        id: 7,
+                        title: "房源信息",
+                        href: "agent-zf.html",
+                        icon: "el-icon-edit"
+                    }]
+                }, {
+                    id: 8,
+                    title: "审核管理",
+                    icon: "el-icon-view",
+                    list: [{
+                        id: 9,
+                        title: "房源发布一级审核",
+                        href: "zf-first.html",
+                        icon: "el-icon-star-off"
+                    }, {
+                        id: 10,
+                        title: "房源发布二级审核",
+                        href: "zf-second.html",
+                        icon: "el-icon-star-on"
+                    }, {
+                        id: 11,
+                        title: "贷款订单一级审核",
+                        href: "dk-first.html",
+                        icon: "el-icon-star-off"
+                    }, {
+                        id: 12,
+                        title: "贷款订单二级审核",
+                        href: "dk-second.html",
+                        icon: "el-icon-star-on"
+                    }]
+                }, {
+                    id: 13,
+                    title: "贷款管理",
+                    icon: "el-icon-rank",
+                    list: [{
+                        id: 14,
+                        title: "贷款订单",
+                        href: "loan_detail.html",
+                        icon: "el-icon-document"
+                    }, {
+                        id: 15,
+                        title: "还款订单",
+                        href: "repay_detail.html",
+                        icon: "el-icon-document"
+                    }]
+                }, {
+                    id: 16,
+                    title: "房源管理",
+                    icon: "el-icon-document",
+                    list: [{
+                        id: 17,
+                        title: "房源信息",
+                        href: "house_detail.html",
+                        icon: "el-icon-document"
+                    }, {
+                        id: 18,
+                        title: "租房订单",
+                        href: "order_detail.html",
+                        icon: "el-icon-document"
+                    }]
+                }, {
+                    id: 19,
+                    title: "字典管理",
+                    icon: "el-icon-tickets",
+                    list: [{
+                        id: 20,
+                        title: "字典信息",
+                        href: "/toDictionaryPage",
+                        icon: "el-icon-tickets"
+                    }]
+                }, {
+                    id: 21,
+                    title: "日志管理",
+                    icon: "el-icon-bell",
+                    list: [{
+                        id: 22,
+                        title: "日志信息",
+                        href: "/toLogPage",
+                        icon: "el-icon-bell"
+                    }]
+                }, {
+                    id: 22,
+                    title: "测试上传",
+                    icon: "el-icon-bell",
+                    list: [{
+                        id: 22,
+                        title: "测试上传",
+                        href: "/toUploadPage",
+                        icon: "el-icon-bell"
+                    }]
+                }]
+            },
+            vif: true,
+            nickname: ""
+        },
+        mounted: function () {
+            var date = new Date();
+            this.now = (date.getMonth() + 1) + '-' + date.getDate() + "/" + date.getHours() + ':' + date.getMinutes()
+            this.menuTree();
+        },
+        methods: {
+            menuTree: function () {
+                var _this = this;
+                this.nickname = window.localStorage.getItem("username");
+                if (window.localStorage.getItem("id") != 0) {
+                    $.post("/menus", function (menu) {
+                        alert(menu.code);
+                        //alert((menu.data)[0].id);
+                        alert(JSON.stringify(menu.data));
+                        _this.root = menu.data;
+
+                    })
+                } else {
+                    $.post("http://localhost:8080/WeatherManage/sidebar2", function (menu) {
+                        _this.root = menu;
+
+                    })
+                }
+            },
+            back: function () {
+                location.href = "login"
+            }
+        }
+
+    })
+</script>
+
+
+
+
 </html>

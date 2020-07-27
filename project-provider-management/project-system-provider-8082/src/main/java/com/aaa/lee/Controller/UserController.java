@@ -45,12 +45,11 @@ public class UserController extends CommonController<User> {
      * Description: 新增用户
      **/
     @PostMapping("/addUser")
-    public ResultData addUser( User user) {
+    public ResultData addUser(User user) {
         ResultData resultData = userService.addUser(user);
         return (resultData.getCode().equals(INSERT_SUCCESS.getCode()))
                 ? resultData : super.insertOperationFailed();
     }
-
 
 
     /**
@@ -58,34 +57,37 @@ public class UserController extends CommonController<User> {
      * @date : 2020/7/18 20:44
      * Description: 根据id批量删除用户
      **/
-    @PostMapping("/delUserByIds")
-    public ResultData delUserByIds( List<Integer> ids) {
-        ResultData resultData = userService.delUserByIds(ids);
+    @PostMapping("/delUserById")
+    public ResultData delUserById(User id) {
+        ResultData resultData = userService.delUserById(id);
         return resultData.getCode().equals(operationSuccess().getCode()) ?
                 resultData : super.deleteOperationFailed();
     }
+
     /**
      * @Author: Lee ShiHao
      * @date : 2020/7/20 19:32
      * Description: 重置密码
-    **/
+     **/
     @PostMapping("/resetUserPwd")
-    public ResultData resetUserPwd (User user){
+    public ResultData resetUserPwd(User user) {
         ResultData resultData = userService.resetUserPwd(user);
         return resultData.getCode().equals(SUCCESS.getCode()) ?
                 resultData : super.updateOperationFailed();
     }
+
     /**
      * @Author: Lee ShiHao
      * @date : 2020/7/19 9:53
      * Description: 根据主键(id)修改用户信息
-    **/
-    @PostMapping("/updateUserById")
-    public ResultData updateUserById(User user){
-        ResultData resultData = userService.updateUserById(user);
+     **/
+    @PostMapping("/updateUser")
+    public ResultData updateUser(User user) {
+        ResultData resultData = userService.updateUser(user);
         return resultData.getCode().equals(UPDATE_SUCCESS.getCode()) ?
                 resultData : super.updateOperationFailed();
     }
+
     /**
      * @Author: Lee ShiHao
      * @date : 2020/7/18 21:03
@@ -101,7 +103,7 @@ public class UserController extends CommonController<User> {
     /**
      * @Author: Lee ShiHao
      * @date : 2020/7/18 15:50
-     * Description: 查询一条数据
+     * Description: 通过id查询一条数据
      **/
     @PostMapping("/selUserById")
     public ResultData selUserById(User id) {
@@ -109,24 +111,38 @@ public class UserController extends CommonController<User> {
         return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
                 resultData : super.selectOperationFailed();
     }
+
+    /**
+     * @Author: Li ShiHao
+     * @Date: 2020/7/27 10:51
+     * @Description: 通过用户名查询一条数据
+     */
+    @PostMapping("/selUserByUsername")
+    public ResultData selUserByUsername(User username) {
+        ResultData resultData = userService.selUserByUsername(username);
+        return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
+                resultData : super.selectOperationFailed();
+    }
+
     /**
      * @Author: Lee ShiHao
      * @date : 2020/7/19 9:57
      * Description: 分页查询用户
-    **/
+     **/
     @PostMapping("/selUserByPage")
-    public ResultData selUserByPage(User user,Integer pageNumber,Integer pageSize){
+    public ResultData selUserByPage(User user, Integer pageNumber, Integer pageSize) {
         ResultData resultData = userService.selUserByPage(user, pageNumber, pageSize);
         return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
                 resultData : super.selectOperationFailed();
     }
+
     /**
      * @Author: Lee ShiHao
      * @date : 2020/7/19 10:13
      * Description: 根据条件分页查询用户
-    **/
+     **/
     @PostMapping("/selUserByPageFiled")
-    public ResultData selUserByPageFiled(Integer number,Integer pageSize,Sqls where, String orderFiled, String... fileds){
+    public ResultData selUserByPageFiled(Integer number, Integer pageSize, Sqls where, String orderFiled, String... fileds) {
         ResultData resultData = userService.selUserByPageFiled(number, pageSize, where, orderFiled, fileds);
         return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
                 resultData : super.selectOperationFailed();

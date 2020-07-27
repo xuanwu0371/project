@@ -27,6 +27,7 @@ public class LoginController extends BaseController {
     @PostMapping("/doLogin")
     @LoginAnnotation(operationType = "登录操作", operationName = "管理员登录")
     public ResultData doLogin(User user) {
+
         return iProjectService.doLogin(user);
     }
 }

@@ -21,5 +21,8 @@
     <result column="type" property="type" jdbcType="CHAR" />
     <result column="token" property="token" jdbcType="VARCHAR" />
   </resultMap>
+  <select id="getLastId" resultType="Long" parameterType="Long">
+    select * from t_user  ORDER BY id DESC limit 1;
 
+  </select>
 </mapper>
