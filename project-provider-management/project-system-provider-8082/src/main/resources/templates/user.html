@@ -101,14 +101,11 @@
 <script src="/static/js/index.js"></script>
 <script src="/static/js/global.js" type="text/javascript" charset="utf-8"></script>
 <script>
-    var app = new Vue({
+    const app = new Vue({
         el: "#app",
         data: {
             formLabelWidth: "120px",
             dialogFormVisible: false,
-            headerImage: "img/my2.jpg",
-            idcardImage: "img/id1.jpg",
-            username: "",
             tableData: [{
                 id: 1,
                 username: "user",
@@ -122,9 +119,10 @@
                 modifyTime: "2019-09-05"
             }],
             form: {},
+            username:"",
             currentPage: 1,
-            total: 0,
-            pageSize: 3,
+            total: 2,
+            pageSize: 5,
             query: {},
             rules: {
                 username: [{
@@ -202,6 +200,7 @@
                 if (data.code == 9) {
                     // 说明数据查询成功
                     _this.tableData = data.data;
+
                 }
             })
         },
@@ -269,13 +268,8 @@
                 this.tableShow(1);
             },
             edit: function (row) {
-
                 this.dialogFormVisible = true;
                 this.form = row;
-                console.log(row);
-                $.post("http://localhost:8082/user/updateUser" + row, function (data) {
-
-                })
             },
             remove: function (row) {
                 var _this = this;
@@ -301,9 +295,8 @@
                     });
                 });
             }
-
         }
-    })
+    });
 </script>
 
 </html>

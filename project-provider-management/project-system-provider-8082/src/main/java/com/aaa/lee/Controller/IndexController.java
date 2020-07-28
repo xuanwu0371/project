@@ -21,4 +21,9 @@ public class IndexController {
     public String toUser() {
         return "user";
     }
+    @GetMapping("/map")
+    public String toMap() {
+        return "map";
+    }
+
 }

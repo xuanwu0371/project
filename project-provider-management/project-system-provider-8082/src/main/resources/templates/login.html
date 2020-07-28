@@ -86,7 +86,6 @@
                 }, function (data) {
                     //判断状态码 200:登录成功
                     if (data.code === "200") {
-
                         //在前端数据库中存入token的值
                         window.localStorage.setItem("token", data.token);
                         //跳转界面到主页

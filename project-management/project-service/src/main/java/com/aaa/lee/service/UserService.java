@@ -132,6 +132,8 @@ public class UserService extends BaseService<User> {
      * Description: 查询所有用户
      **/
     public ResultData selUser(User user) {
+        PageInfo<User> list = super.selectListByPage(user, 1, 1);
+        System.out.println(list);
         List<User> userList = super.selectList(user);
         if (userList.size() > 0) {
             resultData.setCode(SELECT_SUCCESS.getCode())
