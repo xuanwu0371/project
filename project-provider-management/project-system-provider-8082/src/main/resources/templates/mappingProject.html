@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="/static/css/index.css"/>
+    <title>项目页面</title>
+</head>
+<body>
+<div id="app">
+    <el-breadcrumb separator-class="el-icon-arrow-right" style="margin: 20px 0;">
+        <el-breadcrumb-item :to="{ path: '/' }">项目审核管理</el-breadcrumb-item>
+        <el-breadcrumb-item>项目审核</el-breadcrumb-item>
+    </el-breadcrumb>
+    <el-main>
+        <el-form :inline="true" class="demo-form-inline">
+            <el-form-item label="项目名称">
+                <el-input id="projectName" placeholder="请输入项目名称" v-model="projectName"
+                          @keyup.enter.native="tableShow(1)"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <!--                <el-button type="primary" @click="tableShow(1)">查询</el-button>-->
+                <el-button type="primary" @click="search">查询</el-button>
+                <el-button type="success" @click="add">新增</el-button>
+            </el-form-item>
+        </el-form>
+        <el-table :data="tableData" stripe style="width: 100%">
+            <el-table-column prop="id" label="编号">
+            </el-table-column>
+            <el-table-column prop="projectType" label="项目类型">
+            </el-table-column>
+            <el-table-column prop="projectName" label="项目名称">
+            </el-table-column>
+            <el-table-column prop="projectLeader" label="项目负责人">
+            </el-table-column>
+            <el-table-column prop="startDate" label="开工日期">
+            </el-table-column>
+            <el-table-column prop="endDate" label="完工日期">
+            </el-table-column>
+            <el-table-column prop="completeTime" label="完成工期">
+            </el-table-column>
+            <el-table-column prop="acceptanceDepartment" label="验收机构">
+            </el-table-column>
+            <el-table-column prop="projectAmount" label="项目金额（元）">
+            </el-table-column>
+            <el-table-column prop="schedule" label="进度(%)">
+            </el-table-column>
+
+            <el-table-column fixed="right" label="操作" width="200">
+                <template slot-scope="scope">
+                    <el-button type="primary" @click="edit(scope.row)">修改</el-button>
+                    <el-button type="danger" @click="remove(scope.row)">删除</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+        <div class="block">
+            <el-pagination @current-change="tableShow" :current-page="currentPage" :page-size="pageSize"
+                           layout="total, prev, pager, next, jumper" :total="total">
+            </el-pagination>
+        </div>
+
+        <el-dialog title="项目信息" :visible.sync="dialogFormVisible">
+            <el-form :model="form" :rules="rules" ref="form">
+                <input type="hidden" v-model="form.id"/>
+                <el-form-item label="项目类型" prop="projectType" :label-width="formLabelWidth">
+                    <el-input v-model="form.projectType"></el-input>
+                </el-form-item>
+                <el-form-item label="项目名称" prop="projectName" :label-width="formLabelWidth">
+                    <el-input v-model="form.projectName"></el-input>
+                </el-form-item>
+                <el-form-item label="项目金额（元）" prop="projectAmount" :label-width="formLabelWidth">
+                    <el-input v-model="form.projectAmount"></el-input>
+                </el-form-item>
+                <el-form-item label="项目负责人" prop="projectLeader" :label-width="formLabelWidth">
+                    <el-input v-model="form.projectLeader"></el-input>
+                </el-form-item>
+                <el-form-item label="开工日期" prop="startDate" :label-width="formLabelWidth">
+                    <el-input v-model="form.startDate"></el-input>
+                </el-form-item>
+                <el-form-item label="完工日期" prop="endDate" :label-width="formLabelWidth">
+                    <el-input v-model="form.endDate"></el-input>
+                </el-form-item>
+                <el-form-item label="完成工期" prop="completeTime" :label-width="formLabelWidth">
+                    <el-input v-model="form.completeTime"></el-input>
+                </el-form-item>
+                <el-form-item label="验收机构" prop="acceptanceDepartment" :label-width="formLabelWidth">
+                    <el-input v-model="form.acceptanceDepartment"></el-input>
+                </el-form-item>
+                <el-form-item label="验收报告文号" prop="acceptanceReport" :label-width="formLabelWidth">
+                    <el-input v-model="form.acceptanceReport"></el-input>
+                </el-form-item>
+                <el-form-item label="任务来源" prop="taskSource" :label-width="formLabelWidth">
+                    <el-input v-model="form.taskSource"></el-input>
+                </el-form-item>
+                <el-form-item label="项目面积（km²）" prop="projectArea" :label-width="formLabelWidth">
+                    <el-input v-model="form.projectArea"></el-input>
+                </el-form-item>
+                <el-form-item label="比例尺（开本，册）" prop="scale" :label-width="formLabelWidth">
+                <el-input v-model="form.scale"></el-input>
+                </el-form-item>
+                <el-form-item label="图幅数量（线路里程）" prop="sheetNumber" :label-width="formLabelWidth">
+                    <el-input v-model="form.sheetNumber"></el-input>
+                </el-form-item>
+                <el-form-item label="颁奖单位" prop="awardsDepartment" :label-width="formLabelWidth">
+                    <el-input v-model="form.awardsDepartment"></el-input>
+                </el-form-item>
+                <el-form-item label="获奖类型等级" prop="prizeLevel" :label-width="formLabelWidth">
+                    <el-input v-model="form.prizeLevel"></el-input>
+                </el-form-item>
+                <el-form-item label="项目质量认可" prop="projectQualityApproval" :label-width="formLabelWidth">
+                    <el-input v-model="form.projectQualityApproval"></el-input>
+                </el-form-item>
+                <el-form-item label="获奖时间" prop="winningTime" :label-width="formLabelWidth">
+                    <el-input v-model="form.winningTime"></el-input>
+                </el-form-item>
+                <el-form-item label="验收时间" prop="acceptanceTime" :label-width="formLabelWidth">
+                    <el-input v-model="form.acceptanceTime"></el-input>
+                </el-form-item>
+                <el-form-item label="基本内容" prop="basicContent" :label-width="formLabelWidth">
+                <el-input v-model="form.basicContent"></el-input>
+                </el-form-item>
+                <el-form-item label="履约情况" prop="creditStatus" :label-width="formLabelWidth">
+                    <el-input v-model="form.creditStatus"></el-input>
+                </el-form-item>
+                <el-form-item label="向测绘主管部门汇交成果情况" prop="submitStatus" :label-width="formLabelWidth">
+                    <el-input v-model="form.submitStatus"></el-input>
+                </el-form-item>
+                <el-form-item label="单位用户编号" prop="userId" :label-width="formLabelWidth">
+                    <el-input v-model="form.userId"></el-input>
+                </el-form-item>
+                <el-form-item label="进度（百分比）" prop="schedule" :label-width="formLabelWidth">
+                    <el-input v-model="form.schedule"></el-input>
+                </el-form-item>
+                <el-form-item label="创建时间" prop="createTime" :label-width="formLabelWidth">
+                    <el-input v-model="form.createTime"></el-input>
+                </el-form-item>
+                <el-form-item label="更改时间" prop="modifyTime" :label-width="formLabelWidth">
+                    <el-input v-model="form.modifyTime"></el-input>
+                </el-form-item>
+                <el-form-item label="备注" prop="memo" :label-width="formLabelWidth">
+                    <el-input v-model="form.memo"></el-input>
+                </el-form-item>
+                <el-form-item label="项目进行状态" prop="status" :label-width="formLabelWidth">
+                    <el-input v-model="form.status"></el-input>
+                </el-form-item>
+                <el-form-item label="项目审核结果" prop="auditStatus" :label-width="formLabelWidth">
+                    <el-input v-model="form.auditStatus"></el-input>
+                </el-form-item>
+                <el-form-item label="项目成果汇交状态" prop="resultsStatus" :label-width="formLabelWidth">
+                    <el-input v-model="form.resultsStatus"></el-input>
+                </el-form-item>
+                <el-form-item label="中央子午线" prop="meridian" :label-width="formLabelWidth">
+                    <el-input v-model="form.meridian"></el-input>
+                </el-form-item>
+                <el-form-item label="坐标系" prop="coordinateSystem" :label-width="formLabelWidth">
+                    <el-input v-model="form.coordinateSystem"></el-input>
+                </el-form-item>
+                <el-form-item label="管理级别" prop="managementLevel" :label-width="formLabelWidth">
+                    <el-input v-model="form.managementLevel"></el-input>
+                </el-form-item>
+                <el-form-item label="资金来源" prop="fundingSource" :label-width="formLabelWidth">
+                    <el-input v-model="form.fundingSource"></el-input>
+                </el-form-item>
+                <el-form-item label="委托单位" prop="entrustUnit" :label-width="formLabelWidth">
+                    <el-input v-model="form.entrustUnit"></el-input>
+                </el-form-item>
+                <el-form-item label="承建单位" prop="acceptUnit" :label-width="formLabelWidth">
+                    <el-input v-model="form.acceptUnit"></el-input>
+                </el-form-item>
+                <el-form-item label="手机号码" prop="mobilePhone" :label-width="formLabelWidth">
+                    <el-input v-model="form.mobilePhone"></el-input>
+                </el-form-item>
+                <el-form-item label="固定电话" prop="phone" :label-width="formLabelWidth">
+                    <el-input v-model="form.phone"></el-input>
+                </el-form-item>
+                <el-form-item label="项目所在地" prop="address" :label-width="formLabelWidth">
+                    <el-input v-model="form.address"></el-input>
+                </el-form-item>
+                <el-form-item label="项目中心点" prop="centerPoint" :label-width="formLabelWidth">
+                    <el-input v-model="form.centerPoint"></el-input>
+                </el-form-item>
+                <el-form-item label="同步状态" prop="synchronizationStatus" :label-width="formLabelWidth">
+                    <el-input v-model="form.synchronizationStatus"></el-input>
+                </el-form-item>
+                <el-form-item label="合同上传时间" prop="contractTime" :label-width="formLabelWidth">
+                    <el-input v-model="form.contractTime"></el-input>
+                </el-form-item>
+                <el-form-item label="坐标" prop="coordinate" :label-width="formLabelWidth">
+                    <el-input v-model="form.coordinate"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="cancel">取 消</el-button>
+                <el-button type="primary" @click="save">确 定</el-button>
+            </div>
+        </el-dialog>
+    </el-main>
+</div>
+
+</body>
+<!-- 先引入 Vue -->
+<script src="/static/js/vue.js"></script>
+<!-- 引入组件库 -->
+<script src="/static/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<!-- 引入组件库 -->
+<script src="/static/js/index.js"></script>
+<script src="/static/js/global.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            formLabelWidth: "120px",
+            dialogFormVisible: false,
+            headerImage: "img/my2.jpg",
+            idcardImage: "img/id1.jpg",
+            projectName: "",
+            tableData: [{
+                id: 1,
+                username: "user",
+                ssex: "男",
+                email: "793475118@qq.com",
+                roleName: "管理员",
+                deptId: "1",
+                mobile: "15515988735",
+                status: "1",
+                createTime: "2019-09-05",
+                modifyTime: "2019-09-05"
+            }],
+            form: {},
+            currentPage: 1,
+            total: 0,
+            pageSize: 3,
+            query: {},
+            rules: {
+                nickname: [{
+                    required: true,
+                    message: '编号',
+                    trigger: 'blur'
+                }],
+                nickname: [{
+                    required: true,
+                    message: '项目类型',
+                    trigger: 'blur'
+                }],
+                nickname: [{
+                    required: true,
+                    message: '项目名称',
+                    trigger: 'blur'
+                }],
+                nickname: [{
+                    required: true,
+                    message: '项目负责人',
+                    trigger: 'blur'
+                }],
+                nickname: [{
+                    required: true,
+                    message: '开工日期',
+                    trigger: 'blur'
+                }],
+                nickname: [{
+                    required: true,
+                    message: '完工日期',
+                    trigger: 'blur'
+                }],
+                nickname: [{
+                    required: true,
+                    message: '完成工期',
+                    trigger: 'blur'
+                }],
+                phone: [{
+                    required: true,
+                    message: '验收机构',
+                    trigger: 'blur'
+                }],
+                nickname: [{
+                    required: true,
+                    message: '项目金额（元）',
+                    trigger: 'blur'
+                }],
+                nickname: [{
+                    required: true,
+                    message: '项目进度(%)',
+                    trigger: 'blur'
+                }]
+            }
+        },
+        /**
+         *    这两个函数都是来渲染数据的
+         *    mounted:
+         *        当页面上所有的HTML和js代码全部加载完毕之后，该函数才会被触发
+         *    created：
+         *        先去触发该函数，然后再去加载页面信息
+         **/
+        mounted: function () { //在这里实现onload事件
+            this.tableShow(1);
+            // this:VUE对象
+            var _this = this;
+            $.post("http://localhost:8082/mappingProject/selMappingProject", function (data) {
+                if (data.code == 9) {
+                    // 说明数据查询成功
+                    _this.tableData = data.data;
+                    console.log(_this.tableData);
+                }
+            })
+        },
+        methods: {
+            search: function () {
+                var _this = this;
+                var name = $("#projectName").val();
+                if (name != "") {
+                            $.post("http://localhost:8082/mappingProject/selMappingProjectByProjectName?projectName=" + name, function (search) {
+                        if (search.code == 9) {
+                            _this.tableData = search.data;
+
+                        }
+                    })
+                } else {
+                    $.post("http://localhost:8082/mappingProject/selMappingProject", function (data) {
+                        if (data.code == 9) {
+                            // 说明数据查询成功
+                            _this.tableData = data.data;
+                        }
+                    })
+                }
+
+            },
+
+            tableShow: function () {
+                //做异步请求的函数
+                var _this = this;
+
+            },
+            add: function () {
+                this.dialogFormVisible = true;
+                this.form = {};
+            },
+            save: function () {
+                var _this = this;
+                this.$refs["form"].validate(function (valid) {
+                    if (valid) {
+                        _this.dialogFormVisible = false;
+                        $.post("http://localhost:8082/mappingProject/addMappingProject",
+                            _this.form, function (data) {
+                                _this.$notify({
+                                    title: '成功',
+                                    message: data.message,
+                                    type: 'success'
+                                });
+                            });
+                        setTimeout(function () {
+                            location.reload()
+                        }, 1000);
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+
+            },
+            cancel: function () {
+                this.dialogFormVisible = false;
+                this.tableShow(1);
+            },
+            edit: function (row) {
+
+                this.dialogFormVisible = true;
+                this.form = row;
+                console.log(row);
+                $.post("http://localhost:8082/mappingProject/updateMappingProjectById" + row, function (data) {
+                })
+            },
+            remove: function (row) {
+                var _this = this;
+                this.$confirm('此操作将永久删除该条数据, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(function () {
+                    console.log(row.id);
+                    $.post("http://localhost:8082/mappingProject/delMappingProjectById?id=" + row.id, function (data) {
+                        _this.$notify({
+                            title: '成功',
+                            message: data.message,
+                            type: 'success'
+                        });
+                    })
+                    setTimeout(function () {
+                        location.reload()
+                    }, 1000);
+                }).catch(function () {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            }
+
+        }
+    })
+</script>
+
+</html>

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.util.Sqls;
 
+import java.util.List;
+
 /**
  * @author Yang
  * @date 2020-07-19 16:10
@@ -34,7 +36,7 @@ public class AuditController extends BaseController {
      *Description :根据id批量删除审核信息
      */
     @PostMapping("/delAuditByIds")
-    public ResultData delAuditByIds(@RequestBody Integer[] ids) {
+    public ResultData delAuditByIds(@RequestBody List<Integer> ids) {
         return iProjectService.delAudit(ids);
     }
 
@@ -61,11 +63,11 @@ public class AuditController extends BaseController {
     /**
      * @author : yang
      * @date : 2020/7/19 16:16
-     *Description :查询一条数据
+     *Description :通过审核信息名称查询一条数据
      */
     @PostMapping("/selAuditById")
-    public ResultData selAuditById(@RequestBody Audit id) {
-        return iProjectService.selAuditById(id);
+    public ResultData selAuditByAuditName(@RequestBody Audit auditName) {
+        return iProjectService.selAuditByAuditName(auditName);
     }
 
     /**

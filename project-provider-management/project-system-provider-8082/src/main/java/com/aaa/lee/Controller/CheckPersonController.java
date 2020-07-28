@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tk.mybatis.mapper.util.Sqls;
 
+import java.util.List;
+
 import static com.aaa.lee.status.OperationStatus.*;
 /**
  * @author Yang
@@ -38,7 +40,7 @@ public class CheckPersonController extends CommonController<CheckPerson> {
      *Description :新增抽查人员信息
      */
     @PostMapping("/addCheckPerson")
-    public ResultData addCheckPerson(@RequestBody CheckPerson checkPerson) {
+    public ResultData addCheckPerson( CheckPerson checkPerson) {
         ResultData resultData = checkPersonService.addCheckPerson(checkPerson);
         return (resultData.getCode().equals(INSERT_SUCCESS.getCode()))
                 ? resultData : super.insertOperationFailed();
@@ -50,8 +52,8 @@ public class CheckPersonController extends CommonController<CheckPerson> {
      *Description :根据id批量删除抽查人员信息
      */
     @PostMapping("/delCheckPersonByIds")
-    public ResultData delCheckPersonByIds(@RequestBody Integer[] ids) {
-        ResultData resultData = super.batchDelete(ids);
+    public ResultData delCheckPersonByIds( List<Integer> ids) {
+        ResultData resultData = checkPersonService.delCheckPersonByIds(ids);
         return resultData.getCode().equals(operationSuccess().getCode()) ?
                 resultData : super.deleteOperationFailed();
 
@@ -63,7 +65,7 @@ public class CheckPersonController extends CommonController<CheckPerson> {
      *Description :根据主键(id)修改抽查人员信息
      */
     @PostMapping("/updateCheckPersonById")
-    public ResultData updateCheckPersonById(CheckPerson checkPerson){
+    public ResultData updateCheckPersonById( CheckPerson checkPerson){
         ResultData resultData = checkPersonService.updateCheckPersonById(checkPerson);
         return resultData.getCode().equals(UPDATE_SUCCESS.getCode()) ?
                 resultData : super.updateOperationFailed();
@@ -87,7 +89,7 @@ public class CheckPersonController extends CommonController<CheckPerson> {
      *Description :查询一条数据
      */
     @PostMapping("/selCheckPersonById")
-    public ResultData selCheckPersonById(@RequestBody CheckPerson id) {
+    public ResultData selCheckPersonById( CheckPerson id) {
         ResultData resultData = checkPersonService.selCheckPersonBuId(id);
         return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
                 resultData : super.selectOperationFailed();

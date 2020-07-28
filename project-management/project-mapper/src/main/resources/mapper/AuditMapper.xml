@@ -16,4 +16,11 @@
     <result column="ref_id" property="refId" jdbcType="BIGINT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
+  <select id="selAudit" resultType="com.aaa.lee.model.Audit" parameterType="java.lang.Integer">
+    select * from t_audit where name = #{name}
+  </select>
+  <select id="getLastId" resultType="Long" parameterType="Long">
+    select * from t_audit  ORDER BY id DESC limit 1;
+
+  </select>
 </mapper>

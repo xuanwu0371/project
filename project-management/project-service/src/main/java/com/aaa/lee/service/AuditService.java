@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.util.Sqls;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,8 +48,8 @@ public class AuditService extends BaseService<Audit> {
      * @date : 2020/7/19 14:14
      *Description :根据id批量删除审核信息
      */
-    public ResultData delAuditByIds(List<Integer> ids){
-        Integer delete = super.deleteByIds(ids);
+    public ResultData delAuditByIds(Audit ids){
+        Integer delete = super.delete(ids);
         if (delete > 0) {
             resultData.setCode(DELETE_SUCCESS.getCode()).setMsg(DELETE_SUCCESS.getMsg());
         } else {
@@ -97,17 +98,31 @@ public class AuditService extends BaseService<Audit> {
     /**
      * @author : yang
      * @date : 2020/7/19 14:22
-     *Description :查询一条数据
+     *Description :通过审核信息名称查询一条数据
      */
-    public ResultData selAuditById(Audit id) {
-        Audit audit = super.selectOne(id);
-        if (!audit.equals("")) {
-            resultData.setCode(SELECT_SUCCESS.getCode())
-                    .setMsg(SELECT_SUCCESS.getMsg())
-                    .setData(audit);
-        } else {
-            resultData.setCode(SELECT_FAILED.getCode())
-                    .setMsg(SELECT_FAILED.getMsg());
+    public ResultData selAuditByAuditName(Audit auditName) {
+        if (!auditName.equals("") || auditName!=null) {
+            Audit audit = super.selectOne(auditName);
+            List<Audit> auditList = new ArrayList<>();
+            auditList.add(audit);
+            if (!audit.equals("")) {
+                resultData.setCode(SELECT_SUCCESS.getCode())
+                        .setMsg(SELECT_SUCCESS.getMsg())
+                        .setData(audit);
+            } else {
+                resultData.setCode(SELECT_FAILED.getCode())
+                        .setMsg(SELECT_FAILED.getMsg());
+            }
+        }else {
+            List<Audit> auditList = selectList(auditName);
+            if (auditList.size() != 0 ) {
+                this.resultData.setCode(SELECT_SUCCESS.getCode())
+                        .setMsg(SELECT_SUCCESS.getMsg())
+                        .setData(auditList);
+            } else {
+                this.resultData.setCode(SELECT_FAILED.getCode())
+                        .setMsg(SELECT_FAILED.getMsg());
+            }
         }
         return resultData;
     }

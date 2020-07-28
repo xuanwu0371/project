@@ -14,4 +14,7 @@
     <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
     <result column="memo" property="memo" jdbcType="VARCHAR" />
   </resultMap>
+  <select id="selCheckPersonProportion" resultType="com.aaa.lee.model.CheckPerson" parameterType="java.lang.Integer">
+    select * from t_check_person ORDER BY RAND() LIMIT #{proportion};
+  </select>
 </mapper>

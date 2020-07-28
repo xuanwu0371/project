@@ -35,7 +35,7 @@ public class NewsController extends CommonController<News> {
     @Autowired
     private RedisService redisService;
     public BaseService getBaseService() {
-        return null;
+        return newsService;
     }
 
     /**
@@ -58,8 +58,8 @@ public class NewsController extends CommonController<News> {
      * 根据id批量删除新闻
      */
     @PostMapping("/delNewsByIds")
-    public ResultData delNewsByIds(@RequestBody Integer[] ids) {
-        ResultData resultData = super.batchDelete(ids);
+    public ResultData delNewsByIds( List<Integer> ids) {
+        ResultData resultData = newsService.delNewsByIds(ids);
         return resultData.getCode().equals(operationSuccess().getCode()) ?
                 resultData : super.deleteOperationFailed();
     }
@@ -71,7 +71,7 @@ public class NewsController extends CommonController<News> {
      * 根据主键(id)修改新闻信息
      */
     @RequestMapping("/updateNewsById")
-    public ResultData updateNewsById(News news) {
+    public ResultData updateNewsById( News news) {
         ResultData resultData = newsService.updateNewsBuId(news);
         return resultData.getCode().equals(UPDATE_SUCCESS.getCode()) ?
                 resultData : super.updateOperationFailed();
@@ -96,7 +96,7 @@ public class NewsController extends CommonController<News> {
      *Description :查询一条数据
      */
     @PostMapping("/selNewsById")
-    public ResultData selNewsById(@RequestBody News id) {
+    public ResultData selNewsById( News id) {
         ResultData resultData = newsService.selNewsById(id);
         return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
                 resultData : super.selectOperationFailed();

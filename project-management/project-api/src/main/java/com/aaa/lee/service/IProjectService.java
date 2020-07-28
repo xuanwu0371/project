@@ -266,8 +266,8 @@ public interface IProjectService {
     @PostMapping("/addAudit")
     ResultData addAudit(@RequestBody Audit audit);
 
-    @PostMapping("/delAudit")
-    ResultData delAudit(@RequestBody Integer[] ids);
+    @PostMapping("/delAuditByIds")
+    ResultData delAudit(@RequestBody List<Integer> ids);
 
     @PostMapping("/updateAuditBuId")
     ResultData updateAuditBuId(Audit audit);
@@ -275,8 +275,8 @@ public interface IProjectService {
     @PostMapping("/selAudit")
     ResultData selAudit(Audit audit);
 
-    @PostMapping("/selAuditById")
-    ResultData selAuditById(@RequestBody Audit id);
+    @PostMapping("/selAuditByAuditName")
+    ResultData selAuditByAuditName(@RequestBody Audit auditName);
 
     @PostMapping("/selAuditByPage")
     ResultData selAuditByPage(Audit audit, Integer pageNumber, Integer pageSize);
@@ -320,8 +320,8 @@ public interface IProjectService {
     @PostMapping("/addMappingProject")
     ResultData addMappingProject(@RequestBody MappingProject mappingProject);
 
-    @PostMapping("/delMappingProjectByIds")
-    ResultData delMappingProjectByIds(@RequestBody Integer[] ids);
+    @PostMapping("/delMappingProjectById")
+    ResultData delMappingProjectById(@RequestBody MappingProject id);
 
     @PostMapping("/updateMappingProjectById")
     ResultData updateMappingProjectById(@RequestBody MappingProject mappingProject);
@@ -329,8 +329,8 @@ public interface IProjectService {
     @PostMapping("/selMappingProject")
     ResultData selMappingProject(MappingProject mappingProject);
 
-    @PostMapping("/selMappingProjectById")
-    ResultData selMappingProjectById(@RequestBody MappingProject id);
+    @PostMapping("/selMappingProjectByProjectName")
+    ResultData selMappingProjectByProjectName(@RequestBody MappingProject projectName);
 
     @PostMapping("/selMappingProjectByPage")
     ResultData selMappingProjectByPage(MappingProject mappingProject, Integer pageNumber, Integer pageSize);

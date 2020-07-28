@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.util.Sqls;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.aaa.lee.status.OperationStatus.*;
 
@@ -64,6 +66,7 @@ public class CheckPersonService extends BaseService<CheckPerson> {
      *Description :根据主键(id)修改抽查人员信息
      */
     public ResultData updateCheckPersonById(CheckPerson checkPerson){
+        checkPerson.setModifyTime(new Date());
         Integer update = super.update(checkPerson);
         if (update > 0) {
             resultData.setCode(UPDATE_SUCCESS.getCode())
@@ -147,5 +150,21 @@ public class CheckPersonService extends BaseService<CheckPerson> {
                     .setMsg(SELECT_FAILED.getMsg());
         }
         return resultData;
+    }
+
+    /**
+     * @author : yang
+     * @date : 2020/7/21 16:43
+     *Description :根据抽查比例查询抽查人员信息
+     */
+    public ResultData selCheckPersonProportion(Integer proportion){
+
+        Map<String,Object> resultMap = new HashMap<String,Object>();
+        if (proportion != null) {
+          List<Map> result = checkPersonMapper.selCheckPersonProportion(proportion);
+        } else {
+
+        }
+        return null;
     }
 }

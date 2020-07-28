@@ -13,5 +13,10 @@ public interface AuditMapper extends Mapper<Audit> {
      * Description:条件分页查询所有审核
      */
     List<HashMap> selectAuditPageInfo(HashMap map);
-
+    /**
+     * @author : yang
+     * @date : 2020/7/27 19:46
+     *Description :获取最后一个ID
+     */
+    Long getLastId();
 }

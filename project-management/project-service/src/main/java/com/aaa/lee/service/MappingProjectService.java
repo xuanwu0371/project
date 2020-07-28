@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.util.Sqls;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.aaa.lee.staticproerties.TimeFormatProperties.TIME_FORMAT;
 import static com.aaa.lee.status.OperationStatus.*;
@@ -39,11 +36,11 @@ public class MappingProjectService extends BaseService<MappingProject> {
     /**
      * @author yang
      * @date 2020/7/18 8:29
-     *Description
-     *     增加测绘项目
+     * Description
+     * 增加测绘项目
      */
-    public ResultData addMappingProject(MappingProject mappingProject){
-        mappingProject.setModifyTime(DateUtil.formatDate(new Date(), TIME_FORMAT));
+    public ResultData addMappingProject(MappingProject mappingProject) {
+        mappingProject.setCreateTime(DateUtil.formatDate(new Date(), TIME_FORMAT));
         int insert = super.add(mappingProject);
         if (insert > 0) {
             resultData.setCode(INSERT_SUCCESS.getCode()).setMsg(INSERT_SUCCESS.getMsg());
@@ -56,11 +53,11 @@ public class MappingProjectService extends BaseService<MappingProject> {
     /**
      * @author yang
      * @date 2020/7/18 8:44
-     *Description
+     * Description
      * 根据id批量测删除绘项目
      */
-    public ResultData delMappingProjectBuIds(List<Integer> ids){
-        Integer delete = super.deleteByIds(ids);
+    public ResultData delMappingProjectById(MappingProject id) {
+        Integer delete = super.delete(id);
         if (delete > 0) {
             resultData.setCode(DELETE_SUCCESS.getCode()).setMsg(DELETE_SUCCESS.getMsg());
         } else {
@@ -72,10 +69,11 @@ public class MappingProjectService extends BaseService<MappingProject> {
     /**
      * @author yang
      * @date 2020/7/18 8:48
-     *Description
+     * Description
      * 根据主键(id)修改测绘项目信息
      */
-    public ResultData updateMappingProjectById(MappingProject mappingProject){
+    public ResultData updateMappingProjectById(MappingProject mappingProject) {
+        mappingProject.setModifyTime(DateUtil.formatDate(new Date(), TIME_FORMAT));
         Integer update = super.update(mappingProject);
         if (update > 0) {
             resultData.setCode(UPDATE_SUCCESS.getCode())
@@ -87,13 +85,14 @@ public class MappingProjectService extends BaseService<MappingProject> {
         }
         return resultData;
     }
+
     /**
      * @author yang
      * @date 2020/7/18 8:51
-     *Description
+     * Description
      * 查询全部测绘项目信息
      */
-    public ResultData selMappingProject(MappingProject mappingProject){
+    public ResultData selMappingProject(MappingProject mappingProject) {
         List<MappingProject> mappingProjectList = super.selectList(mappingProject);
         ResultData resultData = new ResultData();
         if (mappingProjectList.size() > 0) {
@@ -110,25 +109,30 @@ public class MappingProjectService extends BaseService<MappingProject> {
     /**
      * @author : yang
      * @date : 2020/7/19 14:58
-     *Description :查询一条数据
+     * Description :通过项目名查询一条数据
      */
-    public ResultData selMappingProjectById(MappingProject id) {
-        MappingProject mappingProject = super.selectOne(id);
-        if (!mappingProject.equals("")) {
-            resultData.setCode(SELECT_SUCCESS.getCode())
-                    .setMsg(SELECT_SUCCESS.getMsg())
-                    .setData(mappingProject);
-        } else {
-            resultData.setCode(SELECT_FAILED.getCode())
-                    .setMsg(SELECT_FAILED.getMsg());
+    public ResultData selMappingProjectByProjectName(String projectName) {
+        if (!projectName.equals("")) {
+            MappingProject mappingProject = new MappingProject();
+            mappingProject.setProjectName(projectName);
+            List<MappingProject> list = super.selectList(mappingProject);
+            if (list.size() > 0) {
+                resultData.setCode(SELECT_SUCCESS.getCode())
+                        .setMsg((SELECT_SUCCESS).getMsg())
+                        .setData(list);
+            } else {
+                resultData.setCode(SELECT_FAILED.getCode())
+                        .setMsg(SELECT_FAILED.getMsg());
+            }
         }
         return resultData;
     }
 
+
     /**
      * @author yang
      * @date 2020/7/18 8:53
-     *Description
+     * Description
      * 分页查询项目信息
      */
     public ResultData selMappingProjectByPage(MappingProject mappingProject, Integer pageNumber, Integer pageSize) {
@@ -147,20 +151,22 @@ public class MappingProjectService extends BaseService<MappingProject> {
     /**
      * @author yang
      * @date 2020/7/18 8:58
-     *Description
+     * Description
      * 根据条件分页查询测绘项目信息
      */
-    public ResultData selMappingProjectByPageFiled(Integer number,Integer pageSize,Sqls where, String orderFiled, String... fileds ){
+    public ResultData selMappingProjectByPageFiled(Integer number, Integer pageSize, Sqls where, String
+            orderFiled, String... fileds) {
         PageInfo<MappingProject> mappingProjectPageInfo = super.selectListByPageAndFiled(number, pageSize, where, orderFiled, fileds);
-        if (mappingProjectPageInfo.equals("")){
+        if (mappingProjectPageInfo.equals("")) {
             resultData.setCode(SELECT_SUCCESS.getCode())
                     .setMsg(SELECT_SUCCESS.getMsg())
                     .setData(mappingProjectPageInfo);
-        }else {
+        } else {
             resultData.setCode(SELECT_FAILED.getCode())
                     .setMsg(SELECT_FAILED.getMsg());
         }
         return resultData;
 
     }
+
 }

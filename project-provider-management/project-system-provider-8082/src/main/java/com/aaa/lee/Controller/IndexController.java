@@ -25,5 +25,13 @@ public class IndexController {
     public String toMap() {
         return "map";
     }
+    @GetMapping("/audit")
+    public String toAudit() {
+        return "audit";
+    }
+    @GetMapping("/mappingProject")
+    public String toMappingProject(){
+        return "mappingProject";
+    }
 
 }

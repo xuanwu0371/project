@@ -14,4 +14,10 @@ public interface MappingProjectMapper extends Mapper<MappingProject> {
      * 条件查询测绘项目
      */
     List<HashMap> selectMappingProjectAll(HashMap map);
+    /**
+     * @author : yang
+     * @date : 2020/7/27 21:08
+     *Description :获取最后一个id
+     */
+    Long getLastId( );
 }

@@ -44,7 +44,7 @@ public class MappingProjectController extends CommonController<MappingProject> {
      *     新增测绘项目
      */
     @PostMapping("/addMappingProject")
-    public ResultData addMappingProject(@RequestBody MappingProject mappingProject) {
+    public ResultData addMappingProject( MappingProject mappingProject) {
         ResultData resultData = mappingProjectService.addMappingProject(mappingProject);
         return (resultData.getCode().equals(INSERT_SUCCESS.getCode()))
                 ? resultData : super.insertOperationFailed();
@@ -56,9 +56,9 @@ public class MappingProjectController extends CommonController<MappingProject> {
      *Description
      *    根据id批量删除测绘项目
      */
-    @PostMapping("/delMappingProjectByIds")
-    public ResultData delMappingProjectByIds(@RequestBody Integer[] ids){
-        ResultData resultData = super.batchDelete(ids);
+    @PostMapping("/delMappingProjectById")
+    public ResultData delMappingProjectByIds(MappingProject id){
+        ResultData resultData = mappingProjectService.delMappingProjectById(id);
         return resultData.getCode().equals(operationSuccess().getCode()) ?
                 resultData : super.deleteOperationFailed();
     }
@@ -70,7 +70,7 @@ public class MappingProjectController extends CommonController<MappingProject> {
      *   根据主键(id)修改测绘项目信息
      */
     @PostMapping("/updateMappingProjectById")
-    public ResultData updateMappingProjectById(@RequestBody MappingProject mappingProject){
+    public ResultData updateMappingProjectById( MappingProject mappingProject){
         ResultData resultData = mappingProjectService.updateMappingProjectById(mappingProject);
         return resultData.getCode().equals(UPDATE_SUCCESS.getCode()) ?
                 resultData : super.updateOperationFailed();
@@ -92,11 +92,11 @@ public class MappingProjectController extends CommonController<MappingProject> {
     /**
      * @author : yang
      * @date : 2020/7/19 15:34
-     *Description :查询一条数据
+     *Description :通过项目名查询一条数据
      */
-    @PostMapping("/selMappingProjectById")
-    public ResultData selMappingProjectById(@RequestBody MappingProject id) {
-        ResultData resultData = mappingProjectService.selMappingProjectById(id);
+    @PostMapping("/selMappingProjectByProjectName")
+    public ResultData selMappingProjectByProjectName(String projectName) {
+        ResultData resultData = mappingProjectService.selMappingProjectByProjectName(projectName);
         return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
                 resultData : super.selectOperationFailed();
     }

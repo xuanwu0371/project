@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigInteger;
 
 @Table(name = "t_mapping_project")
 @AllArgsConstructor
@@ -16,7 +17,7 @@ import javax.persistence.Table;
 @Accessors(chain = true)
 public class MappingProject {
     @Id
-    private Long id;
+    private String id;
 
     /**
      * 项目类型

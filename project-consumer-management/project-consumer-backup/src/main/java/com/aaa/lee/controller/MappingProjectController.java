@@ -39,9 +39,9 @@ public class MappingProjectController extends BaseController {
      *Description
      * 根据id批量删除测绘项目
      */
-    @PostMapping("/delMappingProjectByIds")
-    public ResultData delMappingProjectByIds(@RequestBody Integer[] ids){
-        return iProjectService.delMappingProjectByIds(ids);
+    @PostMapping("/delMappingProjectById")
+    public ResultData delMappingProjectById(@RequestBody MappingProject id){
+        return iProjectService.delMappingProjectById(id);
     }
 
     /**
@@ -69,11 +69,11 @@ public class MappingProjectController extends BaseController {
     /**
      * @author : yang
      * @date : 2020/7/19 16:30
-     *Description :查询一条数据
+     *Description :通过项目名查询一条数据
      */
-    @PostMapping("/selMappingProjectById")
-    public ResultData selMappingProjectById(@RequestBody MappingProject id) {
-       return iProjectService.selMappingProjectById(id);
+    @PostMapping("/selMappingProjectByProjectName")
+    public ResultData selMappingProjectByProjectName(@RequestBody MappingProject projectName) {
+       return iProjectService.selMappingProjectByProjectName(projectName);
     }
 
     /**

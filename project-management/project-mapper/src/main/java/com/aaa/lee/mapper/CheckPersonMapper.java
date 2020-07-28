@@ -5,12 +5,14 @@ import tk.mybatis.mapper.common.Mapper;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface CheckPersonMapper extends Mapper<CheckPerson> {
+
     /**
-     * @author luyu
-     * @date 2020/7/18 17:30
-     * Description:条件分页查询所有监察人员
+     * @author : yang
+     * @date : 2020/7/21 16:59
+     *Description :根据抽查比例查询抽查人员信息
      */
-    List<HashMap> selectCheckPersonPageInfo(HashMap map);
+    List<Map> selCheckPersonProportion(Integer proportion);
 }

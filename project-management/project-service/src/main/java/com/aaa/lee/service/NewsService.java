@@ -32,7 +32,7 @@ public class NewsService extends BaseService<News> {
     @Autowired
     private NewsMapper newsMapper;
     
-    private ResultData resultData;
+    private ResultData resultData = new ResultData();
 
     /**
      * @author yang
@@ -74,6 +74,7 @@ public class NewsService extends BaseService<News> {
      * 根据主键（id）修改新闻
      */
     public ResultData updateNewsBuId(News news){
+        news.setGmtModified(new Date());
         Integer update = super.update(news);
         if (update > 0) {
             resultData.setCode(UPDATE_SUCCESS.getCode())

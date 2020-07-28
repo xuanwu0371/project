@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tk.mybatis.mapper.util.Sqls;
 
+import java.util.List;
+
 import static com.aaa.lee.status.OperationStatus.*;
 
 /**
@@ -39,7 +41,7 @@ public class AuditController extends CommonController<Audit> {
      *Description :新增审核信息
      */
     @PostMapping("/addAudit")
-    public ResultData addAudit(@RequestBody Audit audit) {
+    public ResultData addAudit( Audit audit) {
         ResultData resultData = auditService.addAudit(audit);
         return (resultData.getCode().equals(INSERT_SUCCESS.getCode()))
                 ? resultData : super.insertOperationFailed();
@@ -51,8 +53,8 @@ public class AuditController extends CommonController<Audit> {
      *Description :根据id批量删除审核信息
      */
     @PostMapping("/delAuditByIds")
-    public ResultData delAuditByIds(@RequestBody Integer[] ids) {
-        ResultData resultData = super.batchDelete(ids);
+    public ResultData delAuditByIds( Audit ids) {
+        ResultData resultData = auditService.delAuditByIds(ids);
         return resultData.getCode().equals(operationSuccess().getCode()) ?
                 resultData : super.deleteOperationFailed();
 
@@ -64,7 +66,7 @@ public class AuditController extends CommonController<Audit> {
      *Description :根据主键(id)修改审核信息
      */
     @PostMapping("/updateAuditById")
-    public ResultData updateAuditById(Audit audit){
+    public ResultData updateAuditById( Audit audit){
         ResultData resultData = auditService.updateAuditBuId(audit);
         return resultData.getCode().equals(UPDATE_SUCCESS.getCode()) ?
                 resultData : super.updateOperationFailed();
@@ -85,14 +87,15 @@ public class AuditController extends CommonController<Audit> {
     /**
      * @author : yang
      * @date : 2020/7/19 15:16
-     *Description :查询一条数据
+     *Description :通过审核信息名称查询一条数据
      */
-    @PostMapping("/selAuditById")
-    public ResultData selAuditById(@RequestBody Audit id) {
-        ResultData resultData = auditService.selAuditById(id);
+    @PostMapping("/selAuditByAuditName")
+    public ResultData selAuditByAuditName( Audit auditName) {
+        ResultData resultData = auditService.selAuditByAuditName(auditName);
         return resultData.getCode().equals(SELECT_SUCCESS.getCode()) ?
                 resultData : super.selectOperationFailed();
     }
+
     
     /**
      * @author : yang

@@ -49,5 +49,8 @@
     <result column="contract_time" property="contractTime" jdbcType="VARCHAR" />
     <result column="coordinate" property="coordinate" jdbcType="LONGVARCHAR" />
   </resultMap>
+  <select id="getLastId" resultType="Long" parameterType="Long">
+    select * from t_mapping_project  ORDER BY id DESC limit 1;
 
+  </select>
 </mapper>
