@@ -55,7 +55,7 @@ public class UserService extends BaseService<User> {
             } else {
                 resultData.setCode(INSERT_FAILED.getCode()).setMsg(INSERT_FAILED.getMsg());
             }
-        }else {
+        } else {
             user.setModifyTime(DateUtil.formatDate(new Date(), TIME_FORMAT));
             Integer update = super.update(user);
             if (update > 0) {
@@ -133,7 +133,6 @@ public class UserService extends BaseService<User> {
      **/
     public ResultData selUser(User user) {
         PageInfo<User> list = super.selectListByPage(user, 1, 1);
-        System.out.println(list);
         List<User> userList = super.selectList(user);
         if (userList.size() > 0) {
             resultData.setCode(SELECT_SUCCESS.getCode())
@@ -175,22 +174,22 @@ public class UserService extends BaseService<User> {
             List<User> list = new ArrayList<User>();
             list.add(user);
             if (!user.equals("")) {
-                this.resultData.setCode(SELECT_SUCCESS.getCode())
+                resultData.setCode(SELECT_SUCCESS.getCode())
                         .setMsg(SELECT_SUCCESS.getMsg())
                         .setData(list);
             } else {
-                this.resultData.setCode(SELECT_FAILED.getCode())
+                resultData.setCode(SELECT_FAILED.getCode())
                         .setMsg(SELECT_FAILED.getMsg());
             }
 
         } else {
             List<User> list = selectList(username);
             if (list.size() != 0) {
-                this.resultData.setCode(SELECT_SUCCESS.getCode())
+                resultData.setCode(SELECT_SUCCESS.getCode())
                         .setMsg(SELECT_SUCCESS.getMsg())
                         .setData(list);
             } else {
-                this.resultData.setCode(SELECT_FAILED.getCode())
+                resultData.setCode(SELECT_FAILED.getCode())
                         .setMsg(SELECT_FAILED.getMsg());
             }
 

@@ -76,16 +76,21 @@
 <canvas height="926" width="1920" style="position: fixed; top: 0px; left: 0px; z-index: -1; opacity: 0.5;"
         id="c_n1"></canvas>
 <el-container id="app">
-    <el-header style="height:130px;border-bottom: 1px solid lightgray;">
-        <div style="text-align: center;">
-            <img src="/static/img/my.png" height="50px" style="display: inline;margin-right: 20px;"/>
-            <span style="display: inline; font-size: 30px;">欢迎<span id="user"></span>登陆Easy-live管理页面</span>
-        </div>
-        <div style="position: absolute;">
-            管理员：<b>admin:<em>li</em></b>
-            <el-button id="exit" type="info" style="margin-top: 3px; color: white; display: block;" @click="back">
-                退出
-            </el-button>
+    <el-header style="height:80px;border-bottom: 1px solid lightgray;">
+        <div>
+            <div style="text-align: left;width: 45%;float: left">
+                <img src="/static/img/my.png" height="50px" style="display: inline;margin-right: 20px;margin-top: 10px"/>
+                <span style="display: inline; font-size: 30px;">欢迎<span id="user">
+
+                </span>登陆Easy-live管理页面</span>
+            </div>
+            <div style="width: 45%;float: right;margin-top: 0.3%;margin-right: 3%">
+                            <div style="float: right">管理员：<span id="loginName"></span></div>
+                <el-button id="exit" type="info" style="float: right;margin-left: 85%;margin-top: 3px; color: white; display: block;"
+                           @click="back">
+                    退出
+                </el-button>
+            </div>
         </div>
     </el-header>
     <el-container style="height: 1000px">
@@ -126,217 +131,229 @@
             formLabelWidth: "120px",
             dialogFormVisible: false,
             root: {
-                list: [{
-                    id: 1,
-                    title: "单位基本信息",
-                    icon: "el-icon-success",
-                    list: [{
-                        id: 2,
+                list: [
+                    {
+                        id: 1,
+                        title: "系统主页",
+                        icon: "el-icon-setting",
+                        list: [{
+                            id: 2,
+                            title: "系统测绘",
+                            href: "map",
+                            icon: "el-icon-circle-plus"
+                        }]
+                    }, {
+
+                        id: 3,
                         title: "单位基本信息",
-                        href: "user",
-                        icon: "el-icon-news"
+                        icon: "el-icon-success",
+                        list: [{
+                            id: 4,
+                            title: "单位基本信息",
+                            href: "user",
+                            icon: "el-icon-news"
+                        }, {
+                            id: 5,
+                            title: "单位负责人",
+                            href: "user",
+                            icon: "el-icon-news"
+                        }, {
+                            id: 6,
+                            title: "技术人员信息",
+                            href: "user",
+                            icon: "el-icon-news"
+                        }, {
+                            id: 7,
+                            title: "仪器设备信息",
+                            href: "user",
+                            icon: "el-icon-news"
+                        }, {
+                            id: 8,
+                            title: "特殊岗位人员",
+                            href: "user",
+                            icon: "el-icon-news"
+                        }, {
+                            id: 9,
+                            title: "测绘成果及档案管理",
+                            href: "user",
+                            icon: "el-icon-news"
+                        }, {
+                            id: 10,
+                            title: "质量体系",
+                            href: "user",
+                            icon: "el-icon-news"
+                        }, {
+                            id: 11,
+                            title: "通用材料附件汇总",
+                            href: "user",
+                            icon: "el-icon-news"
+                        }]
                     }, {
-                        id: 2,
-                        title: "单位负责人",
-                        href: "user",
-                        icon: "el-icon-news"
-                    }, {
-                        id: 2,
-                        title: "技术人员信息",
-                        href: "user",
-                        icon: "el-icon-news"
-                    }, {
-                        id: 2,
-                        title: "仪器设备信息",
-                        href: "user",
-                        icon: "el-icon-news"
-                    }, {
-                        id: 2,
-                        title: "特殊岗位人员",
-                        href: "user",
-                        icon: "el-icon-news"
-                    }, {
-                        id: 2,
-                        title: "测绘成果及档案管理",
-                        href: "user",
-                        icon: "el-icon-news"
-                    }, {
-                        id: 2,
-                        title: "质量体系",
-                        href: "user",
-                        icon: "el-icon-news"
-                    }, {
-                        id: 2,
-                        title: "通用材料附件汇总",
-                        href: "user",
-                        icon: "el-icon-news"
-                    }]
-                }, {
-                    id: 3,
-                    title: "项目管理",
-                    icon: "el-icon-setting",
-                    list: [{
-                        id: 4,
+                        id: 12,
                         title: "项目管理",
-                        href: "map",
-                        icon: "el-icon-circle-plus"
-                    }]
-                }, {
-                    id: 5,
-                    title: "项目汇交",
-                    icon: "el-icon-info",
-                    list: [{
-                        id: 6,
-                        title: "项目汇交",
-                        href: "myinfo.html",
-                        icon: "el-icon-message"
-                    }]
-                }, {
-                    id: 8,
-                    title: "数据统计",
-                    icon: "el-icon-view",
-                    list: [{
-                        id: 9,
-                        title: "资质项目汇总统计",
-                        href: "zf-first.html",
-                        icon: "el-icon-star-off"
+                        icon: "el-icon-setting",
+                        list: [{
+                            id: 13,
+                            title: "项目管理",
+                            href: "map",
+                            icon: "el-icon-circle-plus"
+                        }]
                     }, {
-                        id: 10,
-                        title: "单位信息统计",
-                        href: "zf-second.html",
-                        icon: "el-icon-star-on"
-                    }, {
-                        id: 11,
-                        title: "人员设备汇总统计",
-                        href: "dk-first.html",
-                        icon: "el-icon-star-off"
-                    }]
-                }, {
-                    id: 13,
-                    title: "项目审核",
-                    icon: "el-icon-rank",
-                    list: [{
                         id: 14,
-                        title: "项目信息",
-                        href: "mappingProject",
-                        icon: "el-icon-document"
+                        title: "项目汇交",
+                        icon: "el-icon-info",
+                        list: [{
+                            id: 15,
+                            title: "项目汇交",
+                            href: "myinfo.html",
+                            icon: "el-icon-message"
+                        }]
                     }, {
-                        id: 15,
-                        title: "汇交成果信息",
-                        href: "repay_detail.html",
-                        icon: "el-icon-document"
+                        id: 16,
+                        title: "数据统计",
+                        icon: "el-icon-view",
+                        list: [{
+                            id: 16,
+                            title: "资质项目汇总统计",
+                            href: "zf-first.html",
+                            icon: "el-icon-star-off"
+                        }, {
+                            id: 17,
+                            title: "单位信息统计",
+                            href: "zf-second.html",
+                            icon: "el-icon-star-on"
+                        }, {
+                            id: 18,
+                            title: "人员设备汇总统计",
+                            href: "dk-first.html",
+                            icon: "el-icon-star-off"
+                        }]
                     }, {
-                        id: 15,
+                        id: 19,
                         title: "项目审核",
-                        href: "audit",
-                        icon: "el-icon-document"
+                        icon: "el-icon-rank",
+                        list: [{
+                            id: 20,
+                            title: "项目信息",
+                            href: "loan_detail.html",
+                            icon: "el-icon-document"
+                        }, {
+                            id: 21,
+                            title: "汇交成果信息",
+                            href: "repay_detail.html",
+                            icon: "el-icon-document"
+                        }, {
+                            id: 22,
+                            title: "项目审核",
+                            href: "repay_detail.html",
+                            icon: "el-icon-document"
+                        }, {
+                            id: 23,
+                            title: "成果汇交审核",
+                            href: "repay_detail.html",
+                            icon: "el-icon-document"
+                        }]
                     }, {
-                        id: 15,
-                        title: "成果汇交审核",
-                        href: "repay_detail.html",
-                        icon: "el-icon-document"
-                    }]
-                }, {
-                    id: 16,
-                    title: "单位审核",
-                    icon: "el-icon-document",
-                    list: [{
-                        id: 17,
-                        title: "单位列表",
-                        href: "house_detail.html",
-                        icon: "el-icon-document"
+                        id: 24,
+                        title: "单位审核",
+                        icon: "el-icon-document",
+                        list: [{
+                            id: 25,
+                            title: "单位列表",
+                            href: "house_detail.html",
+                            icon: "el-icon-document"
+                        }, {
+                            id: 26,
+                            title: "单位修改待审核",
+                            href: "order_detail.html",
+                            icon: "el-icon-document"
+                        }, {
+                            id: 27,
+                            title: "单位注册待审核",
+                            href: "repay_detail.html",
+                            icon: "el-icon-document"
+                        }]
                     }, {
-                        id: 18,
-                        title: "单位修改待审核",
-                        href: "order_detail.html",
-                        icon: "el-icon-document"
+                        id: 28,
+                        title: "黑白名单",
+                        icon: "el-icon-tickets",
+                        list: [{
+                            id: 29,
+                            title: "白名单",
+                            href: "/toDictionaryPage",
+                            icon: "el-icon-tickets"
+                        }, {
+                            id: 30,
+                            title: "黑名单",
+                            href: "repay_detail.html",
+                            icon: "el-icon-document"
+                        }]
                     }, {
-                        id: 15,
-                        title: "单位注册待审核",
-                        href: "repay_detail.html",
-                        icon: "el-icon-document"
-                    }]
-                }, {
-                    id: 19,
-                    title: "黑白名单",
-                    icon: "el-icon-tickets",
-                    list: [{
-                        id: 20,
-                        title: "白名单",
-                        href: "/toDictionaryPage",
-                        icon: "el-icon-tickets"
+                        id: 31,
+                        title: "双随机抽查",
+                        icon: "el-icon-bell",
+                        list: [{
+                            id: 32,
+                            title: "单位抽查",
+                            href: "/toLogPage",
+                            icon: "el-icon-bell"
+                        }, {
+                            id: 33,
+                            title: "抽查人员",
+                            href: "repay_detail.html",
+                            icon: "el-icon-document"
+                        }]
                     }, {
-                        id: 15,
-                        title: "黑名单",
-                        href: "repay_detail.html",
-                        icon: "el-icon-document"
-                    }]
-                }, {
-                    id: 21,
-                    title: "双随机抽查",
-                    icon: "el-icon-bell",
-                    list: [{
-                        id: 22,
-                        title: "单位抽查",
-                        href: "/toLogPage",
-                        icon: "el-icon-bell"
-                    }, {
-                        id: 15,
-                        title: "抽查人员",
-                        href: "repay_detail.html",
-                        icon: "el-icon-document"
-                    }]
-                }, {
-                    id: 22,
-                    title: "信息公开",
-                    icon: "el-icon-bell",
-                    list: [{
-                        id: 22,
+                        id: 34,
                         title: "信息公开",
-                        href: "/toUploadPage",
-                        icon: "el-icon-bell"
-                    }]
-                }, {
-                    id: 22,
-                    title: "公告栏",
-                    icon: "el-icon-bell",
-                    list: [{
-                        id: 22,
+                        icon: "el-icon-bell",
+                        list: [{
+                            id: 35,
+                            title: "信息公开",
+                            href: "/toUploadPage",
+                            icon: "el-icon-bell"
+                        }]
+                    }, {
+                        id: 36,
                         title: "公告栏",
-                        href: "/toUploadPage",
-                        icon: "el-icon-bell"
+                        icon: "el-icon-bell",
+                        list: [{
+                            id: 37,
+                            title: "公告栏",
+                            href: "/toUploadPage",
+                            icon: "el-icon-bell"
+                        }]
+                    }, {
+                        id: 38,
+                        title: "系统管理",
+                        icon: "el-icon-bell",
+                        list: [{
+                            id: 39,
+                            title: "用户管理",
+                            href: "/toUploadPage",
+                            icon: "el-icon-bell"
+                        }, {
+                            id: 40,
+                            title: "角色管理",
+                            href: "/toUploadPage",
+                            icon: "el-icon-bell"
+                        }, {
+                            id: 41,
+                            title: "菜单管理",
+                            href: "/toUploadPage",
+                            icon: "el-icon-bell"
+                        }, {
+                            id: 42,
+                            title: "部门管理",
+                            href: "/toUploadPage",
+                            icon: "el-icon-bell"
+                        }, {
+                            id: 43,
+                            title: "字段管理",
+                            href: "/toUploadPage",
+                            icon: "el-icon-bell"
+                        }]
                     }]
-                }, {
-                    id: 22,
-                    title: "系统管理",
-                    icon: "el-icon-bell",
-                    list: [{
-                        id: 22,
-                        title: "用户管理",
-                        href: "/toUploadPage",
-                        icon: "el-icon-bell"
-                    }, {
-                        id: 22,
-                        title: "角色管理",
-                        href: "/toUploadPage",
-                        icon: "el-icon-bell"
-                    }, {
-                        id: 22,
-                        title: "菜单管理",
-                        href: "/toUploadPage",
-                        icon: "el-icon-bell"
-                    }, {
-                        id: 22,
-                        title: "部门管理",
-                        href: "/toUploadPage",
-                        icon: "el-icon-bell"
-                    }, {
-                        id: 22,
-                        title: "字段管理",
-                        href: "/toUploadPage",
-                        icon: "el-icon-bell"
-                    }]
-                }]
             },
             vif: true,
             nickname: ""
@@ -366,7 +383,7 @@
                 }
             },
             back: function () {
-                location.href = "login"
+                location.href = "http://localhost:8082/"
             }
         }
 

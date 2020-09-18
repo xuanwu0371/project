@@ -57,7 +57,6 @@ public class AuditController extends CommonController<Audit> {
         ResultData resultData = auditService.delAuditByIds(ids);
         return resultData.getCode().equals(operationSuccess().getCode()) ?
                 resultData : super.deleteOperationFailed();
-
     }
     
     /**

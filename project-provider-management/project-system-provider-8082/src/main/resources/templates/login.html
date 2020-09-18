@@ -88,6 +88,7 @@
                     if (data.code === "200") {
                         //在前端数据库中存入token的值
                         window.localStorage.setItem("token", data.token);
+                        window.localStorage.setItem("userName",this.ruleForm.username);
                         //跳转界面到主页
                         location.href = "toIndex";
                     } else {
